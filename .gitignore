@@ -1,0 +1,23 @@
+# Xcode
+.DS_Store
+*/.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+project.xcworkspace/xcuserdata/
+*.xcuserdatad
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+Packages/
+
+# App & OS artifacts
+*.orig
+*.swp
+*~
+*.ipa
+*.dSYM.zip
+*.dSYM
