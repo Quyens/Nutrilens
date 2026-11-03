@@ -83,32 +83,6 @@ public struct VietnameseDishProfile: Identifiable, Equatable, Hashable, Sendable
         }
         return baseItem
     }
-
-    /// Resolves authentic Vietnamese food photography asset name
-    public var assetImageName: String {
-        switch slug {
-        case "pho", "pho_bo", "dish_pho":
-            return "pho_photo"
-        case "banh_mi", "dish_banh_mi":
-            return "banh_mi_photo"
-        case "bun_cha", "dish_bun_cha":
-            return "bun_cha_photo"
-        case "com_tam", "dish_com_tam":
-            return "com_tam_photo"
-        case "goi_cuon", "dish_goi_cuon", "nom_hoa_chuoi", "salad":
-            return "banner_salad"
-        default:
-            if category.contains("Nước") || category.contains("Bún") || category.contains("Canh") {
-                return "pho_photo"
-            } else if category.contains("Cơm") || category.contains("Xôi") || category.contains("Mặn") {
-                return "com_tam_photo"
-            } else if category.contains("Bánh") {
-                return "banh_mi_photo"
-            } else {
-                return "banner_salad"
-            }
-        }
-    }
 }
 
 public enum VietnameseNutritionDatabase {

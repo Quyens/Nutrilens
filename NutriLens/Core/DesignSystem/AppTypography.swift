@@ -35,7 +35,6 @@ public enum AppTypography {
 
     /// Body Bold: Emphasized body text (Dynamic Type: .body)
     public static let bodyBold = Font.system(.body, design: .default).weight(.semibold)
-    public static let button = bodyBold
 
     /// Subheadline: Secondary context line (Dynamic Type: .subheadline)
     public static let subheadline = Font.system(.subheadline, design: .default).weight(.regular)

@@ -21,7 +21,6 @@ public struct QuickAddMealSheet: View {
     @State private var searchQuery: String = ""
     @State private var selectedDish: VietnameseDishProfile? = nil
     @State private var portionGrams: Double = 400
-    @State private var showingFullExplorer: Bool = false
 
     public init(
         initialCategory: MealType,
@@ -86,22 +85,6 @@ public struct QuickAddMealSheet: View {
                     }
                     .foregroundColor(AppColors.textSecondary)
                 }
-
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        showingFullExplorer = true
-                    }) {
-                        HStack(spacing: 4) {
-                            Image(systemName: "safari")
-                            Text("Khám phá")
-                        }
-                        .font(AppTypography.captionBold)
-                        .foregroundColor(AppColors.primaryGreen)
-                    }
-                }
-            }
-            .sheet(isPresented: $showingFullExplorer) {
-                FoodExplorerView()
             }
         }
     }

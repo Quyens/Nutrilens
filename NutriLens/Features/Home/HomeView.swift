@@ -18,11 +18,9 @@ public struct HomeView: View {
     private let onOpenSettings: (() -> Void)?
     private let onQuickLogDish: ((FoodItem) -> Void)?
     private let onOpenDiary: (() -> Void)?
-    private let onOpenFoodExplorer: (() -> Void)?
 
     @State private var selectedMealForDetail: MealRecord? = nil
     @State private var showingWaterSheet: Bool = false
-    @State private var showingFoodExplorer: Bool = false
 
     public init(
         viewModel: HomeViewModel,
@@ -30,8 +28,7 @@ public struct HomeView: View {
         onLogManualTapped: @escaping () -> Void,
         onOpenSettings: (() -> Void)? = nil,
         onQuickLogDish: ((FoodItem) -> Void)? = nil,
-        onOpenDiary: (() -> Void)? = nil,
-        onOpenFoodExplorer: (() -> Void)? = nil
+        onOpenDiary: (() -> Void)? = nil
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.onScanTapped = onScanTapped
@@ -39,7 +36,6 @@ public struct HomeView: View {
         self.onOpenSettings = onOpenSettings
         self.onQuickLogDish = onQuickLogDish
         self.onOpenDiary = onOpenDiary
-        self.onOpenFoodExplorer = onOpenFoodExplorer
     }
 
     public var body: some View {
@@ -55,16 +51,7 @@ public struct HomeView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 14) {
                         // 0. BRAND HEADER (Matching reference top bar layout)
-                        BrandHeader(
-                            onOpenSettings: onOpenSettings,
-                            onOpenFoodExplorer: {
-                                if let onOpenFoodExplorer {
-                                    onOpenFoodExplorer()
-                                } else {
-                                    showingFoodExplorer = true
-                                }
-                            }
-                        )
+                        BrandHeader(onOpenSettings: onOpenSettings)
 
                         switch viewModel.state {
                         case .idle, .loading:
@@ -87,16 +74,6 @@ public struct HomeView: View {
                             // 2. REFINED AI FOOD SCAN BANNER
                             AIFoodScanBanner(onScan: onScanTapped)
                                 .padding(.top, -4)
-
-                            // 2.5 FOOD DISCOVERY EDITORIAL BANNER
-                            FoodDiscoveryBanner(onExplore: {
-                                if let onOpenFoodExplorer {
-                                    onOpenFoodExplorer()
-                                } else {
-                                    showingFoodExplorer = true
-                                }
-                            })
-                            .padding(.top, -2)
 
                             // 3. TODAY'S MEALS ("Bữa ăn hôm nay" — Food-First Experience)
                             TodaysMealsSection(
@@ -160,11 +137,6 @@ public struct HomeView: View {
             .sheet(isPresented: $showingWaterSheet) {
                 WaterIntakeSheet(viewModel: viewModel)
             }
-            .sheet(isPresented: $showingFoodExplorer, onDismiss: {
-                Task { await viewModel.loadDashboard() }
-            }) {
-                FoodExplorerView()
-            }
         }
     }
 }
@@ -208,7 +180,6 @@ private struct NutriLensBrandMark: View {
 // MARK: - 0. BRAND HEADER
 private struct BrandHeader: View {
     let onOpenSettings: (() -> Void)?
-    let onOpenFoodExplorer: (() -> Void)?
 
     var body: some View {
         HStack(spacing: 8) {
@@ -223,29 +194,8 @@ private struct BrandHeader: View {
 
             Spacer()
 
-            // Food Explorer Search, Notification Bell & Profile Avatar
+            // Notification Bell & Profile Avatar
             HStack(spacing: 10) {
-                Button(action: {
-                    #if canImport(UIKit)
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    #endif
-                    if let onOpenFoodExplorer {
-                        onOpenFoodExplorer()
-                    }
-                }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.white)
-                            .frame(width: 40, height: 40)
-                            .shadow(color: Color.black.opacity(0.06), radius: 4, x: 0, y: 2)
-
-                        Image(systemName: "magnifyingglass")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundColor(Color(red: 0.12, green: 0.42, blue: 0.28))
-                    }
-                }
-                .accessibilityLabel("Khám phá món ăn")
-
                 Button(action: {
                     #if canImport(UIKit)
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -291,61 +241,6 @@ private struct BrandHeader: View {
             }
         }
         .padding(.vertical, 4)
-    }
-}
-
-// MARK: - 2.5 FOOD DISCOVERY BANNER ("Khám phá 35+ món Việt")
-private struct FoodDiscoveryBanner: View {
-    let onExplore: () -> Void
-
-    var body: some View {
-        Button(action: {
-            #if canImport(UIKit)
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            #endif
-            onExplore()
-        }) {
-            HStack(spacing: 12) {
-                ZStack {
-                    Circle()
-                        .fill(AppColors.mintSurface)
-                        .frame(width: 40, height: 40)
-
-                    Image(systemName: "fork.knife")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(AppColors.primaryGreen)
-                }
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Khám phá 35+ món ăn Việt Nam")
-                        .font(.system(size: 14, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(red: 0.06, green: 0.22, blue: 0.14))
-
-                    Text("Tra cứu calo, macros chuẩn Viện Dinh Dưỡng")
-                        .font(.system(size: 11, weight: .regular))
-                        .foregroundColor(Color(red: 0.30, green: 0.46, blue: 0.38))
-                }
-
-                Spacer(minLength: 4)
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(AppColors.primaryGreen)
-                    .padding(8)
-                    .background(AppColors.mintSurface)
-                    .clipShape(Circle())
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 12)
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(Color(red: 0.90, green: 0.94, blue: 0.91), lineWidth: 1)
-            )
-            .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
-        }
-        .buttonStyle(.plain)
     }
 }
 
