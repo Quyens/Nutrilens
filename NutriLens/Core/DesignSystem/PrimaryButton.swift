@@ -3,6 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
+//  Standardized primary call-to-action button (Radius: 16 pt).
 //
 
 import SwiftUI
@@ -37,10 +38,10 @@ public struct PrimaryButton: View {
             #endif
             action()
         }) {
-            HStack(spacing: AppSpacing.sm) {
+            HStack(spacing: AppSpacing.xs) {
                 if isLoading {
                     ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .progressViewStyle(CircularProgressViewStyle(tint: AppColors.primaryActionText))
                         .scaleEffect(0.9)
                 } else if let icon {
                     Image(systemName: icon)
@@ -48,26 +49,23 @@ public struct PrimaryButton: View {
                 }
 
                 Text(title)
-                    .font(AppTypography.headline)
+                    .font(AppTypography.cardTitle)
                     .lineLimit(1)
             }
-            .foregroundColor(.white)
-            .padding(.vertical, AppSpacing.md + 2)
-            .padding(.horizontal, AppSpacing.xl)
+            .foregroundColor(isEnabled ? AppColors.primaryActionText : AppColors.textTertiary)
+            .padding(.vertical, 14)
+            .padding(.horizontal, AppSpacing.lg)
             .frame(maxWidth: isFullWidth ? .infinity : nil)
+            .frame(minHeight: 50)
             .background(
-                RoundedRectangle(cornerRadius: AppRadius.lg, style: .continuous)
-                    .fill(isEnabled ? AnyShapeStyle(AppColors.primaryGradient) : AnyShapeStyle(AppColors.primary.opacity(0.35)))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: AppRadius.lg, style: .continuous)
-                    .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                RoundedRectangle(cornerRadius: AppRadius.button, style: .continuous)
+                    .fill(isEnabled ? AppColors.primaryAction : AppColors.disabled)
             )
             .shadow(
-                color: isEnabled ? AppColors.primary.opacity(0.35) : .clear,
-                radius: 12,
+                color: isEnabled ? Color.black.opacity(0.06) : .clear,
+                radius: 4,
                 x: 0,
-                y: 6
+                y: 2
             )
         }
         .disabled(!isEnabled || isLoading)

@@ -3,6 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
+//  Subdued action button conforming to 16 pt radius and calm surface styling.
 //
 
 import SwiftUI
@@ -37,23 +38,24 @@ public struct SecondaryButton: View {
             HStack(spacing: AppSpacing.xs) {
                 if let icon {
                     Image(systemName: icon)
-                        .font(AppTypography.headline)
+                        .font(.system(size: 15, weight: .medium))
                 }
                 Text(title)
-                    .font(AppTypography.headline)
+                    .font(AppTypography.cardTitle)
                     .lineLimit(1)
             }
-            .foregroundColor(isEnabled ? AppColors.primary : AppColors.textTertiary)
-            .padding(.vertical, AppSpacing.md)
-            .padding(.horizontal, AppSpacing.xl)
+            .foregroundColor(isEnabled ? AppColors.textPrimary : AppColors.textTertiary)
+            .padding(.vertical, 14)
+            .padding(.horizontal, AppSpacing.lg)
             .frame(maxWidth: isFullWidth ? .infinity : nil)
+            .frame(minHeight: 50)
             .background(
-                RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous)
-                    .fill(AppColors.primarySubtle)
+                RoundedRectangle(cornerRadius: AppRadius.button, style: .continuous)
+                    .fill(isEnabled ? AppColors.surfaceSecondary : AppColors.surfacePrimary)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous)
-                    .stroke(AppColors.primary.opacity(0.3), lineWidth: 1)
+                RoundedRectangle(cornerRadius: AppRadius.button, style: .continuous)
+                    .stroke(isEnabled ? AppColors.border : AppColors.border.opacity(0.4), lineWidth: 1)
             )
         }
         .disabled(!isEnabled)

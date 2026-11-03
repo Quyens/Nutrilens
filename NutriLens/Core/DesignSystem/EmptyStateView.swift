@@ -3,6 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
+//  Clean empty state presentation utilizing centralized SF symbols and calm brand tokens.
 //
 
 import SwiftUI
@@ -29,20 +30,20 @@ public struct EmptyStateView: View {
     }
 
     public var body: some View {
-        VStack(spacing: AppSpacing.lg) {
+        VStack(spacing: AppSpacing.md) {
             ZStack {
                 Circle()
-                    .fill(AppColors.primarySubtle)
-                    .frame(width: 80, height: 80)
+                    .fill(AppColors.surfaceSecondary)
+                    .frame(width: 64, height: 64)
 
                 Image(systemName: icon)
-                    .font(.system(size: 34, weight: .semibold))
-                    .foregroundColor(AppColors.primary)
+                    .font(.system(size: 26, weight: .light))
+                    .foregroundColor(AppColors.sageGreen)
             }
 
-            VStack(spacing: AppSpacing.xs) {
+            VStack(spacing: AppSpacing.xxs) {
                 Text(title)
-                    .font(AppTypography.title3)
+                    .font(AppTypography.sectionTitle)
                     .foregroundColor(AppColors.textPrimary)
                     .multilineTextAlignment(.center)
 
@@ -55,20 +56,24 @@ public struct EmptyStateView: View {
 
             if let actionTitle, let action {
                 Button(action: action) {
-                    Text(actionTitle)
-                        .font(AppTypography.headline)
-                        .foregroundColor(AppColors.primary)
-                        .padding(.vertical, AppSpacing.xs)
-                        .padding(.horizontal, AppSpacing.md)
-                        .background(
-                            Capsule()
-                                .stroke(AppColors.primary, lineWidth: 1.5)
-                        )
+                    HStack(spacing: AppSpacing.xxs) {
+                        Image(systemName: "plus")
+                            .font(.system(size: 13, weight: .semibold))
+                        Text(actionTitle)
+                            .font(AppTypography.captionBold)
+                    }
+                    .foregroundColor(AppColors.textPrimary)
+                    .padding(.horizontal, AppSpacing.md)
+                    .padding(.vertical, 8)
+                    .background(AppColors.surfaceSecondary)
+                    .clipShape(Capsule())
+                    .overlay(Capsule().stroke(AppColors.border, lineWidth: 1))
                 }
                 .padding(.top, AppSpacing.xs)
             }
         }
-        .padding(AppSpacing.xl)
+        .padding(.vertical, AppSpacing.xl)
+        .padding(.horizontal, AppSpacing.md)
         .frame(maxWidth: .infinity)
     }
 }
