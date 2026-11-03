@@ -1,0 +1,114 @@
+[
+  {
+    "metadataOutputVersion" : "3.0",
+    "userDefinedMetadata" : {
+      "com.github.apple.coremltools.conversion_date" : "2026-11-03",
+      "com.github.apple.coremltools.source" : "torch==2.8.0",
+      "com.github.apple.coremltools.version" : "9.0",
+      "com.github.apple.coremltools.source_dialect" : "TorchScript"
+    },
+    "classLabels" : [
+      "banh_beo",
+      "banh_bot_loc",
+      "banh_can",
+      "banh_canh",
+      "banh_chung",
+      "banh_cuon",
+      "banh_duc",
+      "banh_gio",
+      "banh_khot",
+      "banh_mi",
+      "banh_pia",
+      "banh_tet",
+      "banh_trang_nuong",
+      "banh_xeo",
+      "bun_bo_hue",
+      "bun_dau_mam_tom",
+      "bun_mam",
+      "bun_rieu",
+      "bun_thit_nuong",
+      "ca_kho_to",
+      "canh_chua",
+      "cao_lau",
+      "chao_long",
+      "com_tam",
+      "goi_cuon",
+      "hu_tieu",
+      "mi_quang",
+      "nem_chua",
+      "pho",
+      "xoi"
+    ],
+    "availability" : {
+      "macOS" : "13.0",
+      "tvOS" : "16.0",
+      "visionOS" : "1.0",
+      "watchOS" : "9.0",
+      "iOS" : "16.0",
+      "macCatalyst" : "16.0"
+    },
+    "inputSchema" : [
+      {
+        "height" : "224",
+        "colorspace" : "RGB",
+        "isOptional" : "0",
+        "width" : "224",
+        "isColor" : "1",
+        "formattedType" : "Image (Color 224 × 224)",
+        "hasSizeFlexibility" : "0",
+        "type" : "Image",
+        "shortDescription" : "Input food image (224x224 RGB, automatically cropped and scaled by Vision)",
+        "name" : "image"
+      }
+    ],
+    "outputSchema" : [
+      {
+        "isOptional" : "0",
+        "formattedType" : "String",
+        "type" : "String",
+        "name" : "classLabel",
+        "shortDescription" : "Top-1 predicted Vietnamese dish identifier"
+      },
+      {
+        "isOptional" : "0",
+        "keyType" : "String",
+        "formattedType" : "Dictionary (String → Double)",
+        "type" : "Dictionary",
+        "name" : "classLabel_probs",
+        "shortDescription" : "Calibrated softmax probability distribution across 30 Vietnamese food classes"
+      }
+    ],
+    "modelParameters" : [
+
+    ],
+    "storagePrecision" : "Float16",
+    "method" : "predict",
+    "version" : "1.0.0-phase4",
+    "isUpdatable" : "0",
+    "specificationVersion" : 7,
+    "stateSchema" : [
+
+    ],
+    "computePrecision" : "Mixed (Float16, Float32, Float64, Int32)",
+    "mlProgramOperationTypeHistogram" : {
+      "Ios16.silu" : 49,
+      "Ios16.mul" : 18,
+      "Ios16.sigmoid" : 16,
+      "Ios16.cast" : 2,
+      "Ios16.add" : 9,
+      "Ios16.sub" : 1,
+      "Ios16.reshape" : 1,
+      "Ios16.reduceMean" : 17,
+      "Ios16.linear" : 1,
+      "Ios16.softmax" : 1,
+      "Ios16.conv" : 81
+    },
+    "shortDescription" : "NutriLens On-Device Vietnamese Food Recognition (30 canonical classes, EfficientNet-B0)",
+    "license" : "NutriLens Proprietary \/ Research",
+    "generatedClassName" : "FoodClassifier",
+    "author" : "NutriLens AI Team",
+    "modelType" : {
+      "name" : "MLModelType_mlProgram"
+    }
+  }
+]

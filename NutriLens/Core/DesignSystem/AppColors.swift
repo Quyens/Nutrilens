@@ -211,7 +211,7 @@ public enum AppColors {
 }
 
 // MARK: - Hex Initializer Extension
-public extension Color {
+private extension Color {
     init(hex: String) {
         let scanner = Scanner(string: hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted))
         var int: UInt64 = 0
