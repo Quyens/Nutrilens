@@ -59,7 +59,7 @@ public struct OnboardingView: View {
                                 goal: viewModel.selectedGoal
                             )
                         }
-                        .padding(.horizontal, AppSpacing.md)
+                        .padding(.horizontal, AppSpacing.screenHorizontal)
                         .padding(.top, AppSpacing.md)
                         .padding(.bottom, AppSpacing.xxl + 40)
                     }
@@ -80,7 +80,7 @@ public struct OnboardingView: View {
                         }
                         .padding(.top, 2)
                     }
-                    .padding(.horizontal, AppSpacing.md)
+                    .padding(.horizontal, AppSpacing.screenHorizontal)
                     .padding(.top, AppSpacing.sm)
                     .padding(.bottom, AppSpacing.md)
                     .background(

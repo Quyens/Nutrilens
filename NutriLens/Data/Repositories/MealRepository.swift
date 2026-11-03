@@ -39,6 +39,25 @@ public final class MealRepository: MealRepositoryProtocol, @unchecked Sendable {
     }
 
     @MainActor
+    public func fetchMeals(from startDate: Date, to endDate: Date) async throws -> [MealRecord] {
+        let start = startDate
+        let end = endDate
+        let descriptor = FetchDescriptor<MealSDModel>(
+            predicate: #Predicate<MealSDModel> {
+                $0.timestamp >= start && $0.timestamp <= end
+            },
+            sortBy: [SortDescriptor(\.timestamp, order: .forward)]
+        )
+
+        do {
+            let results = try container.mainContext.fetch(descriptor)
+            return results.map { $0.toDomain() }
+        } catch {
+            throw AppError.dataPersistenceFailed("Fetch failed: \(error.localizedDescription)")
+        }
+    }
+
+    @MainActor
     public func fetchAllMeals() async throws -> [MealRecord] {
         let descriptor = FetchDescriptor<MealSDModel>(
             sortBy: [SortDescriptor(\.timestamp, order: .reverse)]
@@ -60,6 +79,32 @@ public final class MealRepository: MealRepositoryProtocol, @unchecked Sendable {
             AppLogger.data.info("Saved meal: \(meal.id) with \(meal.items.count) items.")
         } catch {
             throw AppError.dataPersistenceFailed("Save failed: \(error.localizedDescription)")
+        }
+    }
+
+    @MainActor
+    public func updateMeal(_ meal: MealRecord) async throws {
+        let mealId = meal.id
+        let descriptor = FetchDescriptor<MealSDModel>(
+            predicate: #Predicate<MealSDModel> { $0.id == mealId }
+        )
+        do {
+            if let target = try container.mainContext.fetch(descriptor).first {
+                target.timestamp = meal.timestamp
+                target.mealTypeRaw = meal.mealType.rawValue
+                target.notes = meal.notes
+                target.imagePath = meal.imagePath
+                for item in target.items {
+                    container.mainContext.delete(item)
+                }
+                target.items = meal.items.map { FoodItemSDModel(from: $0) }
+                try container.mainContext.save()
+                AppLogger.data.info("Updated meal: \(meal.id)")
+            } else {
+                try await saveMeal(meal)
+            }
+        } catch {
+            throw AppError.dataPersistenceFailed("Update failed: \(error.localizedDescription)")
         }
     }
 

@@ -7,7 +7,9 @@
 
 import Foundation
 
-public enum MealType: String, CaseIterable, Codable, Sendable {
+public enum MealType: String, CaseIterable, Codable, Sendable, Identifiable {
+    public var id: String { rawValue }
+
     case breakfast = "Breakfast"
     case lunch = "Lunch"
     case dinner = "Dinner"
@@ -19,6 +21,15 @@ public enum MealType: String, CaseIterable, Codable, Sendable {
         case .lunch: return "sun.max.fill"
         case .dinner: return "moon.stars.fill"
         case .snack: return "cup.and.saucer.fill"
+        }
+    }
+
+    public var vietnameseName: String {
+        switch self {
+        case .breakfast: return "Bữa sáng"
+        case .lunch: return "Bữa trưa"
+        case .dinner: return "Bữa tối"
+        case .snack: return "Bữa phụ"
         }
     }
 }
@@ -65,5 +76,17 @@ public struct MealRecord: Identifiable, Equatable, Hashable, Sendable {
 
     public var totalFiberGrams: Double {
         items.reduce(0) { $0 + $1.fiberGrams }
+    }
+
+    public var totalServingGrams: Double {
+        items.reduce(0) { $0 + $1.servingSizeGrams }
+    }
+
+    public var displayTitle: String {
+        let names = items.map(\.vietnameseName).filter { !$0.isEmpty }
+        if names.isEmpty {
+            return "Bữa ăn dinh dưỡng"
+        }
+        return names.joined(separator: ", ")
     }
 }

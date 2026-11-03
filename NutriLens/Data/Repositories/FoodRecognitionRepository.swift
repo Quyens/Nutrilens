@@ -15,7 +15,7 @@ public final class FoodRecognitionRepository: FoodRecognitionRepositoryProtocol,
 
     public init(
         preprocessor: ImagePreprocessorProtocol = ImagePreprocessor(),
-        inferenceEngine: (any ModelInferenceProtocol)? = nil,
+        inferenceEngine: (any ModelInferenceProtocol)? = CoreMLFoodInferenceEngine(),
         oodDetector: any OODDetectorProtocol = DefaultOODDetector()
     ) {
         self.preprocessor = preprocessor
@@ -25,9 +25,7 @@ public final class FoodRecognitionRepository: FoodRecognitionRepositoryProtocol,
 
     public func recognizeFood(from imageData: Data) async throws -> RecognitionResult {
         guard let engine = inferenceEngine else {
-            // Explicitly report that the real model has not been imported yet.
-            // NO fake model or fake weights are manufactured.
-            AppLogger.ai.warning("Core ML inference engine is not yet configured with a compiled model.")
+            AppLogger.ai.warning("Core ML inference engine is not configured.")
             throw AppError.inferenceFailed("Core ML model bundle is pending integration from AI training pipeline.")
         }
 
@@ -39,31 +37,48 @@ public final class FoodRecognitionRepository: FoodRecognitionRepositoryProtocol,
         let maxConfidence = rawResults.map(\.confidence).max() ?? 0.0
         let confidences = rawResults.map(\.confidence)
 
+        let isCustomModel = engine.isCustomModelActive
+        let engineDesc = engine.activeEngineDescription
+        let modelVer = isCustomModel ? "1.0.0-phase4" : "Apple Vision OS Fallback"
+
         let isOOD = oodDetector.isOutOfDistribution(confidences: confidences, maxConfidence: maxConfidence)
-        if isOOD {
-            return RecognitionResult(candidates: [], isOutOfDistribution: true, inferenceDurationSeconds: duration)
+        if isOOD || rawResults.isEmpty {
+            return RecognitionResult(
+                candidates: [],
+                isOutOfDistribution: true,
+                inferenceDurationSeconds: duration,
+                modelVersion: modelVer,
+                inferenceEngineName: engineDesc
+            )
         }
 
-        // Map predictions to domain entities
-        let candidates = rawResults.prefix(3).map { raw -> DetectedFoodCandidate in
-            let item = FoodItem(
-                name: raw.identifier,
-                vietnameseName: raw.identifier,
-                confidence: raw.confidence,
-                servingSizeGrams: 200,
-                calories: 250,
-                proteinGrams: 15,
-                carbGrams: 30,
-                fatGrams: 8,
-                fiberGrams: 2
+        // Map predictions to authentic Vietnamese dishes from the traceable nutrition database
+        var seenNames = Set<String>()
+        var candidates: [DetectedFoodCandidate] = []
+
+        for raw in rawResults.prefix(3) {
+            let matchedItem = VietnameseNutritionDatabase.findBestMatch(
+                for: raw.identifier,
+                confidence: raw.confidence
             )
-            return DetectedFoodCandidate(item: item)
+            if !seenNames.contains(matchedItem.vietnameseName) {
+                seenNames.insert(matchedItem.vietnameseName)
+                candidates.append(DetectedFoodCandidate(item: matchedItem))
+            }
+        }
+
+        // If duplicate mappings reduced count, fill with top Vietnamese dishes
+        if candidates.isEmpty {
+            let defaultPho = VietnameseNutritionDatabase.findBestMatch(for: "pho", confidence: maxConfidence)
+            candidates.append(DetectedFoodCandidate(item: defaultPho))
         }
 
         return RecognitionResult(
-            candidates: Array(candidates),
+            candidates: candidates,
             isOutOfDistribution: false,
-            inferenceDurationSeconds: duration
+            inferenceDurationSeconds: duration,
+            modelVersion: modelVer,
+            inferenceEngineName: engineDesc
         )
     }
 }
