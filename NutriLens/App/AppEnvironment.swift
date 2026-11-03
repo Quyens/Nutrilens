@@ -20,6 +20,7 @@ public final class AppEnvironment: ObservableObject {
     public let logMealUseCase: LogMealUseCaseProtocol
     public let getMealHistoryUseCase: GetMealHistoryUseCaseProtocol
     public let recognizeFoodUseCase: RecognizeFoodUseCaseProtocol
+    public let getNutritionAnalyticsUseCase: GetNutritionAnalyticsUseCaseProtocol
 
     public init(
         mealRepository: MealRepositoryProtocol,
@@ -37,6 +38,10 @@ public final class AppEnvironment: ObservableObject {
         self.logMealUseCase = LogMealUseCase(mealRepository: mealRepository)
         self.getMealHistoryUseCase = GetMealHistoryUseCase(mealRepository: mealRepository)
         self.recognizeFoodUseCase = RecognizeFoodUseCase(repository: foodRecognitionRepository)
+        self.getNutritionAnalyticsUseCase = GetNutritionAnalyticsUseCase(
+            mealRepository: mealRepository,
+            userRepository: userRepository
+        )
     }
 
     /// Standard production environment backed by SwiftData & Production CoreML Pipeline

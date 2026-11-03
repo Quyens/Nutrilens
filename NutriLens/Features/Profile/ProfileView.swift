@@ -77,8 +77,9 @@ public struct ProfileView: View {
                 }
                 .padding(AppSpacing.md)
             }
-            .background(AppColors.background.ignoresSafeArea())
+            .background(Color.clear)
             .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.inline)
             .task {
                 await viewModel.loadProfile()
             }

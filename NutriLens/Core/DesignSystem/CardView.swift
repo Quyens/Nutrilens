@@ -3,6 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
+//  Base card container adhering strictly to the calm, organic NutriLens Design System.
 //
 
 import SwiftUI
@@ -15,7 +16,7 @@ public struct CardView<Content: View>: View {
 
     public init(
         padding: CGFloat = AppSpacing.md,
-        cornerRadius: CGFloat = AppRadius.lg,
+        cornerRadius: CGFloat = AppRadius.card,
         isSelected: Bool = false,
         @ViewBuilder content: () -> Content
     ) {
@@ -30,21 +31,21 @@ public struct CardView<Content: View>: View {
             .padding(padding)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(isSelected ? AnyShapeStyle(AppColors.cardSelectedGradient) : AnyShapeStyle(AppColors.surface))
+                    .fill(isSelected ? AppColors.surfaceSecondary : AppColors.surfacePrimary)
             )
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                     .stroke(
-                        isSelected ? AppColors.primary : AppColors.border.opacity(0.35),
-                        lineWidth: isSelected ? 2 : 1
+                        isSelected ? AppColors.sageGreen : AppColors.border,
+                        lineWidth: isSelected ? 1.5 : 1
                     )
             )
             .shadow(
-                color: isSelected ? AppColors.primary.opacity(0.12) : Color.black.opacity(0.04),
-                radius: isSelected ? 12 : 6,
+                color: Color.black.opacity(0.025),
+                radius: 4,
                 x: 0,
-                y: isSelected ? 6 : 2
+                y: 1.5
             )
     }
 }

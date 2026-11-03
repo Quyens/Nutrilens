@@ -28,6 +28,13 @@ public final class MockMealRepository: MealRepositoryProtocol, @unchecked Sendab
         return storage.filter { calendar.isDate($0.timestamp, inSameDayAs: date) }
     }
 
+    public func fetchMeals(from startDate: Date, to endDate: Date) async throws -> [MealRecord] {
+        lock.lock()
+        defer { lock.unlock() }
+        return storage.filter { $0.timestamp >= startDate && $0.timestamp <= endDate }
+            .sorted(by: { $0.timestamp < $1.timestamp })
+    }
+
     public func fetchAllMeals() async throws -> [MealRecord] {
         lock.lock()
         defer { lock.unlock() }
@@ -35,6 +42,13 @@ public final class MockMealRepository: MealRepositoryProtocol, @unchecked Sendab
     }
 
     public func saveMeal(_ meal: MealRecord) async throws {
+        lock.lock()
+        defer { lock.unlock() }
+        storage.removeAll { $0.id == meal.id }
+        storage.insert(meal, at: 0)
+    }
+
+    public func updateMeal(_ meal: MealRecord) async throws {
         lock.lock()
         defer { lock.unlock() }
         storage.removeAll { $0.id == meal.id }
