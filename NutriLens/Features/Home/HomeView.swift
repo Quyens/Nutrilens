@@ -88,16 +88,6 @@ public struct HomeView: View {
                             AIFoodScanBanner(onScan: onScanTapped)
                                 .padding(.top, -4)
 
-                            // 2.5 FOOD DISCOVERY EDITORIAL BANNER
-                            FoodDiscoveryBanner(onExplore: {
-                                if let onOpenFoodExplorer {
-                                    onOpenFoodExplorer()
-                                } else {
-                                    showingFoodExplorer = true
-                                }
-                            })
-                            .padding(.top, -2)
-
                             // 3. TODAY'S MEALS ("Bữa ăn hôm nay" — Food-First Experience)
                             TodaysMealsSection(
                                 meals: viewModel.todaysMeals,
@@ -116,7 +106,18 @@ public struct HomeView: View {
                                 onOpenDiary: onOpenDiary
                             )
 
-                            // 4. SUPPLEMENTARY WIDGETS (Water Intake & Nutrition Tip Side-by-Side)
+                            // 4. VIETNAMESE FOOD DISCOVERY CAROUSEL ("Khám phá món Việt")
+                            VietnameseFoodDiscoverySection(
+                                onOpenExplorer: {
+                                    if let onOpenFoodExplorer {
+                                        onOpenFoodExplorer()
+                                    } else {
+                                        showingFoodExplorer = true
+                                    }
+                                }
+                            )
+
+                            // 5. SUPPLEMENTARY WIDGETS (Water Intake & Nutrition Tip Side-by-Side)
                             SupplementaryWidgetsSection(
                                 summary: summary,
                                 waterLiters: viewModel.waterIntakeLiters,
@@ -125,7 +126,7 @@ public struct HomeView: View {
                                 }
                             )
 
-                            // 5. WEEKLY NUTRITION TRENDS ("Xu hướng dinh dưỡng")
+                            // 6. WEEKLY NUTRITION TRENDS ("Xu hướng dinh dưỡng")
                             WeeklyNutritionSection(
                                 days: viewModel.weeklyDays,
                                 targetCalories: viewModel.userProfile.dailyCalorieTarget,
@@ -135,7 +136,7 @@ public struct HomeView: View {
                     }
                     .padding(.horizontal, 18)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 6)
+                    .padding(.top, 52)
                     .padding(.bottom, 160) // Extra generous clearance so weekly chart never touches tab bar
                 }
             }
@@ -294,58 +295,162 @@ private struct BrandHeader: View {
     }
 }
 
-// MARK: - 2.5 FOOD DISCOVERY BANNER ("Khám phá 35+ món Việt")
-private struct FoodDiscoveryBanner: View {
-    let onExplore: () -> Void
+// MARK: - 4. VIETNAMESE FOOD DISCOVERY CAROUSEL ("Khám phá ẩm thực Việt")
+private struct VietnameseFoodDiscoverySection: View {
+    let onOpenExplorer: () -> Void
+
+    private let featuredDishes: [(dish: VietnameseDishProfile, assetImage: String?)] = {
+        let all = VietnameseNutritionDatabase.dishes
+        var items: [(dish: VietnameseDishProfile, assetImage: String?)] = []
+        if let pho = all.first(where: { $0.id.contains("pho") || $0.slug.contains("pho") }) {
+            items.append((pho, "pho_photo"))
+        }
+        if let bunCha = all.first(where: { $0.id.contains("bun_cha") || $0.slug.contains("bun-cha") }) {
+            items.append((bunCha, "bun_cha_photo"))
+        }
+        if let comTam = all.first(where: { $0.id.contains("com_tam") || $0.slug.contains("com-tam") }) {
+            items.append((comTam, "com_tam_photo"))
+        }
+        if let banhMi = all.first(where: { $0.id.contains("banh_mi") || $0.slug.contains("banh-mi") }) {
+            items.append((banhMi, "banh_mi_photo"))
+        }
+        for d in all where !items.contains(where: { $0.dish.id == d.id }) {
+            if items.count < 8 {
+                items.append((d, nil))
+            }
+        }
+        return items
+    }()
 
     var body: some View {
-        Button(action: {
-            #if canImport(UIKit)
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            #endif
-            onExplore()
-        }) {
-            HStack(spacing: 12) {
-                ZStack {
-                    Circle()
-                        .fill(AppColors.mintSurface)
-                        .frame(width: 40, height: 40)
+        VStack(alignment: .leading, spacing: 10) {
+            // Header
+            HStack(alignment: .center) {
+                HStack(spacing: 8) {
+                    ZStack {
+                        Circle()
+                            .fill(Color(red: 0.90, green: 0.96, blue: 0.92))
+                            .frame(width: 32, height: 32)
+                        Image(systemName: "fork.knife")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(AppColors.primaryGreen)
+                    }
 
-                    Image(systemName: "fork.knife")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(AppColors.primaryGreen)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("Khám phá món Việt")
+                            .font(.system(size: 16.5, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(red: 0.08, green: 0.24, blue: 0.16))
+                        Text("35+ món chuẩn Viện Dinh Dưỡng Quốc Gia")
+                            .font(.system(size: 11))
+                            .foregroundColor(Color(red: 0.35, green: 0.48, blue: 0.40))
+                    }
                 }
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Khám phá 35+ món ăn Việt Nam")
-                        .font(.system(size: 14, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(red: 0.06, green: 0.22, blue: 0.14))
+                Spacer()
 
-                    Text("Tra cứu calo, macros chuẩn Viện Dinh Dưỡng")
-                        .font(.system(size: 11, weight: .regular))
-                        .foregroundColor(Color(red: 0.30, green: 0.46, blue: 0.38))
-                }
-
-                Spacer(minLength: 4)
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .bold))
+                Button {
+                    #if canImport(UIKit)
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    #endif
+                    onOpenExplorer()
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("Tất cả")
+                            .font(.system(size: 12.5, weight: .bold))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 10, weight: .bold))
+                    }
                     .foregroundColor(AppColors.primaryGreen)
-                    .padding(8)
-                    .background(AppColors.mintSurface)
-                    .clipShape(Circle())
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(Color.white)
+                    .clipShape(Capsule())
+                    .shadow(color: Color.black.opacity(0.04), radius: 4, y: 1)
+                }
             }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 12)
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(Color(red: 0.90, green: 0.94, blue: 0.91), lineWidth: 1)
-            )
-            .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+            .padding(.horizontal, 2)
+
+            // Horizontal Carousel of Dish Cards
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(featuredDishes, id: \.dish.id) { item in
+                        Button {
+                            #if canImport(UIKit)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            #endif
+                            onOpenExplorer()
+                        } label: {
+                            VStack(alignment: .leading, spacing: 7) {
+                                // Image Thumbnail
+                                ZStack(alignment: .topTrailing) {
+                                    if let assetName = item.assetImage {
+                                        Image(assetName)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 140, height: 95)
+                                            .clipped()
+                                    } else {
+                                        ZStack {
+                                            LinearGradient(
+                                                colors: [Color(red: 0.90, green: 0.96, blue: 0.92), Color(red: 0.80, green: 0.92, blue: 0.85)],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                            Image(systemName: "fork.knife.circle.fill")
+                                                .font(.system(size: 32))
+                                                .foregroundColor(AppColors.primaryGreen)
+                                        }
+                                        .frame(width: 140, height: 95)
+                                    }
+
+                                    // Grams Tag
+                                    Text("\(Int(item.dish.standardServingGrams))g")
+                                        .font(.system(size: 9.5, weight: .bold))
+                                        .foregroundColor(Color(red: 0.08, green: 0.24, blue: 0.16))
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 3)
+                                        .background(Color.white.opacity(0.92))
+                                        .clipShape(Capsule())
+                                        .padding(6)
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+
+                                // Dish Name & Nutrition
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(item.dish.vietnameseName)
+                                        .font(.system(size: 13, weight: .bold))
+                                        .foregroundColor(Color(red: 0.08, green: 0.18, blue: 0.12))
+                                        .lineLimit(1)
+
+                                    HStack(spacing: 4) {
+                                        Text("\(Int(item.dish.caloriesPerServing)) kcal")
+                                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                                            .foregroundColor(AppColors.primaryGreen)
+
+                                        Text("• \(Int(item.dish.proteinPerServing))g đạm")
+                                            .font(.system(size: 10))
+                                            .foregroundColor(Color(red: 0.40, green: 0.48, blue: 0.44))
+                                    }
+                                }
+                                .padding(.horizontal, 8)
+                                .padding(.bottom, 10)
+                            }
+                            .frame(width: 140)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                    .stroke(Color(red: 0.90, green: 0.93, blue: 0.91), lineWidth: 1)
+                            )
+                            .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+                .padding(.horizontal, 2)
+                .padding(.vertical, 4)
+            }
         }
-        .buttonStyle(.plain)
     }
 }
 
