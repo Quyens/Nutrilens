@@ -832,23 +832,53 @@ private struct TodaysMealsSection: View {
                 // Empty state card
                 EmptyMealsPromptCard(onQuickAddSample: onQuickAddSample)
             } else {
-                // Primary / Hero Meal Card
-                if let featuredMeal = meals.first {
-                    FeaturedFoodCard(meal: featuredMeal) {
-                        onSelectMeal(featuredMeal)
-                    }
-                }
-
-                // Additional meals logged today
-                if meals.count > 1 {
-                    VStack(spacing: AppSpacing.xs) {
-                        ForEach(meals.dropFirst()) { meal in
-                            SecondaryMealRow(meal: meal) {
+                // Horizontal Carousel of Today's Logged Meals (Fixed height, never stretches page)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 12) {
+                        ForEach(meals) { meal in
+                            FeaturedFoodCard(meal: meal) {
                                 onSelectMeal(meal)
                             }
+                            .frame(width: meals.count > 1 ? 295 : 345)
                         }
+
+                        // Shortcut to Diary
+                        Button {
+                            #if canImport(UIKit)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            #endif
+                            onOpenDiary?()
+                        } label: {
+                            VStack(spacing: 8) {
+                                ZStack {
+                                    Circle()
+                                        .fill(AppColors.mintSurface)
+                                        .frame(width: 44, height: 44)
+                                    Image(systemName: "book.pages.fill")
+                                        .font(.system(size: 18, weight: .bold))
+                                        .foregroundColor(AppColors.primaryGreen)
+                                }
+
+                                Text("Xem chi tiết\nNhật ký")
+                                    .font(.system(size: 12, weight: .bold))
+                                    .foregroundColor(Color(red: 0.08, green: 0.22, blue: 0.15))
+                                    .multilineTextAlignment(.center)
+
+                                Text("\(meals.count) món hôm nay")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(Color(red: 0.35, green: 0.48, blue: 0.40))
+                            }
+                            .frame(width: 120, height: 182)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                    .stroke(Color(red: 0.88, green: 0.93, blue: 0.90), style: StrokeStyle(lineWidth: 1.5, dash: [4, 4]))
+                            )
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .padding(.top, 2)
+                    .padding(.vertical, 4)
                 }
             }
         }
@@ -868,12 +898,42 @@ private struct FeaturedFoodCard: View {
 
     private var dishTitle: String {
         let title = meal.items.map(\.vietnameseName).joined(separator: ", ")
-        return title.isEmpty ? "Cơm Tấm Sườn Nướng" : title
+        return title.isEmpty ? "Món ăn dinh dưỡng" : title
+    }
+
+    private var mealTypeEmoji: String {
+        switch meal.mealType {
+        case .breakfast: return "🌅"
+        case .lunch: return "☀️"
+        case .dinner: return "🌙"
+        case .snack: return "🍎"
+        }
+    }
+
+    private var mealBadgeText: String {
+        "\(mealTypeEmoji) \(meal.mealType.vietnameseName) • \(timeString)"
     }
 
     private var loadedImage: UIImage? {
         guard let path = meal.imagePath, !path.isEmpty else { return nil }
         return UIImage(contentsOfFile: path)
+    }
+
+    private var assetImageForMeal: UIImage? {
+        if let path = meal.imagePath, let img = UIImage(named: path) {
+            return img
+        }
+        let lower = dishTitle.lowercased()
+        if lower.contains("phở") || lower.contains("pho") {
+            return UIImage(named: "pho_photo")
+        } else if lower.contains("bún chả") || lower.contains("bun cha") {
+            return UIImage(named: "bun_cha_photo")
+        } else if lower.contains("bánh mì") || lower.contains("banh mi") {
+            return UIImage(named: "banh_mi_photo")
+        } else if lower.contains("cơm tấm") || lower.contains("com tam") {
+            return UIImage(named: "com_tam_photo")
+        }
+        return UIImage(named: "com_tam_photo")
     }
 
     var body: some View {
@@ -887,7 +947,7 @@ private struct FeaturedFoodCard: View {
                             .scaledToFill()
                             .frame(width: geo.size.width, height: 182)
                             .clipped()
-                    } else if let assetImage = UIImage(named: "com_tam_photo") {
+                    } else if let assetImage = assetImageForMeal {
                         Image(uiImage: assetImage)
                             .resizable()
                             .scaledToFill()
@@ -909,24 +969,18 @@ private struct FeaturedFoodCard: View {
                 }
                 .frame(height: 182)
 
-                // Top-Left Floating Badge: "☀️ Trưa • 12:45"
+                // Top-Left Floating Badge: Dynamic Meal Type & Time
                 VStack {
                     HStack {
-                        HStack(spacing: 5) {
-                            Image(systemName: "sun.max.fill")
-                                .font(.system(size: 11, weight: .bold))
-                                .foregroundColor(Color(red: 0.98, green: 0.75, blue: 0.15))
-
-                            Text("Trưa • 12:45")
-                                .font(.system(size: 11.5, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(Color.black.opacity(0.60))
-                        .clipShape(Capsule())
-                        .padding(.leading, 12)
-                        .padding(.top, 12)
+                        Text(mealBadgeText)
+                            .font(.system(size: 11.5, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(Color.black.opacity(0.60))
+                            .clipShape(Capsule())
+                            .padding(.leading, 12)
+                            .padding(.top, 12)
 
                         Spacer()
                     }
@@ -948,7 +1002,7 @@ private struct FeaturedFoodCard: View {
 
                     Spacer()
 
-                    // Circular White/Light-Gray Arrow Button (Matching Reference)
+                    // Circular White/Light-Gray Arrow Button
                     ZStack {
                         Circle()
                             .fill(Color(white: 0.92))
@@ -960,18 +1014,18 @@ private struct FeaturedFoodCard: View {
                     }
                 }
                 .padding(.horizontal, 14)
-                .padding(.vertical, 12)
+                .padding(.vertical, 10)
                 .background(
                     LinearGradient(
-                        colors: [Color.clear, Color.black.opacity(0.80)],
+                        colors: [Color.clear, Color.black.opacity(0.78)],
                         startPoint: .top,
                         endPoint: .bottom
                     )
                 )
             }
-            .frame(height: 195)
+            .frame(height: 182)
             .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-            .shadow(color: Color.black.opacity(0.08), radius: 10, x: 0, y: 4)
+            .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 3)
         }
         .buttonStyle(.plain)
     }

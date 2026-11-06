@@ -58,12 +58,25 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
      - Băng chuyền cuộn ngang các món ăn truyền thống nổi tiếng với hình ảnh chụp thực tế sắc nét (*Phở Bò Tái Nạm, Bún Chả Hà Nội, Cơm Tấm Sườn Bì, Bánh Mì Thịt Nướng...*), định lượng gram, lượng calo và đa lượng đạm. Chạm vào bất kỳ thẻ món nào để xem chi tiết dinh dưỡng.
   3. **Khắc phục lỗi Dynamic Island:** Tăng khoảng đệm đỉnh trang chủ lên 52 pt, giúp logo thương hiệu NutriLens và các nút Tìm kiếm, Thông báo, Avatar nằm an toàn tuyệt đối bên dưới Dynamic Island.
 
+### 1.6 Thiết kế lại "Bữa ăn hôm nay" trên Trang chủ ([`HomeView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Home/HomeView.swift#L830))
+- **Vấn đề trước đây:** Mỗi khi người dùng ghi nhận thêm một món ăn mới trong ngày, danh sách các món ăn lại tự động chèn thêm hàng dọc (`SecondaryMealRow`) nối tiếp nhau vô tận xuống phía dưới, làm màn hình trang chủ bị kéo dài quá mức, đẩy các thành phần quan trọng (Khám phá món Việt, Mục tiêu nước, Xu hướng tuần) xuống sâu.
+- **Giải pháp thiết kế mới hoàn thiện:**
+  1. **Chuyển thành Băng chuyền cuộn ngang cố định chiều cao (Horizontal Carousel - 182 pt):**
+     - Mọi món ăn ghi nhận trong ngày (`meals`) đều được trình bày dưới dạng thẻ ảnh tràn viền cao cấp (`FeaturedFoodCard`), xếp dàn ngang với khoảng cách cân đối 12 pt.
+     - Dù người dùng ghi nhận 1 món, 3 món hay 10 món thì chiều cao của khu vực này **luôn cố định ở 182 pt**, hoàn toàn không bao giờ làm giãn hay kéo dài trang chủ xuống dưới.
+  2. **Thẻ phím tắt nhanh "Xem chi tiết Nhật ký":**
+     - Ở cuối danh sách cuộn ngang, xuất hiện thẻ viên nang viền nét đứt tinh tế với huy hiệu `X món hôm nay` và biểu tượng sổ nhật ký, bấm vào sẽ chuyển thẳng đến tab Nhật ký để tra cứu toàn bộ dòng thời gian chi tiết.
+  3. **Huy hiệu bữa ăn & thời gian thông minh:**
+     - Tự động nhận diện biểu tượng bữa ăn (`🌅 Sáng`, `☀️ Trưa`, `🌙 Tối`, `🍎 Phụ`) cùng giờ ghi nhận thực tế và định lượng đạm, calo.
+
 ---
 
-## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (11 Màn hình Hoàn chỉnh)
+## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (12 Màn hình Hoàn chỉnh)
 
 ````carousel
-![Trang Chủ Đã Thiết Kế Lại](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/home_redesign.png)
+![Trang Chủ Đã Thiết Kế Lại Carousel Ngang Bữa Ăn](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/home_carousel_verified.png)
+<!-- slide -->
+![Trang Chủ Bố Cục Mới](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/home_redesign.png)
 <!-- slide -->
 ![Nhật Ký Bữa Ăn Nền Lá Rực Rỡ](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/meal_history_redesign.png)
 <!-- slide -->
@@ -94,7 +107,8 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
 
 | Tệp nguồn | Loại thay đổi | Mô tả |
 | :--- | :--- | :--- |
-| [`NutriLens/Features/Profile/ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift) | Sửa đổi | Thay toàn bộ `.sheet` bằng `.fullScreenCover`, xây dựng mới `PersonalInfoView`, `PreferencesView`, `AboutView` với nội dung đầy đủ |
+| [`NutriLens/Features/Home/HomeView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Home/HomeView.swift) | Sửa đổi | Chuyển `TodaysMealsSection` thành horizontal carousel cố định 182pt, dời `VietnameseFoodDiscoverySection` xuống dưới, sửa padding Dynamic Island |
+| [`NutriLens/Features/Profile/ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift) | Sửa đổi | Thay toàn bộ `.sheet` bằng `.fullScreenCover`, thêm `unauthenticatedHeroCard`, xây dựng mới `PersonalInfoView`, `PreferencesView`, `AboutView` với nội dung đầy đủ |
 | [`NutriLens/Features/Settings/SettingsView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsView.swift) | Sửa đổi | Nâng cấp toàn diện thành trang Botanical độc lập, bỏ Form xám mặc định |
 | [`NutriLens/App/AppRouter.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/App/AppRouter.swift) | Sửa đổi | Chuyển `SettingsView` và `AuthCoordinatorView` sang `.fullScreenCover` |
 | [`NutriLens/Features/Authentication/LoginView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Authentication/LoginView.swift) | Sửa đổi | Thêm đầy đủ Apple Sign-In, Guest mode, autofill demo, Keychain badge |
