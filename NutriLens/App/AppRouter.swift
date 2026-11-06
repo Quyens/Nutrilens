@@ -150,7 +150,7 @@ public struct MainTabView: View {
                 onCancel: { isPresentingManualLog = false }
             )
         }
-        .sheet(isPresented: $isPresentingSettings) {
+        .fullScreenCover(isPresented: $isPresentingSettings) {
             SettingsView(onOpenAccount: {
                 isPresentingAuth = true
             })
@@ -181,6 +181,8 @@ public struct MainTabView: View {
             } else if ProcessInfo.processInfo.arguments.contains("-startAuthLogin") {
                 authInitialStep = .login
                 isPresentingAuth = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startSettings") {
+                isPresentingSettings = true
             }
         }
     }

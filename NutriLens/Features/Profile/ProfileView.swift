@@ -104,18 +104,18 @@ public struct ProfileView: View {
                     showingNutritionGoalsSheet = false
                 }
             }
-            .sheet(isPresented: $showingPersonalInfoSheet) {
-                PersonalInfoSheet(profile: viewModel.profile) {
+            .fullScreenCover(isPresented: $showingPersonalInfoSheet) {
+                PersonalInfoView(profile: viewModel.profile) {
                     showingPersonalInfoSheet = false
                 }
             }
-            .sheet(isPresented: $showingPreferencesSheet) {
-                PreferencesSheet {
+            .fullScreenCover(isPresented: $showingPreferencesSheet) {
+                PreferencesView {
                     showingPreferencesSheet = false
                 }
             }
-            .sheet(isPresented: $showingAboutSheet) {
-                AboutSheet {
+            .fullScreenCover(isPresented: $showingAboutSheet) {
+                AboutView {
                     showingAboutSheet = false
                 }
             }
@@ -123,6 +123,12 @@ public struct ProfileView: View {
                 await viewModel.loadProfile()
                 if ProcessInfo.processInfo.arguments.contains("-startNutritionGoals") {
                     showingNutritionGoalsSheet = true
+                } else if ProcessInfo.processInfo.arguments.contains("-startPersonalInfo") {
+                    showingPersonalInfoSheet = true
+                } else if ProcessInfo.processInfo.arguments.contains("-startPreferences") {
+                    showingPreferencesSheet = true
+                } else if ProcessInfo.processInfo.arguments.contains("-startAbout") {
+                    showingAboutSheet = true
                 }
             }
         }
@@ -535,167 +541,688 @@ private struct MacroMiniPill: View {
     }
 }
 
-// MARK: - Supplementary Sheets
+// MARK: - Supplementary Full-Screen Pages
 
-private struct PersonalInfoSheet: View {
+private struct PersonalInfoView: View {
     let profile: UserProfile
     let onDismiss: () -> Void
 
-    var body: some View {
-        NavigationStack {
-            ZStack {
-                Image("botanical_wallpaper")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-
-                VStack(spacing: 16) {
-                    CardView {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Thông tin thể trạng")
-                                .font(AppTypography.headline)
-                                .foregroundColor(AppColors.textPrimary)
-
-                            HStack {
-                                Text("Tên hiển thị")
-                                    .font(AppTypography.subheadline)
-                                    .foregroundColor(AppColors.textSecondary)
-                                Spacer()
-                                Text(profile.name)
-                                    .font(AppTypography.bodyBold)
-                                    .foregroundColor(AppColors.textPrimary)
-                            }
-                            Divider()
-                            HStack {
-                                Text("Mục tiêu dinh dưỡng")
-                                    .font(AppTypography.subheadline)
-                                    .foregroundColor(AppColors.textSecondary)
-                                Spacer()
-                                Text(profile.goal.rawValue)
-                                    .font(AppTypography.captionBold)
-                                    .foregroundColor(AppColors.primary)
-                            }
-                        }
-                    }
-
-                    Spacer()
-                }
-                .padding(AppSpacing.screenHorizontal)
-                .padding(.top, 16)
-            }
-            .navigationTitle("Thông tin cá nhân")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Xong", action: onDismiss)
-                        .foregroundColor(AppColors.primaryDark)
-                }
-            }
+    private func localizedGoal(_ goal: DietaryGoal) -> String {
+        switch goal {
+        case .maintainWeight: return "Duy trì cân nặng"
+        case .loseWeight: return "Giảm cân an toàn"
+        case .gainMuscle: return "Tăng cơ săn chắc"
+        case .balancedNutrition: return "Ăn uống lành mạnh"
         }
     }
-}
-
-private struct PreferencesSheet: View {
-    let onDismiss: () -> Void
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Image("botanical_wallpaper")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
+        ZStack(alignment: .top) {
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
 
-                VStack(spacing: 16) {
-                    CardView {
-                        VStack(alignment: .leading, spacing: 12) {
-                            HStack(spacing: 8) {
-                                Image(systemName: "fork.knife.circle.fill")
-                                    .foregroundColor(AppColors.primary)
-                                Text("Thực đơn & Dị ứng thực phẩm")
-                                    .font(AppTypography.headline)
-                                    .foregroundColor(AppColors.textPrimary)
-                            }
+            VStack(spacing: 0) {
+                // Top Bar (Safe below Dynamic Island)
+                HStack {
+                    HStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 38, height: 38)
+                                .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                            Image(systemName: "person.crop.circle.fill")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.primary)
+                        }
 
-                            Text("NutriLens ưu tiên nhận diện món ăn Việt Nam truyền thống và hiện đại. Bạn có thể thiết lập cảnh báo dị ứng hoặc chế độ ăn đặc biệt trong các bản cập nhật sắp tới.")
-                                .font(AppTypography.body)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("Thông tin cá nhân")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+                            Text("Chỉ số thể trạng & hồ sơ sức khỏe")
+                                .font(.system(size: 11))
                                 .foregroundColor(AppColors.textSecondary)
-                                .lineSpacing(3)
                         }
                     }
 
                     Spacer()
+
+                    Button(action: onDismiss) {
+                        Text("Xong")
+                            .font(AppTypography.bodyBold)
+                            .foregroundColor(AppColors.forestGreen)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                    }
                 }
-                .padding(AppSpacing.screenHorizontal)
-                .padding(.top, 16)
-            }
-            .navigationTitle("Sở thích dinh dưỡng")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Xong", action: onDismiss)
-                        .foregroundColor(AppColors.primaryDark)
+                .padding(.horizontal, AppSpacing.screenHorizontal)
+                .padding(.top, 54)
+                .padding(.bottom, 8)
+
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        // 1. Hero Identity Card
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 64, height: 64)
+                                    .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                                Circle()
+                                    .stroke(AppColors.primary.opacity(0.2), lineWidth: 2)
+                                    .frame(width: 64, height: 64)
+                                Image(systemName: "person.fill")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(AppColors.primary)
+                            }
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(profile.name)
+                                    .font(.system(size: 20, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+
+                                HStack(spacing: 6) {
+                                    HStack(spacing: 4) {
+                                        Circle()
+                                            .fill(AppColors.primary)
+                                            .frame(width: 6, height: 6)
+                                        Text("Thành viên NutriLens")
+                                            .font(.system(size: 11, weight: .bold))
+                                            .foregroundColor(AppColors.primaryDark)
+                                    }
+                                    .padding(.horizontal, 9)
+                                    .padding(.vertical, 4)
+                                    .background(AppColors.surfaceSecondary)
+                                    .clipShape(Capsule())
+                                }
+                            }
+
+                            Spacer()
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .fill(Color.white)
+                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+
+                        // 2. Biometrics Card
+                        VStack(alignment: .leading, spacing: 14) {
+                            HStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .fill(AppColors.surfaceSecondary)
+                                        .frame(width: 32, height: 32)
+                                    Image(systemName: "figure.walk")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(AppColors.primary)
+                                }
+                                Text("Chỉ số thể trạng cơ bản")
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                Spacer()
+                            }
+
+                            HStack(spacing: 12) {
+                                MetricBox(title: "Chiều cao", val: "170 cm")
+                                MetricBox(title: "Cân nặng", val: "65 kg")
+                                MetricBox(title: "Chỉ số BMI", val: "22.5", sub: "Bình thường", color: AppColors.primary)
+                            }
+
+                            Divider()
+
+                            HStack {
+                                Text("Khoảng cân nặng khuyến nghị")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(AppColors.textSecondary)
+                                Spacer()
+                                Text("58 – 72 kg")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .fill(Color.white)
+                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+
+                        // 3. Nutrition Target Card
+                        VStack(alignment: .leading, spacing: 14) {
+                            HStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .fill(AppColors.surfaceSecondary)
+                                        .frame(width: 32, height: 32)
+                                    Image(systemName: "target")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(AppColors.primary)
+                                }
+                                Text("Kế hoạch dinh dưỡng")
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                Spacer()
+                            }
+
+                            VStack(spacing: 10) {
+                                InfoRow(label: "Mục tiêu thể trạng", value: localizedGoal(profile.goal), isAccent: true)
+                                Divider()
+                                InfoRow(label: "Ngân sách calo mỗi ngày", value: "\(Int(profile.dailyCalorieTarget)) kcal / ngày")
+                                Divider()
+                                InfoRow(label: "Mục tiêu nước uống", value: "2.000 ml / ngày")
+                                Divider()
+                                InfoRow(label: "Phân bổ đa lượng", value: "Đạm \(Int(profile.dailyProteinTargetGrams))g • Carb \(Int(profile.dailyCarbTargetGrams))g • Béo \(Int(profile.dailyFatTargetGrams))g")
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .fill(Color.white)
+                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+
+                        // 4. Privacy & Security Callout
+                        HStack(alignment: .top, spacing: 12) {
+                            ZStack {
+                                Circle()
+                                    .fill(AppColors.surfaceSecondary)
+                                    .frame(width: 32, height: 32)
+                                Image(systemName: "lock.shield.fill")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(AppColors.primary)
+                            }
+
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Lưu trữ bảo mật trên thiết bị")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                Text("Toàn bộ thông tin thể trạng và lịch sử calo được lưu trữ cục bộ trong SwiftData trên iPhone, không chia sẻ hay tải lên bất kỳ máy chủ nào.")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(AppColors.textSecondary)
+                                    .lineSpacing(2)
+                            }
+                        }
+                        .padding(14)
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(AppColors.primary.opacity(0.18), lineWidth: 1))
+                    }
+                    .padding(.horizontal, AppSpacing.screenHorizontal)
+                    .padding(.top, 4)
+                    .padding(.bottom, 40)
                 }
             }
         }
     }
 }
 
-private struct AboutSheet: View {
+private struct PreferencesView: View {
+    let onDismiss: () -> Void
+
+    @State private var selectedStyle: String = "vietnamese"
+    @State private var selectedAllergens: Set<String> = []
+
+    private let styles: [(id: String, name: String, desc: String, icon: String)] = [
+        ("vietnamese", "Món Việt 3 miền (Mặc định)", "Ưu tiên ẩm thực truyền thống & đặc sản địa phương", "fork.knife"),
+        ("vegetarian", "Ăn chay / Thuần chay", "Tự động gợi ý các món chay dinh dưỡng", "leaf.fill"),
+        ("lowcarb", "Keto / Low-Carb", "Hạn chế tinh bột, tập trung đạm & chất béo tốt", "bolt.fill"),
+        ("eatclean", "Eat Clean / Thanh đạm", "Ưu tiên thực phẩm nguyên bản, ít gia vị dầu mỡ", "sparkles")
+    ]
+
+    private let allergens: [(id: String, name: String, icon: String)] = [
+        ("seafood", "Hải sản (Tôm, Cua, Mực)", "fish.fill"),
+        ("peanut", "Đậu phộng / Lạc", "circle.grid.2x1.fill"),
+        ("egg", "Trứng gia cầm", "oval.fill"),
+        ("dairy", "Sữa & Lactose", "cup.and.saucer.fill"),
+        ("gluten", "Gluten / Bột mì", "allergens"),
+        ("chili", "Ớt / Cay nồng", "flame.fill")
+    ]
+
+    var body: some View {
+        ZStack(alignment: .top) {
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+
+            VStack(spacing: 0) {
+                // Top Bar
+                HStack {
+                    HStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 38, height: 38)
+                                .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                            Image(systemName: "fork.knife.circle.fill")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.primary)
+                        }
+
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("Sở thích dinh dưỡng")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+                            Text("Khẩu vị & Cảnh báo dị ứng")
+                                .font(.system(size: 11))
+                                .foregroundColor(AppColors.textSecondary)
+                        }
+                    }
+
+                    Spacer()
+
+                    Button(action: onDismiss) {
+                        Text("Xong")
+                            .font(AppTypography.bodyBold)
+                            .foregroundColor(AppColors.forestGreen)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                    }
+                }
+                .padding(.horizontal, AppSpacing.screenHorizontal)
+                .padding(.top, 54)
+                .padding(.bottom, 8)
+
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        // 1. Dietary Style Card
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Trường phái ẩm thực")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+
+                            VStack(spacing: 8) {
+                                ForEach(styles, id: \.id) { item in
+                                    Button {
+                                        selectedStyle = item.id
+                                    } label: {
+                                        HStack(spacing: 12) {
+                                            ZStack {
+                                                Circle()
+                                                    .stroke(selectedStyle == item.id ? AppColors.primary : AppColors.border, lineWidth: 2)
+                                                    .frame(width: 20, height: 20)
+                                                if selectedStyle == item.id {
+                                                    Circle()
+                                                        .fill(AppColors.primary)
+                                                        .frame(width: 10, height: 10)
+                                                }
+                                            }
+
+                                            VStack(alignment: .leading, spacing: 2) {
+                                                Text(item.name)
+                                                    .font(AppTypography.bodyBold)
+                                                    .foregroundColor(AppColors.textPrimary)
+                                                Text(item.desc)
+                                                    .font(.system(size: 11))
+                                                    .foregroundColor(AppColors.textSecondary)
+                                            }
+
+                                            Spacer()
+                                        }
+                                        .padding(12)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                                .fill(selectedStyle == item.id ? AppColors.surfaceSecondary : Color.white)
+                                        )
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                                .stroke(selectedStyle == item.id ? AppColors.primary : AppColors.border, lineWidth: 1)
+                                        )
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .fill(Color.white)
+                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+
+                        // 2. Allergen Warnings Card
+                        VStack(alignment: .leading, spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Cảnh báo dị ứng thực phẩm")
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                Text("NutriLens sẽ hiển thị cảnh báo khi nhận diện món ăn có chứa các thành phần:")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(AppColors.textSecondary)
+                            }
+
+                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
+                                ForEach(allergens, id: \.id) { allergen in
+                                    let isSelected = selectedAllergens.contains(allergen.id)
+                                    Button {
+                                        if isSelected {
+                                            selectedAllergens.remove(allergen.id)
+                                        } else {
+                                            selectedAllergens.insert(allergen.id)
+                                        }
+                                    } label: {
+                                        HStack(spacing: 8) {
+                                            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                                                .font(.system(size: 15))
+                                                .foregroundColor(isSelected ? AppColors.primary : AppColors.textTertiary)
+                                            Text(allergen.name)
+                                                .font(.system(size: 12, weight: .semibold))
+                                                .foregroundColor(isSelected ? AppColors.primaryDark : AppColors.textPrimary)
+                                                .lineLimit(1)
+                                            Spacer()
+                                        }
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 10)
+                                        .background(isSelected ? AppColors.surfaceSecondary : Color.white)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                        .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(isSelected ? AppColors.primary : AppColors.border, lineWidth: 1))
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .fill(Color.white)
+                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+
+                        // 3. AI Recognition Optimization Card
+                        HStack(alignment: .top, spacing: 12) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .fill(AppColors.surfaceSecondary)
+                                    .frame(width: 36, height: 36)
+                                Image(systemName: "sparkles")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(AppColors.primary)
+                            }
+
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Tối ưu hóa ẩm thực Việt")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                Text("Hệ thống AI on-device tự động ưu tiên nhận diện 5.000+ món ăn truyền thống 3 miền, tính toán calo chuẩn xác theo nguyên liệu và khẩu phần thực tế.")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(AppColors.textSecondary)
+                                    .lineSpacing(2)
+                            }
+                        }
+                        .padding(14)
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+                    }
+                    .padding(.horizontal, AppSpacing.screenHorizontal)
+                    .padding(.top, 4)
+                    .padding(.bottom, 40)
+                }
+            }
+        }
+    }
+}
+
+private struct AboutView: View {
     let onDismiss: () -> Void
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Image("botanical_wallpaper")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
+        ZStack(alignment: .top) {
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
 
-                VStack(spacing: 20) {
-                    VStack(spacing: 8) {
-                        Image(systemName: "leaf.circle.fill")
-                            .font(.system(size: 64))
-                            .foregroundColor(AppColors.primary)
+            VStack(spacing: 0) {
+                // Top Bar
+                HStack {
+                    HStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 38, height: 38)
+                                .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                            Image(systemName: "leaf.fill")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.primary)
+                        }
 
-                        Text("NutriLens")
-                            .font(AppTypography.title)
-                            .foregroundColor(AppColors.textPrimary)
-
-                        Text("AI Dinh Dưỡng Món Việt • On-Device")
-                            .font(AppTypography.captionBold)
-                            .foregroundColor(AppColors.primaryDark)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("Giới thiệu")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+                            Text("Về NutriLens AI 1.0")
+                                .font(.system(size: 11))
+                                .foregroundColor(AppColors.textSecondary)
+                        }
                     }
-                    .padding(.top, 24)
 
-                    CardView {
+                    Spacer()
+
+                    Button(action: onDismiss) {
+                        Text("Đóng")
+                            .font(AppTypography.bodyBold)
+                            .foregroundColor(AppColors.forestGreen)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                    }
+                }
+                .padding(.horizontal, AppSpacing.screenHorizontal)
+                .padding(.top, 54)
+                .padding(.bottom, 8)
+
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        // 1. Hero Brand Emblem
+                        VStack(spacing: 10) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 80, height: 80)
+                                    .shadow(color: Color.black.opacity(0.08), radius: 10, y: 3)
+                                Circle()
+                                    .stroke(AppColors.primary.opacity(0.25), lineWidth: 2)
+                                    .frame(width: 80, height: 80)
+
+                                Image(systemName: "leaf.fill")
+                                    .font(.system(size: 40, weight: .bold))
+                                    .foregroundStyle(
+                                        LinearGradient(
+                                            colors: [Color(hex: "2EA66B"), Color(hex: "1F7A4D")],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .rotationEffect(.degrees(12))
+                            }
+
+                            VStack(spacing: 4) {
+                                Text("NutriLens")
+                                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                                    .foregroundColor(AppColors.textPrimary)
+
+                                Text("AI Dinh Dưỡng Món Việt • On-Device")
+                                    .font(AppTypography.subheadlineBold)
+                                    .foregroundColor(AppColors.primaryDark)
+
+                                Text("Phiên bản 1.0.0 (Build 2026.11)")
+                                    .font(.system(size: 11, weight: .medium))
+                                    .foregroundColor(AppColors.textSecondary)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 4)
+                                    .background(AppColors.surfaceSecondary)
+                                    .clipShape(Capsule())
+                                    .padding(.top, 2)
+                            }
+                        }
+                        .padding(.top, 6)
+
+                        // 2. Mission Statement Card
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Về ứng dụng")
-                                .font(AppTypography.headline)
+                            Text("Sứ mệnh NutriLens")
+                                .font(.system(size: 15, weight: .bold))
                                 .foregroundColor(AppColors.textPrimary)
 
-                            Text("NutriLens kết hợp công nghệ Trí tuệ Nhân tạo on-device (Core ML) và cơ sở dữ liệu dinh dưỡng món ăn Việt Nam độc quyền nhằm giúp người dùng theo dõi calo, cân bằng đa lượng và xây dựng lối sống lành mạnh bền vững.")
+                            Text("NutriLens kết hợp công nghệ Trí tuệ Nhân tạo thị giác máy tính on-device (Apple Vision / Core ML) và cơ sở dữ liệu ẩm thực Việt Nam độc quyền nhằm giúp người dùng theo dõi calo, cân bằng dưỡng chất và xây dựng lối sống lành mạnh bền vững mà không cần gửi ảnh lên đám mây.")
                                 .font(AppTypography.body)
                                 .foregroundColor(AppColors.textSecondary)
                                 .lineSpacing(4)
                         }
-                    }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .fill(Color.white)
+                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
 
-                    Spacer()
+                        // 3. Technology Pillars Card
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text("Trụ cột công nghệ cốt lõi")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+
+                            VStack(spacing: 12) {
+                                PillarRow(icon: "bolt.fill", title: "AI On-Device Siêu Tốc", desc: "Nhận diện tức thì dưới 0.3s trên chip Apple Neural Engine")
+                                Divider()
+                                PillarRow(icon: "fork.knife", title: "5.000+ Món Việt", desc: "Thực đơn đa dạng 3 miền từ phở, bún đến cơm tấm và món kho")
+                                Divider()
+                                PillarRow(icon: "lock.shield.fill", title: "Quyền Riêng Tư 100%", desc: "Ảnh chụp và nhật ký lưu an toàn trong SwiftData nội bộ của máy")
+                                Divider()
+                                PillarRow(icon: "chart.pie.fill", title: "Đa Lượng Khoa Học", desc: "Tự động phân bổ tỷ lệ Đạm - Carb - Béo theo khuyến nghị chuẩn")
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .fill(Color.white)
+                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+                        )
+                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+
+                        // 4. Team & Tech Info Card
+                        VStack(spacing: 6) {
+                            Text("Phát triển bởi Đội ngũ NutriLens")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+                            Text("SwiftData • SwiftUI • Core ML • Clean Architecture")
+                                .font(.system(size: 11))
+                                .foregroundColor(AppColors.textSecondary)
+                            Text("© 2026 NutriLens. Mọi quyền được bảo lưu.")
+                                .font(.system(size: 10))
+                                .foregroundColor(AppColors.textTertiary)
+                        }
+                        .padding(14)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white.opacity(0.8))
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .padding(.bottom, 40)
+                    }
+                    .padding(.horizontal, AppSpacing.screenHorizontal)
+                    .padding(.top, 4)
                 }
-                .padding(AppSpacing.screenHorizontal)
             }
-            .navigationTitle("Giới thiệu")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Đóng", action: onDismiss)
-                        .foregroundColor(AppColors.primaryDark)
-                }
+        }
+    }
+}
+
+// MARK: - Helper Subviews
+
+private struct MetricBox: View {
+    let title: String
+    let val: String
+    var sub: String? = nil
+    var color: Color = AppColors.textPrimary
+
+    var body: some View {
+        VStack(spacing: 4) {
+            Text(title)
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(AppColors.textSecondary)
+            Text(val)
+                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .foregroundColor(color)
+            if let sub {
+                Text(sub)
+                    .font(.system(size: 9, weight: .bold))
+                    .foregroundColor(AppColors.primaryDark)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(AppColors.surfaceSecondary)
+                    .clipShape(Capsule())
             }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(10)
+        .background(AppColors.surfaceSecondary.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+}
+
+private struct InfoRow: View {
+    let label: String
+    let value: String
+    var isAccent: Bool = false
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 13))
+                .foregroundColor(AppColors.textSecondary)
+            Spacer()
+            Text(value)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(isAccent ? AppColors.primary : AppColors.textPrimary)
+        }
+    }
+}
+
+private struct PillarRow: View {
+    let icon: String
+    let title: String
+    let desc: String
+
+    var body: some View {
+        HStack(spacing: 12) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(AppColors.surfaceSecondary)
+                    .frame(width: 32, height: 32)
+                Image(systemName: icon)
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(AppColors.primary)
+            }
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(AppColors.textPrimary)
+                Text(desc)
+                    .font(.system(size: 11))
+                    .foregroundColor(AppColors.textSecondary)
+            }
+
+            Spacer()
         }
     }
 }
