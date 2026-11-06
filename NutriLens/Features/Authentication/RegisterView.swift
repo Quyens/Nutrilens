@@ -3,7 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
-//  Registration screen with name, email, password strength feedback, and confirm password checks.
+//  Fresh Premium Botanical Registration screen.
 //
 
 import SwiftUI
@@ -15,28 +15,21 @@ public struct RegisterView: View {
         self.viewModel = viewModel
     }
 
-    private var hasMinimumLength: Bool {
-        viewModel.password.count >= 8
-    }
-
-    private var hasLettersAndNumbers: Bool {
-        let hasLetters = viewModel.password.range(of: #"[A-Za-z]"#, options: .regularExpression) != nil
-        let hasNumbers = viewModel.password.range(of: #"[0-9]"#, options: .regularExpression) != nil
-        return hasLetters && hasNumbers
-    }
-
-    private var passwordsMatch: Bool {
-        !viewModel.password.isEmpty && viewModel.password == viewModel.confirmPassword
-    }
-
     public var body: some View {
         ZStack {
-            AppColors.background.ignoresSafeArea()
-            AppColors.subtleGlowGradient.ignoresSafeArea()
+            // Background
+            AppColors.canvasBackground.ignoresSafeArea()
+
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .opacity(0.10)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: AppSpacing.lg) {
-                    // MARK: - Header
+                    // MARK: - Navigation Header
                     HStack {
                         Button {
                             viewModel.clearFeedback()
@@ -44,31 +37,35 @@ public struct RegisterView: View {
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "chevron.left")
-                                    .font(.system(size: 16, weight: .semibold))
+                                    .font(.system(size: 15, weight: .semibold))
                                 Text("Quay lại")
-                                    .font(AppTypography.body)
+                                    .font(AppTypography.bodyBold)
                             }
-                            .foregroundColor(AppColors.primaryDark)
+                            .foregroundColor(AppColors.forestGreen)
                         }
-                        .accessibilityLabel("Quay lại màn hình chào mừng")
+                        .accessibilityLabel("Quay lại")
 
                         Spacer()
+
+                        Image(systemName: "leaf.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(AppColors.primary)
                     }
-                    .padding(.top, AppSpacing.sm)
+                    .padding(.top, AppSpacing.xs)
 
                     // Title
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Bắt đầu cùng NutriLens")
+                        Text("Tạo tài khoản mới")
                             .font(AppTypography.largeTitle)
                             .foregroundColor(AppColors.textPrimary)
 
-                        Text("Tạo tài khoản để cá nhân hóa mục tiêu dinh dưỡng và lưu trữ thực đơn.")
+                        Text("Bắt đầu hành trình chăm sóc sức khỏe và thấu hiểu bữa ăn cùng NutriLens.")
                             .font(AppTypography.subheadline)
                             .foregroundColor(AppColors.textSecondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                    // MARK: - Error Banner
+                    // Error Banner
                     if let err = viewModel.errorMessage {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(alignment: .top, spacing: 8) {
@@ -93,189 +90,114 @@ public struct RegisterView: View {
 
                     // MARK: - Form Inputs
                     VStack(spacing: AppSpacing.md) {
-                        // Display Name Field
+                        BotanicalTextField(
+                            title: "Họ và tên",
+                            placeholder: "Nguyễn Văn A",
+                            text: $viewModel.displayName,
+                            icon: "person.fill",
+                            keyboardType: .default,
+                            autocapitalization: .words
+                        )
+
+                        BotanicalTextField(
+                            title: "Địa chỉ Email",
+                            placeholder: "name@example.com",
+                            text: $viewModel.email,
+                            icon: "envelope.fill",
+                            keyboardType: .emailAddress,
+                            autocapitalization: .never
+                        )
+
+                        BotanicalTextField(
+                            title: "Mật khẩu",
+                            placeholder: "Tối thiểu 8 ký tự, gồm chữ và số",
+                            text: $viewModel.password,
+                            icon: "lock.fill",
+                            isSecure: true
+                        )
+
+                        BotanicalTextField(
+                            title: "Xác nhận mật khẩu",
+                            placeholder: "Nhập lại mật khẩu",
+                            text: $viewModel.confirmPassword,
+                            icon: "lock.shield.fill",
+                            isSecure: true
+                        )
+
+                        // Password checklist
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("Họ và tên")
-                                .font(AppTypography.captionBold)
-                                .foregroundColor(AppColors.textSecondary)
-
-                            HStack {
-                                Image(systemName: "person")
-                                    .foregroundColor(AppColors.textTertiary)
-                                    .frame(width: 20)
-
-                                TextField("Nguyễn Văn A", text: $viewModel.displayName)
-                                    .font(AppTypography.body)
-                            }
-                            .padding(AppSpacing.md)
-                            .background(AppColors.surface)
-                            .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppRadius.md)
-                                    .stroke(AppColors.cardBorder, lineWidth: 1)
+                            ValidationRow(
+                                isPassed: viewModel.password.count >= 8,
+                                text: "Tối thiểu 8 ký tự"
+                            )
+                            ValidationRow(
+                                isPassed: viewModel.password.rangeOfCharacter(from: .letters) != nil && viewModel.password.rangeOfCharacter(from: .decimalDigits) != nil,
+                                text: "Bao gồm cả chữ cái và chữ số"
+                            )
+                            ValidationRow(
+                                isPassed: !viewModel.password.isEmpty && viewModel.password == viewModel.confirmPassword,
+                                text: "Mật khẩu khớp nhau"
                             )
                         }
-
-                        // Email Field
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Email")
-                                .font(AppTypography.captionBold)
-                                .foregroundColor(AppColors.textSecondary)
-
-                            HStack {
-                                Image(systemName: "envelope")
-                                    .foregroundColor(AppColors.textTertiary)
-                                    .frame(width: 20)
-
-                                TextField("ban@example.com", text: $viewModel.email)
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled(true)
-                                    .keyboardType(.emailAddress)
-                                    .font(AppTypography.body)
-                            }
-                            .padding(AppSpacing.md)
-                            .background(AppColors.surface)
-                            .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppRadius.md)
-                                    .stroke(AppColors.cardBorder, lineWidth: 1)
-                            )
-                        }
-
-                        // Password Field
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Mật khẩu")
-                                .font(AppTypography.captionBold)
-                                .foregroundColor(AppColors.textSecondary)
-
-                            HStack {
-                                Image(systemName: "lock")
-                                    .foregroundColor(AppColors.textTertiary)
-                                    .frame(width: 20)
-
-                                if viewModel.isPasswordVisible {
-                                    TextField("Mật khẩu", text: $viewModel.password)
-                                        .textInputAutocapitalization(.never)
-                                        .autocorrectionDisabled(true)
-                                        .font(AppTypography.body)
-                                } else {
-                                    SecureField("Mật khẩu", text: $viewModel.password)
-                                        .font(AppTypography.body)
-                                }
-
-                                Button {
-                                    viewModel.isPasswordVisible.toggle()
-                                } label: {
-                                    Image(systemName: viewModel.isPasswordVisible ? "eye.slash" : "eye")
-                                        .foregroundColor(AppColors.textTertiary)
-                                }
-                                .accessibilityLabel(viewModel.isPasswordVisible ? "Ẩn mật khẩu" : "Hiện mật khẩu")
-                            }
-                            .padding(AppSpacing.md)
-                            .background(AppColors.surface)
-                            .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppRadius.md)
-                                    .stroke(AppColors.cardBorder, lineWidth: 1)
-                            )
-
-                            // Password Strength Indicators
-                            VStack(alignment: .leading, spacing: 4) {
-                                RequirementRow(title: "Ít nhất 8 ký tự", satisfied: hasMinimumLength)
-                                RequirementRow(title: "Bao gồm chữ cái và chữ số", satisfied: hasLettersAndNumbers)
-                            }
-                            .padding(.top, 4)
-                        }
-
-                        // Confirm Password Field
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Xác nhận mật khẩu")
-                                .font(AppTypography.captionBold)
-                                .foregroundColor(AppColors.textSecondary)
-
-                            HStack {
-                                Image(systemName: "lock.shield")
-                                    .foregroundColor(AppColors.textTertiary)
-                                    .frame(width: 20)
-
-                                if viewModel.isConfirmPasswordVisible {
-                                    TextField("Nhập lại mật khẩu", text: $viewModel.confirmPassword)
-                                        .textInputAutocapitalization(.never)
-                                        .autocorrectionDisabled(true)
-                                        .font(AppTypography.body)
-                                } else {
-                                    SecureField("Nhập lại mật khẩu", text: $viewModel.confirmPassword)
-                                        .font(AppTypography.body)
-                                }
-
-                                Button {
-                                    viewModel.isConfirmPasswordVisible.toggle()
-                                } label: {
-                                    Image(systemName: viewModel.isConfirmPasswordVisible ? "eye.slash" : "eye")
-                                        .foregroundColor(AppColors.textTertiary)
-                                }
-                                .accessibilityLabel(viewModel.isConfirmPasswordVisible ? "Ẩn mật khẩu xác nhận" : "Hiện mật khẩu xác nhận")
-                            }
-                            .padding(AppSpacing.md)
-                            .background(AppColors.surface)
-                            .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: AppRadius.md)
-                                    .stroke(AppColors.cardBorder, lineWidth: 1)
-                            )
-
-                            if !viewModel.confirmPassword.isEmpty {
-                                RequirementRow(title: "Mật khẩu khớp nhau", satisfied: passwordsMatch)
-                                    .padding(.top, 4)
-                            }
-                        }
+                        .padding(.top, 4)
                     }
+                    .padding(AppSpacing.md)
+                    .background(
+                        RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                            .fill(AppColors.surfacePrimary)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                            .stroke(AppColors.border, lineWidth: 1)
+                    )
 
-                    // MARK: - Submit Button
-                    PrimaryButton(
-                        "Đăng ký tài khoản",
-                        icon: "checkmark.circle.fill",
-                        isLoading: viewModel.isLoading
-                    ) {
-                        Task {
-                            await viewModel.register()
+                    // MARK: - Action Button
+                    VStack(spacing: AppSpacing.sm) {
+                        PrimaryButton("Đăng ký tài khoản", icon: "checkmark", isLoading: viewModel.isLoading) {
+                            Task {
+                                await viewModel.register()
+                            }
                         }
-                    }
-                    .disabled(viewModel.isLoading || !viewModel.isRegisterFormValid)
+                        .disabled(!viewModel.isRegisterFormValid || viewModel.isLoading)
 
-                    // MARK: - Login Link
-                    HStack(spacing: 4) {
-                        Text("Đã có tài khoản?")
-                            .font(AppTypography.subheadline)
-                            .foregroundColor(AppColors.textSecondary)
+                        // Switch to Login
+                        HStack(spacing: 4) {
+                            Text("Đã có tài khoản?")
+                                .font(AppTypography.caption)
+                                .foregroundColor(AppColors.textSecondary)
 
-                        Button("Đăng nhập") {
-                            viewModel.clearFeedback()
-                            viewModel.currentStep = .login
+                            Button {
+                                viewModel.clearFeedback()
+                                viewModel.currentStep = .login
+                            } label: {
+                                Text("Đăng nhập")
+                                    .font(AppTypography.captionBold)
+                                    .foregroundColor(AppColors.primary)
+                            }
                         }
-                        .font(AppTypography.subheadlineBold)
-                        .foregroundColor(AppColors.primaryDark)
+                        .padding(.top, 6)
                     }
-                    .padding(.top, AppSpacing.sm)
                 }
-                .padding(.horizontal, AppSpacing.screenHorizontal)
+                .padding(AppSpacing.screenHorizontal)
+                .padding(.bottom, AppSpacing.xl)
             }
         }
     }
 }
 
-private struct RequirementRow: View {
-    let title: String
-    let satisfied: Bool
+private struct ValidationRow: View {
+    let isPassed: Bool
+    let text: String
 
     var body: some View {
         HStack(spacing: 6) {
-            Image(systemName: satisfied ? "checkmark.circle.fill" : "circle")
+            Image(systemName: isPassed ? "checkmark.circle.fill" : "circle")
                 .font(.system(size: 13))
-                .foregroundColor(satisfied ? AppColors.primary : AppColors.textTertiary)
-            Text(title)
+                .foregroundColor(isPassed ? AppColors.primary : AppColors.textTertiary)
+
+            Text(text)
                 .font(AppTypography.caption)
-                .foregroundColor(satisfied ? AppColors.textPrimary : AppColors.textTertiary)
+                .foregroundColor(isPassed ? AppColors.textPrimary : AppColors.textTertiary)
         }
     }
 }

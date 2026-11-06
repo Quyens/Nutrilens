@@ -3,7 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
-//  Presents email verification status and provides honest offline resend messaging.
+//  Fresh Premium Botanical Email Verification status screen.
 //
 
 import SwiftUI
@@ -19,8 +19,15 @@ public struct EmailVerificationStatusView: View {
 
     public var body: some View {
         ZStack {
-            AppColors.background.ignoresSafeArea()
-            AppColors.subtleGlowGradient.ignoresSafeArea()
+            // Background
+            AppColors.canvasBackground.ignoresSafeArea()
+
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .opacity(0.10)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
 
             VStack(spacing: AppSpacing.xl) {
                 Spacer()
@@ -28,11 +35,15 @@ public struct EmailVerificationStatusView: View {
                 // Verification Icon
                 ZStack {
                     Circle()
-                        .fill(AppColors.primarySubtle)
-                        .frame(width: 88, height: 88)
+                        .stroke(AppColors.primary.opacity(0.2), lineWidth: 3)
+                        .frame(width: 96, height: 96)
+
+                    Circle()
+                        .fill(AppColors.surfaceSecondary)
+                        .frame(width: 86, height: 86)
 
                     Image(systemName: viewModel.currentUser?.isEmailVerified == true ? "checkmark.seal.fill" : "envelope.badge.shield.half.filled")
-                        .font(.system(size: 40))
+                        .font(.system(size: 42))
                         .foregroundColor(viewModel.currentUser?.isEmailVerified == true ? AppColors.primary : AppColors.carbsOrange)
                 }
 
@@ -40,17 +51,18 @@ public struct EmailVerificationStatusView: View {
                 VStack(spacing: 8) {
                     Text(viewModel.currentUser?.isEmailVerified == true ? "Email đã được xác thực" : "Kiểm tra hộp thư của bạn")
                         .font(AppTypography.title2)
+                        .fontWeight(.bold)
                         .foregroundColor(AppColors.textPrimary)
 
                     if let email = viewModel.currentUser?.email {
                         Text(email)
-                            .font(AppTypography.headline)
-                            .foregroundColor(AppColors.primaryDark)
+                            .font(AppTypography.headlineBold)
+                            .foregroundColor(AppColors.primary)
                     }
 
                     Text(viewModel.currentUser?.isEmailVerified == true ?
-                         "Tài khoản của bạn đã được xác thực thành công. Bạn có thể sử dụng tất cả tính năng của NutriLens." :
-                         "Chúng tôi đã ghi nhận địa chỉ email của bạn. Trong môi trường thử nghiệm, bạn có thể tiếp tục ngay vào ứng dụng.")
+                         "Tài khoản của bạn đã được xác thực an toàn. Bạn có thể sử dụng đầy đủ các tính năng của NutriLens." :
+                         "NutriLens đã ghi nhận địa chỉ email này. Trong môi trường hiện tại, bạn có thể tiếp tục ngay vào ứng dụng.")
                         .font(AppTypography.body)
                         .foregroundColor(AppColors.textSecondary)
                         .multilineTextAlignment(.center)
@@ -59,15 +71,15 @@ public struct EmailVerificationStatusView: View {
 
                 Spacer()
 
-                // Actions
-                VStack(spacing: AppSpacing.md) {
+                // Action Buttons
+                VStack(spacing: AppSpacing.sm) {
                     PrimaryButton("Tiếp tục vào ứng dụng", icon: "arrow.right") {
                         onContinue()
                     }
 
                     if viewModel.currentUser?.isEmailVerified != true {
                         SecondaryButton("Gửi lại email xác thực", icon: "arrow.clockwise") {
-                            viewModel.infoMessage = "Chế độ thử nghiệm: Yêu cầu gửi lại đã ghi nhận (không gửi email thực)."
+                            viewModel.infoMessage = "Yêu cầu gửi lại đã ghi nhận trên thiết bị."
                         }
                     }
                 }

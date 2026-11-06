@@ -43,6 +43,7 @@ public struct MainTabView: View {
     @State private var isPresentingManualLog: Bool = false
     @State private var isPresentingSettings: Bool = false
     @State private var isPresentingAuth: Bool = false
+    @State private var authInitialStep: AuthStep = .accountManagement
 
     public init() {}
 
@@ -157,7 +158,7 @@ public struct MainTabView: View {
         .sheet(isPresented: $isPresentingAuth) {
             AuthCoordinatorView(
                 viewModel: environment.makeAuthViewModel(
-                    initialStep: .accountManagement,
+                    initialStep: ProcessInfo.processInfo.arguments.contains("-startAuthWelcome") ? .welcome : authInitialStep,
                     onAuthCompleted: {
                         isPresentingAuth = false
                     }
@@ -166,6 +167,18 @@ public struct MainTabView: View {
                     isPresentingAuth = false
                 }
             )
+        }
+        .onAppear {
+            if ProcessInfo.processInfo.arguments.contains("-startTabProfile") {
+                selectedTab = .profile
+            } else if ProcessInfo.processInfo.arguments.contains("-startAccountSecurity") {
+                selectedTab = .profile
+                authInitialStep = .accountManagement
+                isPresentingAuth = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startAuthWelcome") {
+                authInitialStep = .welcome
+                isPresentingAuth = true
+            }
         }
     }
 }

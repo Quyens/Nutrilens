@@ -123,6 +123,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>0A12868AFB82216EE923DFC2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>DBB97F7E86E947F774713D20</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>0A85897F1A32FE9B91C081CD</key>
 		<dict>
 			<key>children</key>
@@ -539,6 +546,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>354799794BF581772A9A7416</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Core/DesignSystem/BotanicalTextField.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>35BD2D24F5732465ED0DF098</key>
 		<dict>
 			<key>fileRef</key>
@@ -658,6 +676,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Core/DesignSystem/CardView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>40FE00BD605F55E0E45A6318</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Profile/NutritionGoalsView.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1175,6 +1204,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>6F9F09AB20B6EDAE1026A0D6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F04D1B1CE4FB887496B6E85D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>712F6B0F34F4DFF8C5DC7126</key>
 		<dict>
 			<key>isa</key>
@@ -1370,6 +1406,8 @@
 				<string>39C5BB1BE4D95A2C628F82EB</string>
 				<string>9E619DF4F7B9D8B2661D840F</string>
 				<string>EA686B42B9CFBD552C7B19DD</string>
+				<string>BE97A736EE5C8D33060CFF81</string>
+				<string>354799794BF581772A9A7416</string>
 				<string>3F9C2148FDFB49E37E290913</string>
 				<string>F13680150D5EF3493FDCDBCA</string>
 				<string>399D2585F0FB43DBE432CA02</string>
@@ -1380,8 +1418,10 @@
 				<string>4E347ACB14EB4633DC8D735D</string>
 				<string>3431F9C4602DD4561D4664C1</string>
 				<string>C9588BB2B91129A64F134743</string>
+				<string>DBB97F7E86E947F774713D20</string>
 				<string>51FF831A9407313E294F7614</string>
 				<string>9DE02D7B7B410409713A6AEF</string>
+				<string>F04D1B1CE4FB887496B6E85D</string>
 				<string>3CF19EDAE4F067AE7423D570</string>
 				<string>B5F8316277DF9BBF3F65210F</string>
 				<string>DF1CB1DCA4EE0D363CE7359D</string>
@@ -1406,6 +1446,7 @@
 				<string>F50FBB5C3285D36386B3BC75</string>
 				<string>4A7E41CD8FCE1F683BABA282</string>
 				<string>163EF8A6243AF389523E803E</string>
+				<string>40FE00BD605F55E0E45A6318</string>
 				<string>CB84FD0178E8A1E13ABEA843</string>
 				<string>F117A3359E74F8FD2B3E99B1</string>
 				<string>868CD18DF6DB31E8E8820973</string>
@@ -1542,6 +1583,8 @@
 				<string>1C542CE60D8F5F389844FB7F</string>
 				<string>FE17B5C55F84E828B280B184</string>
 				<string>3069F710B502C1BB27D3BCBD</string>
+				<string>D9E7BE349980140BC6691682</string>
+				<string>ACDD611BB3EAD70CA67F0D8F</string>
 				<string>9887D5F3251F8756B0B36DC0</string>
 				<string>3A5C34423CBB466B8167B619</string>
 				<string>8DAB2AB3C943375E92EA4709</string>
@@ -1552,8 +1595,10 @@
 				<string>C89EF9269027813DCDE6144F</string>
 				<string>B3B61A4F0C96C4C0E6BBDC0E</string>
 				<string>2BEE0371756C2B6285E9C2F2</string>
+				<string>0A12868AFB82216EE923DFC2</string>
 				<string>12E64DDA7FA599B7CE06C578</string>
 				<string>FC024BDC1CC467F4E078D28E</string>
+				<string>6F9F09AB20B6EDAE1026A0D6</string>
 				<string>23066A8650C21E68B0AC47E6</string>
 				<string>E640830F5D474A293C115092</string>
 				<string>9656B078BD52190DDFA4950D</string>
@@ -1578,6 +1623,7 @@
 				<string>8E02B908B2893DFAE3E58DF7</string>
 				<string>6982010D77F9B5CBDF96F01A</string>
 				<string>D989414512973A25B8A8CC6C</string>
+				<string>D288905923477B0F5B4344F3</string>
 				<string>D9167100A7C0D9FF0BA6CAC6</string>
 				<string>DF3D8CB6A062AE32E64EA3AA</string>
 				<string>6CB9730E87CA7361E8D2711A</string>
@@ -1937,6 +1983,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>ACDD611BB3EAD70CA67F0D8F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>354799794BF581772A9A7416</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>AEED6892412F88AF0D4E605E</key>
 		<dict>
 			<key>isa</key>
@@ -2191,6 +2244,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>BE97A736EE5C8D33060CFF81</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Core/DesignSystem/BotanicalProfileHeader.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>BFA33FD48E7626FFDBDF46AB</key>
 		<dict>
 			<key>buildConfigurationList</key>
@@ -2376,6 +2440,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>D288905923477B0F5B4344F3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>40FE00BD605F55E0E45A6318</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>D4EC8199E854142FD4F365FC</key>
 		<dict>
 			<key>isa</key>
@@ -2519,12 +2590,30 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>D9E7BE349980140BC6691682</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BE97A736EE5C8D33060CFF81</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>DB6313FB928C2D20CAC647A1</key>
 		<dict>
 			<key>fileRef</key>
 			<string>A96EA249977253D9F8C8E2F1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>DBB97F7E86E947F774713D20</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Core/DesignSystem/NutritionGoalsCard.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>DCD50C86C7BC8B054235F2A6</key>
 		<dict>
@@ -2800,6 +2889,17 @@
 			<string>0448C6C0801A2BFD6B01B82A</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>F04D1B1CE4FB887496B6E85D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Core/DesignSystem/ProfileMenuCard.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>F0CD18A8A23827BE19921AAA</key>
 		<dict>

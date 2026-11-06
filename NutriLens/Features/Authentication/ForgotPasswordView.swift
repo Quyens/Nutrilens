@@ -3,7 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
-//  Password recovery screen with email validation and honest offline/mock messaging.
+//  Fresh Premium Botanical Password Recovery screen.
 //
 
 import SwiftUI
@@ -17,12 +17,19 @@ public struct ForgotPasswordView: View {
 
     public var body: some View {
         ZStack {
-            AppColors.background.ignoresSafeArea()
-            AppColors.subtleGlowGradient.ignoresSafeArea()
+            // Background
+            AppColors.canvasBackground.ignoresSafeArea()
+
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .opacity(0.10)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: AppSpacing.lg) {
-                    // MARK: - Header
+                    // Navigation Header
                     HStack {
                         Button {
                             viewModel.clearFeedback()
@@ -30,17 +37,21 @@ public struct ForgotPasswordView: View {
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "chevron.left")
-                                    .font(.system(size: 16, weight: .semibold))
+                                    .font(.system(size: 15, weight: .semibold))
                                 Text("Quay lại")
-                                    .font(AppTypography.body)
+                                    .font(AppTypography.bodyBold)
                             }
-                            .foregroundColor(AppColors.primaryDark)
+                            .foregroundColor(AppColors.forestGreen)
                         }
-                        .accessibilityLabel("Quay lại màn hình đăng nhập")
+                        .accessibilityLabel("Quay lại")
 
                         Spacer()
+
+                        Image(systemName: "leaf.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(AppColors.primary)
                     }
-                    .padding(.top, AppSpacing.sm)
+                    .padding(.top, AppSpacing.xs)
 
                     // Title
                     VStack(alignment: .leading, spacing: 6) {
@@ -48,16 +59,16 @@ public struct ForgotPasswordView: View {
                             .font(AppTypography.largeTitle)
                             .foregroundColor(AppColors.textPrimary)
 
-                        Text("Nhập email đã đăng ký của bạn. Chúng tôi sẽ hướng dẫn các bước tiếp theo để tạo mật khẩu mới.")
+                        Text("Nhập email tài khoản để nhận hướng dẫn khôi phục mật khẩu.")
                             .font(AppTypography.subheadline)
                             .foregroundColor(AppColors.textSecondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                    // MARK: - Success / Info Banner
+                    // Info / Success Banner
                     if let info = viewModel.infoMessage {
                         HStack(alignment: .top, spacing: 8) {
-                            Image(systemName: "checkmark.circle.fill")
+                            Image(systemName: "info.circle.fill")
                                 .foregroundColor(AppColors.primary)
                             Text(info)
                                 .font(AppTypography.caption)
@@ -65,11 +76,11 @@ public struct ForgotPasswordView: View {
                         }
                         .padding(AppSpacing.md)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(AppColors.primarySubtle)
+                        .background(AppColors.surfaceSecondary)
                         .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
                     }
 
-                    // MARK: - Error Banner
+                    // Error Banner
                     if let err = viewModel.errorMessage {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(alignment: .top, spacing: 8) {
@@ -92,58 +103,39 @@ public struct ForgotPasswordView: View {
                         .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
                     }
 
-                    // MARK: - Email Field
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Email tài khoản")
-                            .font(AppTypography.captionBold)
-                            .foregroundColor(AppColors.textSecondary)
-
-                        HStack {
-                            Image(systemName: "envelope")
-                                .foregroundColor(AppColors.textTertiary)
-                                .frame(width: 20)
-
-                            TextField("ban@example.com", text: $viewModel.email)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled(true)
-                                .keyboardType(.emailAddress)
-                                .font(AppTypography.body)
-                        }
-                        .padding(AppSpacing.md)
-                        .background(AppColors.surface)
-                        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: AppRadius.md)
-                                .stroke(AppColors.cardBorder, lineWidth: 1)
+                    // Form Card
+                    VStack(spacing: AppSpacing.md) {
+                        BotanicalTextField(
+                            title: "Địa chỉ Email",
+                            placeholder: "name@example.com",
+                            text: $viewModel.email,
+                            icon: "envelope.fill",
+                            keyboardType: .emailAddress,
+                            autocapitalization: .never
                         )
                     }
+                    .padding(AppSpacing.md)
+                    .background(
+                        RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                            .fill(AppColors.surfacePrimary)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                            .stroke(AppColors.border, lineWidth: 1)
+                    )
 
-                    // MARK: - Submit Button
-                    PrimaryButton(
-                        "Gửi liên kết khôi phục",
-                        icon: "paperplane.fill",
-                        isLoading: viewModel.isLoading
-                    ) {
-                        Task {
-                            await viewModel.requestPasswordReset()
+                    // Action Button
+                    VStack(spacing: AppSpacing.sm) {
+                        PrimaryButton("Gửi yêu cầu khôi phục", icon: "paperplane.fill", isLoading: viewModel.isLoading) {
+                            Task {
+                                await viewModel.requestPasswordReset()
+                            }
                         }
+                        .disabled(viewModel.email.trimmingCharacters(in: .whitespaces).isEmpty || viewModel.isLoading)
                     }
-                    .disabled(viewModel.isLoading || viewModel.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-
-                    // MARK: - Honest Backend Status Note
-                    VStack(spacing: 4) {
-                        Text("Lưu ý dịch vụ")
-                            .font(AppTypography.captionBold)
-                            .foregroundColor(AppColors.textSecondary)
-
-                        Text("Hiện tại dịch vụ backend trực tuyến đang được phát triển. Không có email nào được gửi ra ngoài thiết bị.")
-                            .font(AppTypography.caption)
-                            .foregroundColor(AppColors.textTertiary)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.top, AppSpacing.lg)
                 }
-                .padding(.horizontal, AppSpacing.screenHorizontal)
+                .padding(AppSpacing.screenHorizontal)
+                .padding(.bottom, AppSpacing.xl)
             }
         }
     }
