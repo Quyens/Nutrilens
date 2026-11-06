@@ -1,5 +1,5 @@
 # NutriLens V1.0 — Visual UI/UX Redesign Report
-## Profile Dashboard, Personal Info, Preferences, About, Account & Security, Nutrition Goals & Authentication
+## Profile Dashboard, Personal Info, Preferences, About, Settings, Account & Security, Nutrition Goals & Authentication
 
 **Date:** 2026-11-06  
 **Role:** Senior Apple iOS UI/UX Designer, Apple HIG Specialist & Principal SwiftUI Engineer  
@@ -10,28 +10,34 @@
 
 ---
 
-## 1. Executive Summary & Complete Full-Screen Page Conversion
+## 1. Tóm tắt khắc phục toàn diện theo phản hồi người dùng
 
-Following user review and screenshots showing lingering sheet pop-ups (*"fix và hoàn thiện giúp tôiu"*), a comprehensive audit was executed across **all remaining modal sheets** in [`ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift):
+Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
+1. **Khắc phục lỗi "Cứ nổi lên chứ không phải trang":**
+   - Loại bỏ hoàn toàn modal sheet (`.sheet`) đối với toàn bộ các màn hình phụ trợ và điều hướng:
+     - **Thông tin cá nhân (`PersonalInfoView`):** Đã chuyển thành `.fullScreenCover`.
+     - **Sở thích dinh dưỡng (`PreferencesView`):** Đã chuyển thành `.fullScreenCover`.
+     - **Giới thiệu về NutriLens (`AboutView`):** Đã chuyển thành `.fullScreenCover`.
+     - **Cài đặt ứng dụng (`SettingsView`):** Đã chuyển thành `.fullScreenCover`.
+     - **Mục tiêu dinh dưỡng (`NutritionGoalsView`):** Đã chuyển thành `.fullScreenCover`.
+     - **Đăng nhập & Cổng xác thực (`LoginView`, `WelcomeAuthView`):** Đã chuyển thành `.fullScreenCover`.
+     - **Tài khoản & Bảo mật (`AccountManagementView`):** Đã chuyển thành `.fullScreenCover`.
+   - Giờ đây mọi màn hình đều là **một trang độc lập toàn màn hình 100%**, có hình nền lá cây `botanical_wallpaper` phủ kín cạnh mép (`.ignoresSafeArea()`), không còn hiện tượng co màn hình phía sau hay ló đỉnh màn hình cha.
 
-### 1.1 Khắc phục dứt điểm "Cứ nổi lên chứ không phải trang"
-Toàn bộ các sheet phụ trợ trước đây đã được nâng cấp thành **Trang Độc Lập Toàn Màn Hình 100% (`.fullScreenCover`)**:
-1. **Thông tin cá nhân (`PersonalInfoView`):** Chuyển từ modal sheet thành trang toàn màn hình.
-2. **Sở thích dinh dưỡng (`PreferencesView`):** Chuyển từ modal sheet thành trang toàn màn hình.
-3. **Giới thiệu về NutriLens (`AboutView`):** Chuyển từ modal sheet thành trang toàn màn hình.
-4. **Mục tiêu dinh dưỡng (`NutritionGoalsView`):** Đã chuyển thành trang toàn màn hình.
-5. **Đăng nhập & Xác thực (`LoginView`, `WelcomeAuthView`):** Đã chuyển thành trang toàn màn hình.
-6. **Tài khoản & Bảo mật (`AccountManagementView`):** Đã chuyển thành trang toàn màn hình.
+2. **Khắc phục lỗi "Bị thiếu thiếu vậy" (80% khoảng trắng trống trước đây):**
+   - **Thông tin cá nhân:** Đã bổ sung thẻ định danh hồ sơ, khối Chỉ số thể trạng cơ bản (Chiều cao, Cân nặng, BMI 22.5 chuẩn và dải cân nặng khuyến nghị 58–72 kg), thẻ Kế hoạch dinh dưỡng Việt hóa (Mục tiêu, Calo, Nước, Đa lượng) và thẻ Cam kết bảo mật SwiftData on-device.
+   - **Sở thích dinh dưỡng:** Đã bổ sung Bộ chọn phong cách ăn uống (Món Việt 3 miền, Ăn chay, Keto, Eat Clean), Lưới cảnh báo dị ứng 6 loại thực phẩm (Hải sản, Đậu phộng, Trứng, Sữa, Gluten, Cay nồng) và Thẻ tối ưu hóa AI On-device.
+   - **Giới thiệu NutriLens:** Đã bổ sung Biểu tượng lá mầm thương hiệu lớn, Sứ mệnh phát triển, 4 Trụ cột công nghệ cốt lõi và Thông tin bản quyền, công nghệ chi tiết.
+   - **Cài đặt ứng dụng:** Thay thế hoàn toàn form trắng mặc định bằng giao diện Botanical sang trọng với thẻ Quản lý tài khoản, Tùy chọn hiển thị & Cảm ứng, Bảo mật & Quyền riêng tư, và Thông tin ứng dụng.
+   - **Đăng nhập (`LoginView`):** Đầy đủ Avatar Hero, Lời chào, Thẻ công nghệ món Việt, Điền nhanh tài khoản thử nghiệm, Đăng nhập email/mật khẩu, Nút "Tiếp tục với Apple", Nút "Trải nghiệm không cần tài khoản" (Khách), và Huy hiệu bảo mật Apple Keychain.
 
-### 1.2 Khắc phục triệt để "Bị thiếu thiếu vậy"
-- **Loại bỏ hoàn toàn các khung trống hoang vắng (80% màn hình trống trước đây):**
-  - **Thông tin cá nhân:** Bổ sung khối Chỉ số thể trạng (Chiều cao, Cân nặng, BMI 22.5 chuẩn), Kế hoạch dinh dưỡng Việt hóa (Mục tiêu, Calo, Nước, Đa lượng) và Banner an tâm bảo mật SwiftData on-device.
-  - **Sở thích dinh dưỡng:** Bổ sung Bộ chọn trường phái ẩm thực (Món Việt 3 miền, Ăn chay, Keto, Eat Clean), Lưới cảnh báo dị ứng 6 loại thực phẩm (Hải sản, Đậu phộng, Trứng, Sữa, Gluten, Ớt) và Thẻ tối ưu hóa AI On-device.
-  - **Giới thiệu NutriLens:** Bổ sung Biểu tượng thương hiệu lớn, Sứ mệnh phát triển, 4 Trụ cột công nghệ cốt lõi và Thông tin bản quyền đầy đủ.
+3. **Khắc phục lỗi đè chữ lên thanh điều hướng:**
+   - Xóa bỏ `NavigationStack` toolbar mặc định gây lỗi chồng chữ trên iOS 17+.
+   - Thay thế bằng **Custom Floating Top Bar** với khoảng đệm `padding(.top, 54)` chuẩn Apple HIG, hoàn toàn an toàn bên dưới Dynamic Island và Status Bar, đi kèm nút bo góc viên nang (*"Xong"* / *"Đóng"* / *"Quay lại"*).
 
 ---
 
-## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (8 Màn hình Hoàn chỉnh)
+## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (9 Màn hình Hoàn chỉnh)
 
 ````carousel
 ![Thông Tin Cá Nhân Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/personal_info_redesign.png)
@@ -39,6 +45,8 @@ Toàn bộ các sheet phụ trợ trước đây đã được nâng cấp thàn
 ![Sở Thích Dinh Dưỡng & Dị Ứng Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/preferences_redesign.png)
 <!-- slide -->
 ![Giới Thiệu Về NutriLens Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/about_redesign.png)
+<!-- slide -->
+![Cài Đặt Ứng Dụng Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/settings_redesign.png)
 <!-- slide -->
 ![Đăng Nhập Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/login_redesign.png)
 <!-- slide -->
@@ -53,31 +61,11 @@ Toàn bộ các sheet phụ trợ trước đây đã được nâng cấp thàn
 
 ---
 
-## 3. Chi tiết thiết kế các trang mới hoàn thiện
+## 3. Danh sách tệp nguồn đã cập nhật
 
-### Trang 01: Thông tin cá nhân ([`PersonalInfoView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift#L540))
-- **Thanh đỉnh:** Icon tròn đại diện, tiêu đề *"Thông tin cá nhân"*, phụ đề *"Chỉ số thể trạng & hồ sơ sức khỏe"*, nút *"Xong"* trong viên nang trắng (cách Dynamic Island 54 pt).
-- **Thẻ định danh:** Avatar tròn viền xanh, tên hiển thị, huy hiệu *"Thành viên NutriLens"*.
-- **Thẻ thể trạng cơ bản:** 3 khối thông số Chiều cao (170 cm), Cân nặng (65 kg), Chỉ số BMI (22.5 - Bình thường), và khoảng cân nặng chuẩn (58 – 72 kg).
-- **Thẻ kế hoạch dinh dưỡng:** Mục tiêu thể trạng thuần Việt (*"Ăn uống lành mạnh"* - không còn bị lỗi tiếng Anh), Ngân sách calo (*2000 kcal / ngày*), Nước uống (*2.000 ml / ngày*), Đa lượng (*Đạm 125g • Carb 250g • Béo 55g*).
-- **Thẻ bảo mật:** Banner an tâm giải thích dữ liệu lưu trữ 100% trong SwiftData cục bộ trên iPhone.
-
-### Trang 02: Sở thích dinh dưỡng & Dị ứng ([`PreferencesView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift#L665))
-- **Thanh đỉnh:** Icon tròn thìa nĩa, tiêu đề *"Sở thích dinh dưỡng"*, phụ đề *"Khẩu vị & Cảnh báo dị ứng"*, nút *"Xong"*.
-- **Trường phái ẩm thực:** 4 tùy chọn có mô tả chi tiết: Món Việt 3 miền (Mặc định), Ăn chay/Thuần chay, Keto/Low-Carb, Eat Clean/Thanh đạm.
-- **Cảnh báo dị ứng thực phẩm:** Lưới 6 thẻ dị ứng phổ biến: Hải sản, Đậu phộng, Trứng, Sữa, Gluten, Cay nồng.
-- **Tối ưu hóa ẩm thực Việt:** Thẻ giới thiệu AI On-Device tối ưu cho 5.000+ món ăn Việt.
-
-### Trang 03: Giới thiệu về NutriLens ([`AboutView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift#L785))
-- **Thanh đỉnh:** Icon tròn lá mầm, tiêu đề *"Giới thiệu"*, phụ đề *"Về NutriLens AI 1.0"*, nút *"Đóng"*.
-- **Phần Hero:** Biểu tượng lá lớn, tên "NutriLens", phụ đề *"AI Dinh Dưỡng Món Việt • On-Device"*, huy hiệu phiên bản *"Phiên bản 1.0.0 (Build 2026.11)"*.
-- **Thẻ sứ mệnh:** Tóm tắt giá trị AI thị giác máy tính on-device và cơ sở dữ liệu ẩm thực Việt Nam.
-- **4 Trụ cột công nghệ cốt lõi:** AI Siêu tốc (<0.3s), 5.000+ Món Việt, Quyền riêng tư 100%, Đa lượng khoa học.
-- **Bản quyền & Công nghệ:** Thông tin kiến trúc SwiftData, SwiftUI, Core ML và bản quyền © 2026 NutriLens.
-
----
-
-## 4. Tệp mã nguồn đã cập nhật
-
-- [`NutriLens/Features/Profile/ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift): Thay thế toàn bộ các modal sheet cũ thành các trang toàn màn hình độc lập với nội dung phong phú, căn lề Dynamic Island và hỗ trợ launch argument kiểm thử.
-- Toàn bộ ảnh chụp đã được đồng bộ vào thư mục artifacts và báo cáo.
+| Tệp nguồn | Loại thay đổi | Mô tả |
+| :--- | :--- | :--- |
+| [`NutriLens/Features/Profile/ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift) | Sửa đổi | Thay toàn bộ `.sheet` bằng `.fullScreenCover`, xây dựng mới `PersonalInfoView`, `PreferencesView`, `AboutView` với nội dung đầy đủ |
+| [`NutriLens/Features/Settings/SettingsView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsView.swift) | Sửa đổi | Nâng cấp toàn diện thành trang Botanical độc lập, bỏ Form xám mặc định |
+| [`NutriLens/App/AppRouter.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/App/AppRouter.swift) | Sửa đổi | Chuyển `SettingsView` và `AuthCoordinatorView` sang `.fullScreenCover` |
+| [`NutriLens/Features/Authentication/LoginView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Authentication/LoginView.swift) | Sửa đổi | Thêm đầy đủ Apple Sign-In, Guest mode, autofill demo, Keychain badge |
