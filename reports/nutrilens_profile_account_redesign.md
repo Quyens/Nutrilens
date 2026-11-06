@@ -36,11 +36,25 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
    - Xóa bỏ `NavigationStack` toolbar mặc định gây lỗi chồng chữ trên iOS 17+.
    - Thay thế bằng **Custom Floating Top Bar** với khoảng đệm `padding(.top, 54)` chuẩn Apple HIG, hoàn toàn an toàn bên dưới Dynamic Island và Status Bar, đi kèm nút bo góc viên nang (*"Xong"* / *"Đóng"* / *"Quay lại"*).
 
+### 1.4 Trạng thái Hồ sơ cá nhân khi Chưa Đăng nhập ([`ProfileView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift#L190))
+- **Vấn đề trước đây:** Khi người dùng chưa đăng nhập, giao diện vẫn hiển thị thẻ hồ sơ *"NutriUser • Đã xác thực"* như thể đã đăng nhập, và không có nút Đăng nhập hay Đăng ký nào trên màn hình.
+- **Giải pháp thiết kế mới hoàn thiện:**
+  - Tích hợp **Thẻ Hero Chưa Đăng Nhập (`unauthenticatedHeroCard`)**:
+    - Avatar biểu tượng dấu cộng sinh động với chấm trạng thái cam `• Chế độ Khách (Offline)`.
+    - Tiêu đề: **"Bạn chưa đăng nhập"**, phụ đề: *"Đăng nhập để đồng bộ dinh dưỡng món Việt & quản lý tài khoản"*.
+    - **Bộ đôi nút hành động nổi bật:**
+      - Nút chính xanh Botanical: **"→ Đăng nhập"** (mở trực tiếp trang Đăng nhập toàn màn hình).
+      - Nút phụ viền xanh: **"+ Đăng ký"** (mở trực tiếp trang Tạo tài khoản toàn màn hình).
+    - Dòng lưu ý an tâm: *"Dữ liệu calo & món ăn vẫn được lưu an toàn trong SwiftData trên máy"*.
+  - Khi người dùng đăng nhập thành công, thẻ Hero sẽ lập tức chuyển thành thẻ thông tin cá nhân đã xác thực (`personalHeroCard`).
+
 ---
 
-## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (9 Màn hình Hoàn chỉnh)
+## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (10 Màn hình Hoàn chỉnh)
 
 ````carousel
+![Hồ Sơ Cá Nhân Khi Chưa Đăng Nhập](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/profile_unauthenticated.png)
+<!-- slide -->
 ![Thông Tin Cá Nhân Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/personal_info_redesign.png)
 <!-- slide -->
 ![Sở Thích Dinh Dưỡng & Dị Ứng Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/preferences_redesign.png)
