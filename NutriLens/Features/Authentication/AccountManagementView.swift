@@ -18,20 +18,60 @@ public struct AccountManagementView: View {
     }
 
     public var body: some View {
-        NavigationStack {
-            ZStack {
-                // MARK: - Full Botanical Wallpaper (Matching HomeView)
-                Image("botanical_wallpaper")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
+        ZStack(alignment: .top) {
+            // MARK: - Full Botanical Wallpaper (Matching HomeView)
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+
+            VStack(spacing: 0) {
+                // MARK: - 0. Custom Top Bar (Safe below Dynamic Island)
+                HStack {
+                    HStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 38, height: 38)
+                                .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                            Image(systemName: "lock.shield.fill")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(AppColors.primary)
+                        }
+
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("Tài khoản & Bảo mật")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+                            Text("Quản lý phiên và lưu trữ thiết bị")
+                                .font(.system(size: 11))
+                                .foregroundColor(AppColors.textSecondary)
+                        }
+                    }
+
+                    Spacer()
+
+                    Button(action: onDismiss) {
+                        Text("Xong")
+                            .font(AppTypography.bodyBold)
+                            .foregroundColor(AppColors.forestGreen)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                    }
+                }
+                .padding(.horizontal, AppSpacing.screenHorizontal)
+                .padding(.top, 54)
+                .padding(.bottom, 8)
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: AppSpacing.lg) {
                         // MARK: - 1. Account Identity Card
                         accountIdentityCard
-                            .padding(.top, AppSpacing.sm)
+                            .padding(.top, 4)
 
                         // MARK: - 2. Guest Information Banner
                         if viewModel.isGuest || viewModel.currentUser == nil || viewModel.currentUser?.isMockAccount == true {
@@ -49,54 +89,45 @@ public struct AccountManagementView: View {
                         // MARK: - 5. Destructive Danger Zone
                         destructiveSection
                     }
-                    .padding(AppSpacing.screenHorizontal)
+                    .padding(.horizontal, AppSpacing.screenHorizontal)
                     .padding(.bottom, AppSpacing.xl)
                 }
             }
-            .navigationTitle("Tài khoản & Bảo mật")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Xong", action: onDismiss)
-                        .font(AppTypography.bodyBold)
-                        .foregroundColor(AppColors.primaryDark)
+        }
+        .confirmationDialog(
+            "Đăng xuất khỏi NutriLens?",
+            isPresented: $viewModel.showingLogoutConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Đăng xuất", role: .destructive) {
+                Task {
+                    await viewModel.logout()
+                    onDismiss()
                 }
             }
-            .confirmationDialog(
-                "Đăng xuất khỏi NutriLens?",
-                isPresented: $viewModel.showingLogoutConfirmation,
-                titleVisibility: .visible
-            ) {
-                Button("Đăng xuất", role: .destructive) {
-                    Task {
-                        await viewModel.logout()
-                        onDismiss()
-                    }
+            Button("Hủy", role: .cancel) {}
+        } message: {
+            Text("Dữ liệu nhật ký bữa ăn và lịch sử dinh dưỡng đã lưu trên máy sẽ vẫn được bảo lưu an toàn.")
+        }
+        .confirmationDialog(
+            viewModel.isGuest ? "Xác nhận xóa dữ liệu thiết bị?" : "Xác nhận xóa tài khoản?",
+            isPresented: $viewModel.showingDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button(viewModel.isGuest ? "Xóa dữ liệu thiết bị" : "Xóa vĩnh viễn tài khoản", role: .destructive) {
+                Task {
+                    await viewModel.deleteAccount()
+                    onDismiss()
                 }
-                Button("Hủy", role: .cancel) {}
-            } message: {
-                Text("Dữ liệu nhật ký bữa ăn và lịch sử dinh dưỡng đã lưu trên máy sẽ vẫn được bảo lưu an toàn.")
             }
-            .confirmationDialog(
-                viewModel.isGuest ? "Xác nhận xóa dữ liệu thiết bị?" : "Xác nhận xóa tài khoản?",
-                isPresented: $viewModel.showingDeleteConfirmation,
-                titleVisibility: .visible
-            ) {
-                Button(viewModel.isGuest ? "Xóa dữ liệu thiết bị" : "Xóa vĩnh viễn tài khoản", role: .destructive) {
-                    Task {
-                        await viewModel.deleteAccount()
-                        onDismiss()
-                    }
-                }
-                Button("Hủy", role: .cancel) {}
-            } message: {
-                Text(viewModel.isGuest
-                     ? "Toàn bộ thông tin nhật ký bữa ăn trên máy này sẽ được dọn sạch. Bạn sẽ quay về trạng thái ban đầu."
-                     : "Hành động này sẽ xóa phiên đăng nhập hiện tại và gỡ bỏ thông tin tài khoản trên thiết bị.")
-            }
-            .task {
-                await viewModel.loadSession()
-            }
+            Button("Hủy", role: .cancel) {}
+        } message: {
+            Text(viewModel.isGuest
+                 ? "Toàn bộ thông tin nhật ký bữa ăn trên máy này sẽ được dọn sạch. Bạn sẽ quay về trạng thái ban đầu."
+                 : "Hành động này sẽ xóa phiên đăng nhập hiện tại và gỡ bỏ thông tin tài khoản trên thiết bị.")
+        }
+        .task {
+            await viewModel.loadSession()
         }
     }
 

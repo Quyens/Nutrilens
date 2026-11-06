@@ -59,7 +59,7 @@ public struct RegisterView: View {
                                 .foregroundColor(AppColors.primary)
                         }
                     }
-                    .padding(.top, AppSpacing.xs)
+                    .padding(.top, 54)
 
                     // Title
                     VStack(alignment: .leading, spacing: 6) {

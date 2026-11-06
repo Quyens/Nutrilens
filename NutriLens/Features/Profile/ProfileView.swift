@@ -99,7 +99,7 @@ public struct ProfileView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .navigationBarHidden(true)
-            .sheet(isPresented: $showingNutritionGoalsSheet) {
+            .fullScreenCover(isPresented: $showingNutritionGoalsSheet) {
                 NutritionGoalsView(viewModel: viewModel) {
                     showingNutritionGoalsSheet = false
                 }

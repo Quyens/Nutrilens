@@ -155,7 +155,7 @@ public struct MainTabView: View {
                 isPresentingAuth = true
             })
         }
-        .sheet(isPresented: $isPresentingAuth) {
+        .fullScreenCover(isPresented: $isPresentingAuth) {
             AuthCoordinatorView(
                 viewModel: environment.makeAuthViewModel(
                     initialStep: ProcessInfo.processInfo.arguments.contains("-startAuthLogin") ? .login : (ProcessInfo.processInfo.arguments.contains("-startAuthWelcome") ? .welcome : authInitialStep),

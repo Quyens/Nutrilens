@@ -36,20 +36,60 @@ public struct NutritionGoalsView: View {
     }
 
     public var body: some View {
-        NavigationStack {
-            ZStack {
-                // MARK: - Full Botanical Wallpaper (Matching HomeView)
-                Image("botanical_wallpaper")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
+        ZStack(alignment: .top) {
+            // MARK: - Full Botanical Wallpaper (Matching HomeView)
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+
+            VStack(spacing: 0) {
+                // MARK: - 0. Custom Top Bar (Safe below Dynamic Island)
+                HStack {
+                    HStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 38, height: 38)
+                                .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                            Image(systemName: "flame.fill")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(AppColors.primary)
+                        }
+
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("Thiết lập mục tiêu")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(AppColors.textPrimary)
+                            Text("Ngân sách calo & đa lượng mỗi ngày")
+                                .font(.system(size: 11))
+                                .foregroundColor(AppColors.textSecondary)
+                        }
+                    }
+
+                    Spacer()
+
+                    Button(action: onDismiss) {
+                        Text("Đóng")
+                            .font(AppTypography.bodyBold)
+                            .foregroundColor(AppColors.forestGreen)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 7)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                    }
+                }
+                .padding(.horizontal, AppSpacing.screenHorizontal)
+                .padding(.top, 54)
+                .padding(.bottom, 8)
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: AppSpacing.lg) {
                         // MARK: - 1. Botanical Header Illustration Card
                         headerBannerCard
-                            .padding(.top, AppSpacing.sm)
+                            .padding(.top, 4)
 
                         // MARK: - 2. Dietary Goal Selector
                         dietaryGoalSection
@@ -77,16 +117,8 @@ public struct NutritionGoalsView: View {
                         }
                         .padding(.top, AppSpacing.xs)
                     }
-                    .padding(AppSpacing.screenHorizontal)
+                    .padding(.horizontal, AppSpacing.screenHorizontal)
                     .padding(.bottom, AppSpacing.xl)
-                }
-            }
-            .navigationTitle("Thiết lập mục tiêu")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Đóng", action: onDismiss)
-                        .foregroundColor(AppColors.textSecondary)
                 }
             }
         }

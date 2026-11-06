@@ -29,7 +29,7 @@ public struct WelcomeAuthView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: AppSpacing.lg) {
-                    // MARK: - Top Close Button (if presented modally)
+                    // MARK: - Top Close Button
                     HStack {
                         if viewModel.isMockMode {
                             HStack(spacing: 6) {
@@ -64,7 +64,7 @@ public struct WelcomeAuthView: View {
                             .accessibilityLabel("Đóng màn hình xác thực")
                         }
                     }
-                    .padding(.top, AppSpacing.xs)
+                    .padding(.top, 54)
 
                     // MARK: - Botanical Hero Branding
                     VStack(spacing: AppSpacing.md) {
