@@ -12,6 +12,8 @@ public struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
     private let onOpenSettings: () -> Void
     private let onOpenAccount: () -> Void
+    private let onOpenLogin: (() -> Void)?
+    private let onOpenRegister: (() -> Void)?
 
     @State private var showingNutritionGoalsSheet: Bool = false
     @State private var showingPersonalInfoSheet: Bool = false
@@ -21,22 +23,33 @@ public struct ProfileView: View {
     public init(
         viewModel: ProfileViewModel,
         onOpenSettings: @escaping () -> Void,
-        onOpenAccount: @escaping () -> Void = {}
+        onOpenAccount: @escaping () -> Void = {},
+        onOpenLogin: (() -> Void)? = nil,
+        onOpenRegister: (() -> Void)? = nil
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.onOpenSettings = onOpenSettings
         self.onOpenAccount = onOpenAccount
+        self.onOpenLogin = onOpenLogin
+        self.onOpenRegister = onOpenRegister
+    }
+
+    private var isAuthenticated: Bool {
+        viewModel.currentSession.isAuthenticated
     }
 
     private var isGuest: Bool {
-        viewModel.currentSession.isGuest
+        viewModel.currentSession.isGuest || !isAuthenticated
     }
 
     private var displayName: String {
-        if isGuest {
-            return "Khách NutriLens"
+        if let name = viewModel.currentSession.user?.displayName, !name.isEmpty {
+            return name
         }
-        return viewModel.currentSession.user?.displayName ?? viewModel.profile.name
+        if isAuthenticated {
+            return viewModel.profile.name
+        }
+        return "Khách NutriLens"
     }
 
     private var localizedGoal: String {
@@ -67,8 +80,12 @@ public struct ProfileView: View {
 
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 16) {
-                            // MARK: - 1. Personal Identity Hero Card
-                            personalHeroCard
+                            // MARK: - 1. Identity Hero Card (Adaptive to Auth State)
+                            if !isAuthenticated {
+                                unauthenticatedHeroCard
+                            } else {
+                                personalHeroCard
+                            }
 
                             // MARK: - 2. Featured Nutrition Targets Card
                             nutritionTargetsCard
@@ -117,6 +134,11 @@ public struct ProfileView: View {
             .fullScreenCover(isPresented: $showingAboutSheet) {
                 AboutView {
                     showingAboutSheet = false
+                }
+            }
+            .onAppear {
+                Task {
+                    await viewModel.loadProfile()
                 }
             }
             .task {
@@ -177,6 +199,138 @@ public struct ProfileView: View {
             .accessibilityLabel("Mở Cài đặt ứng dụng")
         }
         .padding(.vertical, 4)
+    }
+
+    private var unauthenticatedHeroCard: some View {
+        VStack(spacing: 14) {
+            HStack(spacing: 14) {
+                // Botanical Avatar Emblem with Plus
+                ZStack {
+                    Circle()
+                        .stroke(AppColors.primary.opacity(0.25), lineWidth: 2.5)
+                        .frame(width: 66, height: 66)
+
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [AppColors.surfaceSecondary, AppColors.softGreen.opacity(0.6)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 58, height: 58)
+
+                    Image(systemName: "person.crop.circle.badge.plus")
+                        .font(.system(size: 28, weight: .semibold))
+                        .foregroundColor(AppColors.forestGreen)
+
+                    Circle()
+                        .fill(AppColors.carbsOrange)
+                        .frame(width: 14, height: 14)
+                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                        .offset(x: 20, y: 20)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Bạn chưa đăng nhập")
+                        .font(.system(size: 19, weight: .bold))
+                        .foregroundColor(AppColors.textPrimary)
+
+                    Text("Đăng nhập để đồng bộ dinh dưỡng món Việt & quản lý tài khoản")
+                        .font(.system(size: 11))
+                        .foregroundColor(AppColors.textSecondary)
+                        .lineLimit(2)
+
+                    HStack(spacing: 5) {
+                        Circle()
+                            .fill(AppColors.carbsOrange)
+                            .frame(width: 6, height: 6)
+                        Text("Chế độ Khách (Offline)")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(AppColors.forestGreen)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(AppColors.surfaceSecondary)
+                    .clipShape(Capsule())
+                    .padding(.top, 1)
+                }
+
+                Spacer()
+            }
+
+            // Dual CTA Buttons: Đăng nhập & Đăng ký
+            HStack(spacing: 10) {
+                Button {
+                    if let onOpenLogin {
+                        onOpenLogin()
+                    } else {
+                        onOpenAccount()
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.right.circle.fill")
+                            .font(.system(size: 13, weight: .bold))
+                        Text("Đăng nhập")
+                            .font(AppTypography.bodyBold)
+                    }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 42)
+                    .background(
+                        LinearGradient(
+                            colors: [Color(hex: "2EA66B"), Color(hex: "1F7A4D")],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .shadow(color: AppColors.primary.opacity(0.2), radius: 5, y: 2)
+                }
+
+                Button {
+                    if let onOpenRegister {
+                        onOpenRegister()
+                    } else {
+                        onOpenAccount()
+                    }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "person.badge.plus")
+                            .font(.system(size: 13, weight: .bold))
+                        Text("Đăng ký")
+                            .font(AppTypography.bodyBold)
+                    }
+                    .foregroundColor(AppColors.forestGreen)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 42)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .stroke(AppColors.primary.opacity(0.35), lineWidth: 1.5)
+                    )
+                    .shadow(color: Color.black.opacity(0.03), radius: 4, y: 2)
+                }
+            }
+
+            // Trust note
+            HStack(spacing: 6) {
+                Image(systemName: "internaldrive.fill")
+                    .font(.system(size: 10))
+                    .foregroundColor(AppColors.primary)
+                Text("Dữ liệu calo & món ăn vẫn được lưu an toàn trong SwiftData trên máy")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(AppColors.textTertiary)
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+        )
+        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
     }
 
     private var personalHeroCard: some View {

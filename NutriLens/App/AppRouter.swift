@@ -125,6 +125,15 @@ public struct MainTabView: View {
                             isPresentingSettings = true
                         },
                         onOpenAccount: {
+                            authInitialStep = .accountManagement
+                            isPresentingAuth = true
+                        },
+                        onOpenLogin: {
+                            authInitialStep = .login
+                            isPresentingAuth = true
+                        },
+                        onOpenRegister: {
+                            authInitialStep = .register
                             isPresentingAuth = true
                         }
                     )
