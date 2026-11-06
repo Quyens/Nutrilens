@@ -48,11 +48,25 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
     - Dòng lưu ý an tâm: *"Dữ liệu calo & món ăn vẫn được lưu an toàn trong SwiftData trên máy"*.
   - Khi người dùng đăng nhập thành công, thẻ Hero sẽ lập tức chuyển thành thẻ thông tin cá nhân đã xác thực (`personalHeroCard`).
 
+### 1.5 Thiết kế lại "Khám phá món ăn" trên Trang chủ ([`HomeView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Home/HomeView.swift#L298))
+- **Vấn đề trước đây:** Thanh ngang *"Khám phá 35+ món ăn Việt Nam"* bị xếp kẹp chật chội ngay giữa thẻ Quét AI và danh sách Bữa ăn hôm nay, tạo cảm giác 2 banner liên tiếp bị lặp và thiếu tự nhiên. Đồng thời phần đỉnh thanh điều hướng bị Dynamic Island che khuất.
+- **Giải pháp thiết kế mới hoàn thiện:**
+  1. **Loại bỏ banner kẹp ở giữa:** Thẻ Quét món ăn bằng AI giờ đây liên kết liền mạch và trực tiếp với khu vực Bữa ăn hôm nay, tạo nhịp thị giác thoáng đãng và sạch sẽ.
+  2. **Nâng cấp thành Khối Khám Phá Món Việt dạng Carousel Cuộn Ngang (`VietnameseFoodDiscoverySection`):**
+     - Đặt ngay sau khu vực bữa ăn của ngày, biến thành một chuyên mục ẩm thực đặc sắc.
+     - Tiêu đề **"Khám phá món Việt"** kèm nút **"Tất cả ›"**.
+     - Băng chuyền cuộn ngang các món ăn truyền thống nổi tiếng với hình ảnh chụp thực tế sắc nét (*Phở Bò Tái Nạm, Bún Chả Hà Nội, Cơm Tấm Sườn Bì, Bánh Mì Thịt Nướng...*), định lượng gram, lượng calo và đa lượng đạm. Chạm vào bất kỳ thẻ món nào để xem chi tiết dinh dưỡng.
+  3. **Khắc phục lỗi Dynamic Island:** Tăng khoảng đệm đỉnh trang chủ lên 52 pt, giúp logo thương hiệu NutriLens và các nút Tìm kiếm, Thông báo, Avatar nằm an toàn tuyệt đối bên dưới Dynamic Island.
+
 ---
 
-## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (10 Màn hình Hoàn chỉnh)
+## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (11 Màn hình Hoàn chỉnh)
 
 ````carousel
+![Trang Chủ Đã Thiết Kế Lại](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/home_redesign.png)
+<!-- slide -->
+![Nhật Ký Bữa Ăn Nền Lá Rực Rỡ](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/meal_history_redesign.png)
+<!-- slide -->
 ![Hồ Sơ Cá Nhân Khi Chưa Đăng Nhập](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/profile_unauthenticated.png)
 <!-- slide -->
 ![Thông Tin Cá Nhân Toàn Trang](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/personal_info_redesign.png)
