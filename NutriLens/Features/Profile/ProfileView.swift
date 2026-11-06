@@ -79,7 +79,7 @@ public struct ProfileView: View {
                         .padding(.bottom, 6)
 
                     ScrollView(showsIndicators: false) {
-                        VStack(spacing: 16) {
+                        VStack(spacing: 14) {
                             // MARK: - 1. Identity Hero Card (Adaptive to Auth State)
                             if !isAuthenticated {
                                 unauthenticatedHeroCard
@@ -90,14 +90,10 @@ public struct ProfileView: View {
                             // MARK: - 2. Featured Nutrition Targets Card
                             nutritionTargetsCard
 
-                            // MARK: - 3. Quick Health Metrics Widgets
-                            quickMetricsSection
+                            // MARK: - 3. Unified Profile Menu Card (Section 4.4 Spec)
+                            unifiedMenuCard
 
-                            // MARK: - 4. Grouped Profile Settings Cards
-                            accountAndDataCard
-                            appAndAboutCard
-
-                            // MARK: - 5. Footer
+                            // MARK: - 4. Footer
                             VStack(spacing: 4) {
                                 Text("NutriLens • AI Dinh Dưỡng Thuần Việt")
                                     .font(AppTypography.caption)
@@ -107,10 +103,10 @@ public struct ProfileView: View {
                                     .foregroundColor(AppColors.textTertiary)
                             }
                             .padding(.top, 4)
-                            .padding(.bottom, 130) // Generous clearance for floating tab bar
+                            .padding(.bottom, 120) // Generous clearance for floating tab bar
                         }
                         .padding(.horizontal, AppSpacing.screenHorizontal)
-                        .padding(.top, 6)
+                        .padding(.top, 4)
                     }
                 }
             }
@@ -141,6 +137,11 @@ public struct ProfileView: View {
                     await viewModel.loadProfile()
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("NutriLensAuthSessionChanged"))) { _ in
+                Task {
+                    await viewModel.loadProfile()
+                }
+            }
             .task {
                 await viewModel.loadProfile()
                 if ProcessInfo.processInfo.arguments.contains("-startNutritionGoals") {
@@ -164,22 +165,17 @@ public struct ProfileView: View {
                 ZStack {
                     Circle()
                         .fill(Color.white)
-                        .frame(width: 38, height: 38)
+                        .frame(width: 36, height: 36)
                         .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 2)
 
                     Image(systemName: "leaf.fill")
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.system(size: 17, weight: .bold))
                         .foregroundColor(AppColors.primary)
                 }
 
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("Hồ sơ cá nhân")
-                        .font(.system(size: 19, weight: .bold))
-                        .foregroundColor(AppColors.textPrimary)
-                    Text("Trung tâm sức khỏe & mục tiêu")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(AppColors.textSecondary)
-                }
+                Text("Hồ sơ")
+                    .font(.system(size: 24, weight: .bold, design: .serif))
+                    .foregroundColor(AppColors.textPrimary)
             }
 
             Spacer()
@@ -188,27 +184,27 @@ public struct ProfileView: View {
                 ZStack {
                     Circle()
                         .fill(Color.white)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 38, height: 38)
                         .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 2)
 
                     Image(systemName: "gearshape.fill")
-                        .font(.system(size: 18))
+                        .font(.system(size: 16))
                         .foregroundColor(AppColors.forestGreen)
                 }
             }
             .accessibilityLabel("Mở Cài đặt ứng dụng")
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 2)
     }
 
     private var unauthenticatedHeroCard: some View {
-        VStack(spacing: 14) {
-            HStack(spacing: 14) {
+        VStack(spacing: 12) {
+            HStack(spacing: 12) {
                 // Botanical Avatar Emblem with Plus
                 ZStack {
                     Circle()
-                        .stroke(AppColors.primary.opacity(0.25), lineWidth: 2.5)
-                        .frame(width: 66, height: 66)
+                        .stroke(AppColors.primary.opacity(0.25), lineWidth: 2)
+                        .frame(width: 58, height: 58)
 
                     Circle()
                         .fill(
@@ -218,42 +214,43 @@ public struct ProfileView: View {
                                 endPoint: .bottomTrailing
                             )
                         )
-                        .frame(width: 58, height: 58)
+                        .frame(width: 50, height: 50)
 
                     Image(systemName: "person.crop.circle.badge.plus")
-                        .font(.system(size: 28, weight: .semibold))
+                        .font(.system(size: 24, weight: .semibold))
                         .foregroundColor(AppColors.forestGreen)
 
                     Circle()
                         .fill(AppColors.carbsOrange)
-                        .frame(width: 14, height: 14)
+                        .frame(width: 12, height: 12)
                         .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                        .offset(x: 20, y: 20)
+                        .offset(x: 17, y: 17)
                 }
 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Bạn chưa đăng nhập")
-                        .font(.system(size: 19, weight: .bold))
-                        .foregroundColor(AppColors.textPrimary)
+                    HStack(spacing: 6) {
+                        Text("Khách NutriLens")
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundColor(AppColors.textPrimary)
 
-                    Text("Đăng nhập để đồng bộ dinh dưỡng món Việt & quản lý tài khoản")
+                        HStack(spacing: 4) {
+                            Circle()
+                                .fill(AppColors.carbsOrange)
+                                .frame(width: 5, height: 5)
+                            Text("Chế độ khách")
+                                .font(.system(size: 10.5, weight: .bold))
+                                .foregroundColor(AppColors.forestGreen)
+                        }
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 2.5)
+                        .background(AppColors.surfaceSecondary)
+                        .clipShape(Capsule())
+                    }
+
+                    Text("Đăng nhập để đồng bộ dinh dưỡng & quản lý tài khoản")
                         .font(.system(size: 11))
                         .foregroundColor(AppColors.textSecondary)
-                        .lineLimit(2)
-
-                    HStack(spacing: 5) {
-                        Circle()
-                            .fill(AppColors.carbsOrange)
-                            .frame(width: 6, height: 6)
-                        Text("Chế độ Khách (Offline)")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(AppColors.forestGreen)
-                    }
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(AppColors.surfaceSecondary)
-                    .clipShape(Capsule())
-                    .padding(.top, 1)
+                        .lineLimit(1)
                 }
 
                 Spacer()
@@ -276,7 +273,7 @@ public struct ProfileView: View {
                     }
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 42)
+                    .frame(height: 38)
                     .background(
                         LinearGradient(
                             colors: [Color(hex: "2EA66B"), Color(hex: "1F7A4D")],
@@ -285,7 +282,7 @@ public struct ProfileView: View {
                         )
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                    .shadow(color: AppColors.primary.opacity(0.2), radius: 5, y: 2)
+                    .shadow(color: AppColors.primary.opacity(0.2), radius: 4, y: 2)
                 }
 
                 Button {
@@ -303,7 +300,7 @@ public struct ProfileView: View {
                     }
                     .foregroundColor(AppColors.forestGreen)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 42)
+                    .frame(height: 38)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .overlay(
@@ -324,13 +321,13 @@ public struct ProfileView: View {
                     .foregroundColor(AppColors.textTertiary)
             }
         }
-        .padding(16)
+        .padding(14)
         .background(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color.white)
                 .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
         )
-        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(AppColors.border, lineWidth: 1))
     }
 
     private var personalHeroCard: some View {
@@ -512,89 +509,19 @@ public struct ProfileView: View {
         )
     }
 
-    private var quickMetricsSection: some View {
-        HStack(spacing: 12) {
-            // Metric 1: Biometrics
-            Button {
-                showingPersonalInfoSheet = true
-            } label: {
-                HStack(spacing: 10) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(AppColors.surfaceSecondary)
-                            .frame(width: 40, height: 40)
-                        Image(systemName: "figure.walk")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(AppColors.primary)
-                    }
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Thể trạng")
-                            .font(.system(size: 11, weight: .medium))
-                            .foregroundColor(AppColors.textSecondary)
-                        Text("Cân nặng & BMI")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-
-                    Spacer()
-                }
-                .padding(12)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
-                .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(AppColors.border, lineWidth: 1))
-            }
-            .buttonStyle(PlainButtonStyle())
-
-            // Metric 2: Water Target
-            Button {
-                showingPreferencesSheet = true
-            } label: {
-                HStack(spacing: 10) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color(hex: "E8F2FA"))
-                            .frame(width: 40, height: 40)
-                        Image(systemName: "drop.fill")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(AppColors.proteinBlue)
-                    }
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Nước uống")
-                            .font(.system(size: 11, weight: .medium))
-                            .foregroundColor(AppColors.textSecondary)
-                        Text("2.000 ml / ngày")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-
-                    Spacer()
-                }
-                .padding(12)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
-                .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(AppColors.border, lineWidth: 1))
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
-    }
-
-    private var accountAndDataCard: some View {
+    private var unifiedMenuCard: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("TÀI KHOẢN & DỮ LIỆU")
+            Text("TÙY CHỌN & THIẾT LẬP")
                 .font(.system(size: 11, weight: .bold))
                 .foregroundColor(AppColors.textSecondary)
                 .padding(.leading, 4)
 
             VStack(spacing: 0) {
                 ProfileMenuRow(
-                    icon: "lock.shield.fill",
-                    title: "Tài khoản & Bảo mật",
-                    subtitle: isGuest ? "Đang dùng Chế độ Khách (Lưu nội bộ)" : "Quản lý phiên đăng nhập và dữ liệu",
-                    action: onOpenAccount
+                    icon: "person.text.rectangle.fill",
+                    title: "Thông tin cá nhân",
+                    subtitle: "Chỉ số thể trạng, cân nặng & BMI",
+                    action: { showingPersonalInfoSheet = true }
                 )
 
                 Divider()
@@ -607,27 +534,22 @@ public struct ProfileView: View {
                     subtitle: "Món ăn ưa thích, kiêng cữ cá nhân",
                     action: { showingPreferencesSheet = true }
                 )
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color.white)
-                    .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(AppColors.border, lineWidth: 1)
-            )
-        }
-    }
 
-    private var appAndAboutCard: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("ỨNG DỤNG & THIẾT LẬP")
-                .font(.system(size: 11, weight: .bold))
-                .foregroundColor(AppColors.textSecondary)
-                .padding(.leading, 4)
+                Divider()
+                    .padding(.leading, 56)
+                    .background(AppColors.divider)
 
-            VStack(spacing: 0) {
+                ProfileMenuRow(
+                    icon: "lock.shield.fill",
+                    title: "Tài khoản & Bảo mật",
+                    subtitle: isGuest ? "Chế độ Khách (Lưu nội bộ)" : "Quản lý phiên đăng nhập và dữ liệu",
+                    action: onOpenAccount
+                )
+
+                Divider()
+                    .padding(.leading, 56)
+                    .background(AppColors.divider)
+
                 ProfileMenuRow(
                     icon: "gearshape.fill",
                     title: "Cài đặt ứng dụng",

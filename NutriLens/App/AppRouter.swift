@@ -164,7 +164,9 @@ public struct MainTabView: View {
                 isPresentingAuth = true
             })
         }
-        .fullScreenCover(isPresented: $isPresentingAuth) {
+        .fullScreenCover(isPresented: $isPresentingAuth, onDismiss: {
+            NotificationCenter.default.post(name: NSNotification.Name("NutriLensAuthSessionChanged"), object: nil)
+        }) {
             AuthCoordinatorView(
                 viewModel: environment.makeAuthViewModel(
                     initialStep: ProcessInfo.processInfo.arguments.contains("-startAuthLogin") ? .login : (ProcessInfo.processInfo.arguments.contains("-startAuthWelcome") ? .welcome : authInitialStep),

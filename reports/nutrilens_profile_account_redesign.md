@@ -36,17 +36,24 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
    - Xóa bỏ `NavigationStack` toolbar mặc định gây lỗi chồng chữ trên iOS 17+.
    - Thay thế bằng **Custom Floating Top Bar** với khoảng đệm `padding(.top, 54)` chuẩn Apple HIG, hoàn toàn an toàn bên dưới Dynamic Island và Status Bar, đi kèm nút bo góc viên nang (*"Xong"* / *"Đóng"* / *"Quay lại"*).
 
-### 1.4 Trạng thái Hồ sơ cá nhân khi Chưa Đăng nhập ([`ProfileView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift#L190))
-- **Vấn đề trước đây:** Khi người dùng chưa đăng nhập, giao diện vẫn hiển thị thẻ hồ sơ *"NutriUser • Đã xác thực"* như thể đã đăng nhập, và không có nút Đăng nhập hay Đăng ký nào trên màn hình.
+### 1.4 Tối ưu hóa Hồ sơ cá nhân & Thẻ Menu Hợp Nhất 5 Mục ([`ProfileView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift#L157))
+- **Vấn đề trước đây:** 
+  - Tiêu đề "Hồ sơ cá nhân / Trung tâm sức khỏe & mục tiêu" chiếm nhiều diện tích.
+  - Các mục cài đặt bị chia cắt thành 2 thẻ rời ("Tài khoản & dữ liệu" và "Ứng dụng & thiết lập") cộng với 2 widget thể trạng, làm trang bị quá dài và mục "Giới thiệu về NutriLens" bị thanh tab bar nổi che lấp mất một nửa.
 - **Giải pháp thiết kế mới hoàn thiện:**
-  - Tích hợp **Thẻ Hero Chưa Đăng Nhập (`unauthenticatedHeroCard`)**:
-    - Avatar biểu tượng dấu cộng sinh động với chấm trạng thái cam `• Chế độ Khách (Offline)`.
-    - Tiêu đề: **"Bạn chưa đăng nhập"**, phụ đề: *"Đăng nhập để đồng bộ dinh dưỡng món Việt & quản lý tài khoản"*.
-    - **Bộ đôi nút hành động nổi bật:**
-      - Nút chính xanh Botanical: **"→ Đăng nhập"** (mở trực tiếp trang Đăng nhập toàn màn hình).
-      - Nút phụ viền xanh: **"+ Đăng ký"** (mở trực tiếp trang Tạo tài khoản toàn màn hình).
-    - Dòng lưu ý an tâm: *"Dữ liệu calo & món ăn vẫn được lưu an toàn trong SwiftData trên máy"*.
-  - Khi người dùng đăng nhập thành công, thẻ Hero sẽ lập tức chuyển thành thẻ thông tin cá nhân đã xác thực (`personalHeroCard`).
+  1. **Chuẩn hóa tiêu đề "Hồ sơ":** Font serif sang trọng 24pt, logo mầm lá xanh bên trái và nút bánh răng Cài đặt ở góc phải, giữ trọn vẹn diện tích hiển thị.
+  2. **Thẻ Hero "Khách NutriLens":** 
+     - Biểu tượng mầm xanh viền cam `• Chế độ khách`.
+     - Bộ đôi nút hành động nổi bật: nút chính xanh ngọc **"→ Đăng nhập"** và nút phụ viền xanh **"+ Đăng ký"**.
+     - Thông báo lưu trữ an toàn trong SwiftData nội bộ.
+  3. **Thẻ Menu Hợp Nhất 5 Mục (Unified Profile Menu Card):**
+     - Gom toàn bộ 5 tùy chọn cốt lõi vào **duy nhất 1 thẻ trắng thanh lịch** với đổ bóng nhẹ:
+       1. **Thông tin cá nhân:** Chỉ số thể trạng, cân nặng & BMI.
+       2. **Sở thích dinh dưỡng & Dị ứng:** Món ăn ưa thích, kiêng cữ cá nhân.
+       3. **Tài khoản & Bảo mật:** Quản lý phiên đăng nhập và dữ liệu.
+       4. **Cài đặt ứng dụng:** Thông báo, camera AI, quyền riêng tư.
+       5. **Giới thiệu về NutriLens:** Công nghệ nhận diện AI món Việt on-device.
+     - Toàn bộ 5 mục hiển thị trọn vẹn, không còn bị tab bar che khuất hay chém đôi. Khoảng đệm đáy 120pt đảm bảo khi cuộn xuống vẫn cực kỳ thoáng mắt.
 
 ### 1.5 Thiết kế lại "Khám phá món ăn" trên Trang chủ ([`HomeView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Home/HomeView.swift#L298))
 - **Vấn đề trước đây:** Thanh ngang *"Khám phá 35+ món ăn Việt Nam"* bị xếp kẹp chật chội ngay giữa thẻ Quét AI và danh sách Bữa ăn hôm nay, tạo cảm giác 2 banner liên tiếp bị lặp và thiếu tự nhiên. Đồng thời phần đỉnh thanh điều hướng bị Dynamic Island che khuất.
