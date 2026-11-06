@@ -20,6 +20,12 @@ public struct RawClassificationResult: Sendable {
 }
 
 public protocol ModelInferenceProtocol: Sendable {
-    /// Executes Core ML prediction against preprocessed pixel buffer.
+    /// True if the compiled NutriLens Core ML model (.mlmodelc) is bundled and active
+    var isCustomModelActive: Bool { get }
+
+    /// Human-readable description of the active inference engine
+    var activeEngineDescription: String { get }
+
+    /// Executes prediction against preprocessed pixel buffer.
     func infer(pixelBuffer: CVPixelBuffer) async throws -> [RawClassificationResult]
 }

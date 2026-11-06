@@ -25,9 +25,14 @@ public final class ImagePreprocessor: ImagePreprocessorProtocol {
         }
 
         let context = CIContext()
-        let scaleX = targetSize.width / ciImage.extent.width
-        let scaleY = targetSize.height / ciImage.extent.height
-        let transformed = ciImage.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
+        // Aspect-fill and center crop to preserve food geometry parity with PyTorch T.Resize(224) + T.CenterCrop(224)
+        let scale = max(targetSize.width / ciImage.extent.width, targetSize.height / ciImage.extent.height)
+        let scaledImage = ciImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
+
+        let cropOriginX = (scaledImage.extent.width - targetSize.width) / 2.0
+        let cropOriginY = (scaledImage.extent.height - targetSize.height) / 2.0
+        let cropped = scaledImage.cropped(to: CGRect(x: cropOriginX, y: cropOriginY, width: targetSize.width, height: targetSize.height))
+            .transformed(by: CGAffineTransform(translationX: -cropOriginX, y: -cropOriginY))
 
         var pixelBuffer: CVPixelBuffer?
         let attrs = [
@@ -48,7 +53,7 @@ public final class ImagePreprocessor: ImagePreprocessorProtocol {
             throw AppError.imageProcessingFailed("Could not allocate CVPixelBuffer.")
         }
 
-        context.render(transformed, to: buffer)
+        context.render(cropped, to: buffer)
         return buffer
     }
 }

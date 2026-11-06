@@ -37,15 +37,21 @@ public struct RecognitionResult: Equatable, Sendable {
     public let candidates: [DetectedFoodCandidate]
     public let isOutOfDistribution: Bool
     public let inferenceDurationSeconds: TimeInterval
+    public let modelVersion: String
+    public let inferenceEngineName: String
 
     public init(
         candidates: [DetectedFoodCandidate],
         isOutOfDistribution: Bool,
-        inferenceDurationSeconds: TimeInterval
+        inferenceDurationSeconds: TimeInterval,
+        modelVersion: String = "1.0.0-phase4",
+        inferenceEngineName: String = "NutriLens Core ML"
     ) {
         self.candidates = candidates
         self.isOutOfDistribution = isOutOfDistribution
         self.inferenceDurationSeconds = inferenceDurationSeconds
+        self.modelVersion = modelVersion
+        self.inferenceEngineName = inferenceEngineName
     }
 
     public var primaryFood: FoodItem? {

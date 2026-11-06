@@ -59,6 +59,8 @@ def main():
 
     assets_file_ref_id = gen_id("FILE_REF_ASSETS")
     assets_build_file_id = gen_id("BUILD_FILE_ASSETS")
+    model_file_ref_id = gen_id("FILE_REF_FOODCLASSIFIER")
+    model_build_file_id = gen_id("BUILD_FILE_FOODCLASSIFIER")
 
     # Start PBX objects dict
     objects = {}
@@ -95,6 +97,19 @@ def main():
         "fileRef": assets_file_ref_id
     }
     app_group_children.append(assets_file_ref_id)
+
+    # Core ML Model
+    objects[model_file_ref_id] = {
+        "isa": "PBXFileReference",
+        "lastKnownFileType": "wrapper.mlmodelc",
+        "path": "NutriLens/AI/Models/FoodClassifier.mlmodelc",
+        "sourceTree": "<group>"
+    }
+    objects[model_build_file_id] = {
+        "isa": "PBXBuildFile",
+        "fileRef": model_file_ref_id
+    }
+    app_group_children.append(model_file_ref_id)
 
     # Unit Tests sources
     test_sources_build_files = []
@@ -167,7 +182,7 @@ def main():
     objects[app_resources_build_phase_id] = {
         "isa": "PBXResourcesBuildPhase",
         "buildActionMask": "2147483647",
-        "files": [assets_build_file_id],
+        "files": [assets_build_file_id, model_build_file_id],
         "runOnlyForDeploymentPostprocessing": "0"
     }
     objects[app_frameworks_build_phase_id] = {
