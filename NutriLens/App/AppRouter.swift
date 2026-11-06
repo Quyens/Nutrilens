@@ -178,7 +178,9 @@ public struct MainTabView: View {
             )
         }
         .onAppear {
-            if ProcessInfo.processInfo.arguments.contains("-startTabProfile") {
+            if ProcessInfo.processInfo.arguments.contains("-startTabHistory") {
+                selectedTab = .history
+            } else if ProcessInfo.processInfo.arguments.contains("-startTabProfile") {
                 selectedTab = .profile
             } else if ProcessInfo.processInfo.arguments.contains("-startAccountSecurity") {
                 selectedTab = .profile

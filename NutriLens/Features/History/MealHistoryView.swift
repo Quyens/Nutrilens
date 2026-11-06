@@ -31,7 +31,7 @@ public struct MealHistoryView: View {
                     // 1. Top Header: Title, Month Navigation, Today Button & Search Toggle
                     topHeaderView
                         .padding(.horizontal, AppSpacing.screenHorizontal)
-                        .padding(.top, 14)
+                        .padding(.top, 54)
                         .padding(.bottom, AppSpacing.xs)
 
                     // 2. Horizontal Weekly Calendar Strip
@@ -124,20 +124,11 @@ public struct MealHistoryView: View {
     // MARK: - Background
 
     private var botanicalBackgroundView: some View {
-        ZStack {
-            #if canImport(UIKit)
-            if let _ = UIImage(named: "botanical_wallpaper") {
-                Image("botanical_wallpaper")
-                    .resizable()
-                    .scaledToFill()
-                    .overlay(AppColors.background.opacity(0.92))
-            } else {
-                AppColors.background
-            }
-            #else
-            AppColors.background
-            #endif
-        }
+        Image("botanical_wallpaper")
+            .resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+            .allowsHitTesting(false)
     }
 
     // MARK: - Top Header
@@ -187,11 +178,12 @@ public struct MealHistoryView: View {
                     } label: {
                         Text("Hôm nay")
                             .font(.system(size: 12, weight: .semibold))
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 6)
-                            .background(AppColors.primaryGreen.opacity(0.12))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 7)
+                            .background(Color.white)
                             .foregroundColor(AppColors.primaryGreen)
-                            .cornerRadius(12)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.06), radius: 4, y: 2)
                     }
                 }
 
@@ -207,13 +199,15 @@ public struct MealHistoryView: View {
                         }
                     }
                 } label: {
-                    Image(systemName: viewModel.isSearching ? "xmark.circle.fill" : "magnifyingglass")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(viewModel.isSearching ? AppColors.primaryGreen : AppColors.textSecondary)
-                        .frame(width: 36, height: 36)
-                        .background(AppColors.cardBackground)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(AppColors.borderSubtle, lineWidth: 1))
+                    ZStack {
+                        Circle()
+                            .fill(Color.white)
+                            .frame(width: 40, height: 40)
+                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                        Image(systemName: viewModel.isSearching ? "xmark.circle.fill" : "magnifyingglass")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundColor(AppColors.primary)
+                    }
                 }
                 .accessibilityIdentifier("diary_search_toggle")
             }
@@ -251,19 +245,19 @@ public struct MealHistoryView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
                     .background(
-                        isSelected ? AppColors.primaryGreen : AppColors.cardBackground
+                        isSelected ? AppColors.primaryGreen : Color.white
                     )
                     .cornerRadius(AppRadius.md)
                     .overlay(
                         RoundedRectangle(cornerRadius: AppRadius.md)
                             .stroke(
-                                isSelected ? Color.clear : (isToday ? AppColors.primaryGreen.opacity(0.4) : AppColors.borderSubtle),
+                                isSelected ? Color.clear : (isToday ? AppColors.primaryGreen.opacity(0.4) : AppColors.border),
                                 lineWidth: isToday ? 1.5 : 1
                             )
                     )
                     .shadow(
-                        color: isSelected ? AppColors.primaryGreen.opacity(0.25) : Color.black.opacity(0.02),
-                        radius: isSelected ? 4 : 2,
+                        color: isSelected ? AppColors.primaryGreen.opacity(0.25) : Color.black.opacity(0.04),
+                        radius: isSelected ? 4 : 3,
                         x: 0,
                         y: 2
                     )
@@ -354,7 +348,7 @@ public struct MealHistoryView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(
-                isSelected ? AppColors.primaryGreen : AppColors.cardBackground
+                isSelected ? AppColors.primaryGreen : Color.white
             )
             .foregroundColor(
                 isSelected ? .white : AppColors.textSecondary
@@ -362,8 +356,9 @@ public struct MealHistoryView: View {
             .cornerRadius(14)
             .overlay(
                 RoundedRectangle(cornerRadius: 14)
-                    .stroke(isSelected ? Color.clear : AppColors.borderSubtle, lineWidth: 1)
+                    .stroke(isSelected ? Color.clear : AppColors.border, lineWidth: 1)
             )
+            .shadow(color: Color.black.opacity(0.04), radius: 3, y: 1)
         }
         .buttonStyle(.plain)
     }
@@ -536,14 +531,16 @@ public struct MealHistoryView: View {
                 )
             }
         }
-        .padding(AppSpacing.md)
-        .background(AppColors.cardBackground)
-        .cornerRadius(AppRadius.card)
-        .overlay(
-            RoundedRectangle(cornerRadius: AppRadius.card)
-                .stroke(AppColors.borderSubtle, lineWidth: 1)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
         )
-        .shadow(color: Color.black.opacity(0.03), radius: 6, x: 0, y: 2)
+        .overlay(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .stroke(AppColors.border, lineWidth: 1)
+        )
     }
 
     private func macroSummaryItem(name: String, consumed: Double, target: Double, color: Color) -> some View {
@@ -647,11 +644,13 @@ public struct MealHistoryView: View {
             }
             .padding(.horizontal, AppSpacing.md)
             .padding(.vertical, 12)
-            .background(AppColors.cardBackground.opacity(0.6))
-            .cornerRadius(AppRadius.md)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(Color.white.opacity(0.85))
+            )
             .overlay(
-                RoundedRectangle(cornerRadius: AppRadius.md)
-                    .stroke(AppColors.borderSubtle, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .stroke(AppColors.primary.opacity(0.25), style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
             )
         }
         .buttonStyle(.plain)
@@ -728,14 +727,16 @@ public struct MealHistoryView: View {
                     }
                 }
             }
-            .padding(AppSpacing.sm + 2)
-            .background(AppColors.cardBackground)
-            .cornerRadius(AppRadius.md)
-            .overlay(
-                RoundedRectangle(cornerRadius: AppRadius.md)
-                    .stroke(AppColors.borderSubtle, lineWidth: 1)
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
             )
-            .shadow(color: Color.black.opacity(0.02), radius: 3, x: 0, y: 1)
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(AppColors.border, lineWidth: 1)
+            )
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("diary_meal_card_\(meal.id.uuidString)")
@@ -836,12 +837,15 @@ public struct MealHistoryView: View {
             .padding(.bottom, AppSpacing.sm)
         }
         .frame(maxWidth: .infinity)
-        .padding(AppSpacing.md)
-        .background(AppColors.cardBackground)
-        .cornerRadius(AppRadius.card)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+        )
         .overlay(
-            RoundedRectangle(cornerRadius: AppRadius.card)
-                .stroke(AppColors.borderSubtle, lineWidth: 1)
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .stroke(AppColors.border, lineWidth: 1)
         )
     }
 
