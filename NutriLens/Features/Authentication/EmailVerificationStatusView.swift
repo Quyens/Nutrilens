@@ -3,7 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
-//  Fresh Premium Botanical Email Verification status screen.
+//  Fresh Premium Botanical Email Verification status screen with full wallpaper integration.
 //
 
 import SwiftUI
@@ -19,55 +19,66 @@ public struct EmailVerificationStatusView: View {
 
     public var body: some View {
         ZStack {
-            // Background
-            AppColors.canvasBackground.ignoresSafeArea()
-
+            // MARK: - Full Botanical Wallpaper (Matching HomeView)
             Image("botanical_wallpaper")
                 .resizable()
                 .scaledToFill()
-                .opacity(0.10)
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
 
             VStack(spacing: AppSpacing.xl) {
                 Spacer()
 
-                // Verification Icon
-                ZStack {
-                    Circle()
-                        .stroke(AppColors.primary.opacity(0.2), lineWidth: 3)
-                        .frame(width: 96, height: 96)
+                // Center Floating Card
+                VStack(spacing: 20) {
+                    // Verification Icon
+                    ZStack {
+                        Circle()
+                            .fill(Color.white)
+                            .frame(width: 96, height: 96)
+                            .shadow(color: Color.black.opacity(0.08), radius: 10, y: 3)
 
-                    Circle()
-                        .fill(AppColors.surfaceSecondary)
-                        .frame(width: 86, height: 86)
+                        Circle()
+                            .stroke(AppColors.primary.opacity(0.25), lineWidth: 2)
+                            .frame(width: 96, height: 96)
 
-                    Image(systemName: viewModel.currentUser?.isEmailVerified == true ? "checkmark.seal.fill" : "envelope.badge.shield.half.filled")
-                        .font(.system(size: 42))
-                        .foregroundColor(viewModel.currentUser?.isEmailVerified == true ? AppColors.primary : AppColors.carbsOrange)
-                }
-
-                // Title & Subtitle
-                VStack(spacing: 8) {
-                    Text(viewModel.currentUser?.isEmailVerified == true ? "Email đã được xác thực" : "Kiểm tra hộp thư của bạn")
-                        .font(AppTypography.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(AppColors.textPrimary)
-
-                    if let email = viewModel.currentUser?.email {
-                        Text(email)
-                            .font(AppTypography.headlineBold)
-                            .foregroundColor(AppColors.primary)
+                        Image(systemName: viewModel.currentUser?.isEmailVerified == true ? "checkmark.seal.fill" : "envelope.badge.shield.half.filled")
+                            .font(.system(size: 42))
+                            .foregroundColor(viewModel.currentUser?.isEmailVerified == true ? AppColors.primary : AppColors.carbsOrange)
                     }
 
-                    Text(viewModel.currentUser?.isEmailVerified == true ?
-                         "Tài khoản của bạn đã được xác thực an toàn. Bạn có thể sử dụng đầy đủ các tính năng của NutriLens." :
-                         "NutriLens đã ghi nhận địa chỉ email này. Trong môi trường hiện tại, bạn có thể tiếp tục ngay vào ứng dụng.")
-                        .font(AppTypography.body)
-                        .foregroundColor(AppColors.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, AppSpacing.lg)
+                    // Title & Subtitle
+                    VStack(spacing: 8) {
+                        Text(viewModel.currentUser?.isEmailVerified == true ? "Email đã được xác thực" : "Kiểm tra hộp thư của bạn")
+                            .font(.system(size: 22, weight: .bold))
+                            .foregroundColor(AppColors.textPrimary)
+
+                        if let email = viewModel.currentUser?.email {
+                            Text(email)
+                                .font(AppTypography.headlineBold)
+                                .foregroundColor(AppColors.primary)
+                        }
+
+                        Text(viewModel.currentUser?.isEmailVerified == true ?
+                             "Tài khoản của bạn đã được xác thực an toàn. Bạn có thể sử dụng đầy đủ các tính năng của NutriLens." :
+                             "NutriLens đã ghi nhận địa chỉ email này. Trong phiên bản cục bộ, bạn có thể tiếp tục ngay vào ứng dụng.")
+                            .font(AppTypography.body)
+                            .foregroundColor(AppColors.textSecondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, AppSpacing.sm)
+                    }
                 }
+                .padding(24)
+                .background(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(Color.white)
+                        .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 4)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .stroke(AppColors.border, lineWidth: 1)
+                )
+                .padding(.horizontal, AppSpacing.screenHorizontal)
 
                 Spacer()
 

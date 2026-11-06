@@ -3,7 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
-//  Fresh Premium Botanical interface for personal nutrition target configuration.
+//  Fresh Premium Botanical interface for personal nutrition target configuration with full wallpaper integration.
 //
 
 import SwiftUI
@@ -37,54 +37,50 @@ public struct NutritionGoalsView: View {
 
     public var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: AppSpacing.lg) {
-                    // MARK: - 1. Botanical Header Illustration Card
-                    headerBannerCard
-                        .padding(.top, AppSpacing.sm)
+            ZStack {
+                // MARK: - Full Botanical Wallpaper (Matching HomeView)
+                Image("botanical_wallpaper")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
 
-                    // MARK: - 2. Dietary Goal Selector
-                    dietaryGoalSection
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: AppSpacing.lg) {
+                        // MARK: - 1. Botanical Header Illustration Card
+                        headerBannerCard
+                            .padding(.top, AppSpacing.sm)
 
-                    // MARK: - 3. Daily Calorie Target Stepper
-                    calorieTargetSection
+                        // MARK: - 2. Dietary Goal Selector
+                        dietaryGoalSection
 
-                    // MARK: - 4. Macro Breakdown Cards
-                    macroBreakdownSection
+                        // MARK: - 3. Daily Calorie Target Stepper
+                        calorieTargetSection
 
-                    // MARK: - 5. Save Button
-                    PrimaryButton("Lưu mục tiêu", icon: "checkmark", isLoading: isSaving) {
-                        Task {
-                            isSaving = true
-                            await viewModel.updateProfile(
-                                name: viewModel.profile.name,
-                                goal: selectedGoal,
-                                calories: dailyCalories
-                            )
-                            isSaving = false
-                            showSaveSuccess = true
-                            try? await Task.sleep(nanoseconds: 600_000_000)
-                            onDismiss()
+                        // MARK: - 4. Macro Breakdown Cards
+                        macroBreakdownSection
+
+                        // MARK: - 5. Save Button
+                        PrimaryButton("Lưu mục tiêu", icon: "checkmark", isLoading: isSaving) {
+                            Task {
+                                isSaving = true
+                                await viewModel.updateProfile(
+                                    name: viewModel.profile.name,
+                                    goal: selectedGoal,
+                                    calories: dailyCalories
+                                )
+                                isSaving = false
+                                showSaveSuccess = true
+                                try? await Task.sleep(nanoseconds: 400_000_000)
+                                onDismiss()
+                            }
                         }
+                        .padding(.top, AppSpacing.xs)
                     }
-                    .padding(.top, AppSpacing.sm)
+                    .padding(AppSpacing.screenHorizontal)
+                    .padding(.bottom, AppSpacing.xl)
                 }
-                .padding(AppSpacing.screenHorizontal)
-                .padding(.bottom, AppSpacing.xl)
             }
-            .background(
-                ZStack {
-                    // Background
-                    AppColors.canvasBackground.ignoresSafeArea()
-
-                    Image("botanical_wallpaper")
-                        .resizable()
-                        .scaledToFill()
-                        .opacity(0.08)
-                        .ignoresSafeArea()
-                        .allowsHitTesting(false)
-                }
-            )
             .navigationTitle("Thiết lập mục tiêu")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -99,46 +95,47 @@ public struct NutritionGoalsView: View {
     // MARK: - Subviews
 
     private var headerBannerCard: some View {
-        VStack(spacing: AppSpacing.sm) {
+        VStack(spacing: 12) {
             ZStack {
                 Circle()
                     .fill(AppColors.surfaceSecondary)
-                    .frame(width: 56, height: 56)
+                    .frame(width: 58, height: 58)
 
                 Image(systemName: "leaf.circle.fill")
-                    .font(.system(size: 32))
+                    .font(.system(size: 34))
                     .foregroundColor(AppColors.primary)
             }
 
             Text("Mục tiêu dinh dưỡng cá nhân")
-                .font(AppTypography.title2)
-                .fontWeight(.bold)
+                .font(.system(size: 20, weight: .bold))
                 .foregroundColor(AppColors.textPrimary)
                 .multilineTextAlignment(.center)
 
-            Text("Điều chỉnh thông tin theo nhu cầu và sở thích của bạn để NutriLens cá nhân hóa kế hoạch mỗi ngày.")
+            Text("Điều chỉnh kế hoạch năng lượng và dưỡng chất phù hợp nhất với thể trạng và chế độ ăn của bạn.")
                 .font(AppTypography.caption)
                 .foregroundColor(AppColors.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, AppSpacing.sm)
         }
-        .padding(AppSpacing.md)
+        .padding(16)
         .frame(maxWidth: .infinity)
         .background(
-            RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                .fill(AppColors.surfacePrimary)
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
                 .stroke(AppColors.border, lineWidth: 1)
         )
     }
 
     private var dietaryGoalSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+        VStack(alignment: .leading, spacing: 8) {
             Text("Mục tiêu thể trạng")
-                .font(AppTypography.headline)
-                .foregroundColor(AppColors.textPrimary)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(AppColors.textSecondary)
+                .padding(.leading, 4)
 
             VStack(spacing: 8) {
                 ForEach(DietaryGoal.allCases, id: \.self) { goal in
@@ -170,34 +167,45 @@ public struct NutritionGoalsView: View {
                                 .font(AppTypography.caption)
                                 .foregroundColor(AppColors.textSecondary)
                         }
-                        .padding(.horizontal, AppSpacing.md)
+                        .padding(.horizontal, 14)
                         .padding(.vertical, 12)
                         .background(
-                            RoundedRectangle(cornerRadius: AppRadius.sm, style: .continuous)
-                                .fill(selectedGoal == goal ? AppColors.surfaceSecondary : AppColors.surfacePrimary)
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .fill(selectedGoal == goal ? AppColors.surfaceSecondary : Color.white)
                         )
                         .overlay(
-                            RoundedRectangle(cornerRadius: AppRadius.sm, style: .continuous)
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
                                 .stroke(selectedGoal == goal ? AppColors.primary : AppColors.border, lineWidth: 1)
                         )
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
             }
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(AppColors.border, lineWidth: 1)
+            )
         }
     }
 
     private var calorieTargetSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+        VStack(alignment: .leading, spacing: 8) {
             Text("Năng lượng mỗi ngày")
-                .font(AppTypography.headline)
-                .foregroundColor(AppColors.textPrimary)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(AppColors.textSecondary)
+                .padding(.leading, 4)
 
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(alignment: .firstTextBaseline, spacing: 4) {
                         Text("\(Int(dailyCalories))")
-                            .font(AppTypography.nutritionValueLarge)
+                            .font(.system(size: 30, weight: .heavy, design: .rounded))
                             .foregroundColor(AppColors.primary)
                         Text("kcal / ngày")
                             .font(AppTypography.subheadlineBold)
@@ -210,14 +218,14 @@ public struct NutritionGoalsView: View {
 
                 Spacer()
 
-                HStack(spacing: 8) {
+                HStack(spacing: 10) {
                     Button {
                         if dailyCalories > 1200 {
                             dailyCalories -= 50
                         }
                     } label: {
                         Image(systemName: "minus.circle.fill")
-                            .font(.system(size: 28))
+                            .font(.system(size: 32))
                             .foregroundColor(AppColors.primary)
                     }
                     .accessibilityLabel("Giảm 50 kcal")
@@ -228,31 +236,33 @@ public struct NutritionGoalsView: View {
                         }
                     } label: {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 28))
+                            .font(.system(size: 32))
                             .foregroundColor(AppColors.primary)
                     }
                     .accessibilityLabel("Tăng 50 kcal")
                 }
             }
-            .padding(AppSpacing.md)
+            .padding(16)
             .background(
-                RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                    .fill(AppColors.surfacePrimary)
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .stroke(AppColors.border, lineWidth: 1)
             )
         }
     }
 
     private var macroBreakdownSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+        VStack(alignment: .leading, spacing: 8) {
             Text("Tỷ lệ dinh dưỡng đa lượng dự kiến")
-                .font(AppTypography.headline)
-                .foregroundColor(AppColors.textPrimary)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(AppColors.textSecondary)
+                .padding(.leading, 4)
 
-            HStack(spacing: AppSpacing.xs) {
+            HStack(spacing: 8) {
                 MacroCard(
                     title: "Chất đạm",
                     subtitle: "Protein",
@@ -332,19 +342,20 @@ private struct MacroCard: View {
             }
 
             Text(amount)
-                .font(AppTypography.headlineBold)
+                .font(.system(size: 18, weight: .bold, design: .rounded))
                 .foregroundColor(AppColors.textPrimary)
                 .monospacedDigit()
                 .padding(.top, 2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(AppSpacing.sm)
+        .padding(12)
         .background(
-            RoundedRectangle(cornerRadius: AppRadius.sm, style: .continuous)
-                .fill(AppColors.surfacePrimary)
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: AppRadius.sm, style: .continuous)
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .stroke(AppColors.border, lineWidth: 1)
         )
     }

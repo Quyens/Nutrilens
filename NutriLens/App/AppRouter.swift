@@ -158,7 +158,7 @@ public struct MainTabView: View {
         .sheet(isPresented: $isPresentingAuth) {
             AuthCoordinatorView(
                 viewModel: environment.makeAuthViewModel(
-                    initialStep: ProcessInfo.processInfo.arguments.contains("-startAuthWelcome") ? .welcome : authInitialStep,
+                    initialStep: ProcessInfo.processInfo.arguments.contains("-startAuthLogin") ? .login : (ProcessInfo.processInfo.arguments.contains("-startAuthWelcome") ? .welcome : authInitialStep),
                     onAuthCompleted: {
                         isPresentingAuth = false
                     }
@@ -177,6 +177,9 @@ public struct MainTabView: View {
                 isPresentingAuth = true
             } else if ProcessInfo.processInfo.arguments.contains("-startAuthWelcome") {
                 authInitialStep = .welcome
+                isPresentingAuth = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startAuthLogin") {
+                authInitialStep = .login
                 isPresentingAuth = true
             }
         }

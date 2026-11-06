@@ -3,7 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
-//  Fresh Premium Botanical Login screen.
+//  Fresh Premium Botanical Login screen with full wallpaper integration.
 //
 
 import SwiftUI
@@ -17,13 +17,10 @@ public struct LoginView: View {
 
     public var body: some View {
         ZStack {
-            // Background
-            AppColors.canvasBackground.ignoresSafeArea()
-
+            // MARK: - Full Botanical Wallpaper (Matching HomeView)
             Image("botanical_wallpaper")
                 .resizable()
                 .scaledToFill()
-                .opacity(0.10)
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
 
@@ -35,31 +32,42 @@ public struct LoginView: View {
                             viewModel.clearFeedback()
                             viewModel.currentStep = .welcome
                         } label: {
-                            HStack(spacing: 4) {
+                            HStack(spacing: 6) {
                                 Image(systemName: "chevron.left")
-                                    .font(.system(size: 15, weight: .semibold))
+                                    .font(.system(size: 14, weight: .bold))
                                 Text("Quay lại")
                                     .font(AppTypography.bodyBold)
                             }
                             .foregroundColor(AppColors.forestGreen)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
                         }
                         .accessibilityLabel("Quay lại màn hình chào mừng")
 
                         Spacer()
 
-                        Image(systemName: "leaf.fill")
-                            .font(.system(size: 18))
-                            .foregroundColor(AppColors.primary)
+                        ZStack {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 36, height: 36)
+                                .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
+                            Image(systemName: "leaf.fill")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(AppColors.primary)
+                        }
                     }
-                    .padding(.top, AppSpacing.xs)
+                    .padding(.top, AppSpacing.md)
 
                     // MARK: - Greeting Title
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Chào mừng trở lại!")
-                            .font(AppTypography.largeTitle)
+                        Text("Chào mừng trở lại! 👋")
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
                             .foregroundColor(AppColors.textPrimary)
 
-                        Text("Đăng nhập để theo dõi và quản lý nhật ký dinh dưỡng của bạn.")
+                        Text("Đăng nhập để theo dõi và quản lý nhật ký dinh dưỡng món Việt.")
                             .font(AppTypography.subheadline)
                             .foregroundColor(AppColors.textSecondary)
                     }
@@ -69,36 +77,38 @@ public struct LoginView: View {
                     HStack(spacing: AppSpacing.sm) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(AppColors.primary)
+                                .fill(AppColors.surfaceSecondary)
                                 .frame(width: 36, height: 36)
                             Image(systemName: "fork.knife")
                                 .font(.system(size: 16))
-                                .foregroundColor(.white)
+                                .foregroundColor(AppColors.primary)
                         }
 
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Dinh dưỡng thuần Việt")
+                            Text("Dinh dưỡng món Việt chuẩn calo")
                                 .font(AppTypography.captionBold)
                                 .foregroundColor(AppColors.textPrimary)
-                            Text("Nhận diện chính xác 5.000+ món ăn truyền thống")
+                            Text("Quét AI & ghi nhận nhanh 5.000+ món ăn truyền thống")
                                 .font(.system(size: 11))
                                 .foregroundColor(AppColors.textSecondary)
                         }
 
                         Spacer()
                     }
-                    .padding(AppSpacing.sm)
-                    .background(AppColors.surfaceSecondary)
-                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
+                    .padding(12)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .shadow(color: Color.black.opacity(0.03), radius: 6, y: 2)
+                    .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(AppColors.border, lineWidth: 1))
 
                     // MARK: - Development Mock Notice & Autofill
                     if viewModel.isMockMode {
-                        VStack(alignment: .leading, spacing: 6) {
+                        VStack(alignment: .leading, spacing: 8) {
                             HStack(spacing: 6) {
                                 Image(systemName: "wrench.and.screwdriver.fill")
                                     .font(.system(size: 12))
                                     .foregroundColor(AppColors.carbsOrange)
-                                Text("Tài khoản Thử nghiệm Nội bộ")
+                                Text("Tài khoản Thử nghiệm Nội bộ (Mock)")
                                     .font(AppTypography.captionBold)
                                     .foregroundColor(AppColors.carbsOrange)
                             }
@@ -108,19 +118,24 @@ public struct LoginView: View {
                                 viewModel.password = "NutriLens2026!"
                                 viewModel.clearFeedback()
                             } label: {
-                                Text("Chạm để điền: demo@nutrilens.vn / NutriLens2026!")
-                                    .font(AppTypography.captionBold)
-                                    .foregroundColor(AppColors.forestGreen)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 6)
-                                    .background(AppColors.surfaceSecondary)
-                                    .clipShape(Capsule())
+                                HStack(spacing: 6) {
+                                    Image(systemName: "bolt.fill")
+                                        .font(.system(size: 11))
+                                    Text("Điền nhanh: demo@nutrilens.vn")
+                                        .font(AppTypography.captionBold)
+                                }
+                                .foregroundColor(AppColors.forestGreen)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 7)
+                                .background(AppColors.surfaceSecondary)
+                                .clipShape(Capsule())
                             }
                         }
-                        .padding(AppSpacing.md)
+                        .padding(12)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(AppColors.carbsOrange.opacity(0.08))
-                        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(AppColors.carbsOrange.opacity(0.3), lineWidth: 1))
                     }
 
                     // MARK: - Error Banner
@@ -142,11 +157,12 @@ public struct LoginView: View {
                         }
                         .padding(AppSpacing.md)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(AppColors.error.opacity(0.08))
+                        .background(Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
+                        .overlay(RoundedRectangle(cornerRadius: AppRadius.md).stroke(AppColors.error.opacity(0.3), lineWidth: 1))
                     }
 
-                    // MARK: - Form Inputs
+                    // MARK: - Main Floating Form Card
                     VStack(spacing: AppSpacing.md) {
                         BotanicalTextField(
                             title: "Địa chỉ Email",
@@ -174,45 +190,44 @@ public struct LoginView: View {
                                     .font(AppTypography.captionBold)
                                     .foregroundColor(AppColors.forestGreen)
                             }
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                         }
-                    }
-                    .padding(AppSpacing.md)
-                    .background(
-                        RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                            .fill(AppColors.surfacePrimary)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                            .stroke(AppColors.border, lineWidth: 1)
-                    )
 
-                    // MARK: - Action Buttons
-                    VStack(spacing: AppSpacing.sm) {
                         PrimaryButton("Đăng nhập", icon: "arrow.right", isLoading: viewModel.isLoading) {
                             Task {
                                 await viewModel.login()
                             }
                         }
                         .disabled(!viewModel.isLoginFormValid || viewModel.isLoading)
-
-                        // Switch to Register
-                        HStack(spacing: 4) {
-                            Text("Chưa có tài khoản?")
-                                .font(AppTypography.caption)
-                                .foregroundColor(AppColors.textSecondary)
-
-                            Button {
-                                viewModel.clearFeedback()
-                                viewModel.currentStep = .register
-                            } label: {
-                                Text("Đăng ký ngay")
-                                    .font(AppTypography.captionBold)
-                                    .foregroundColor(AppColors.primary)
-                            }
-                        }
                         .padding(.top, 6)
                     }
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 24, style: .continuous)
+                            .fill(Color.white)
+                            .shadow(color: Color.black.opacity(0.05), radius: 12, x: 0, y: 4)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24, style: .continuous)
+                            .stroke(AppColors.border, lineWidth: 1)
+                    )
+
+                    // MARK: - Switch to Register
+                    HStack(spacing: 4) {
+                        Text("Chưa có tài khoản?")
+                            .font(AppTypography.caption)
+                            .foregroundColor(AppColors.textSecondary)
+
+                        Button {
+                            viewModel.clearFeedback()
+                            viewModel.currentStep = .register
+                        } label: {
+                            Text("Đăng ký ngay")
+                                .font(AppTypography.captionBold)
+                                .foregroundColor(AppColors.primary)
+                        }
+                    }
+                    .padding(.top, 4)
                 }
                 .padding(AppSpacing.screenHorizontal)
                 .padding(.bottom, AppSpacing.xl)

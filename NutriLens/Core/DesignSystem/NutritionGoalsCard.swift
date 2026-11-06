@@ -149,3 +149,4 @@ private struct MacroPill: View {
         .clipShape(RoundedRectangle(cornerRadius: AppRadius.sm, style: .continuous))
     }
 }
+

@@ -151,3 +151,4 @@ public struct ProfileMenuRow: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
+

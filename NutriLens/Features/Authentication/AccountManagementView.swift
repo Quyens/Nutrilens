@@ -3,7 +3,7 @@
 //  NutriLens
 //
 //  Created for NutriLens Clean Architecture iOS App.
-//  Fresh Premium Botanical Account & Security screen.
+//  Fresh Premium Botanical Account & Security screen with full wallpaper integration.
 //
 
 import SwiftUI
@@ -19,43 +19,40 @@ public struct AccountManagementView: View {
 
     public var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: AppSpacing.lg) {
-                    // MARK: - 1. Account Identity Card
-                    accountIdentityCard
-                        .padding(.top, AppSpacing.sm)
+            ZStack {
+                // MARK: - Full Botanical Wallpaper (Matching HomeView)
+                Image("botanical_wallpaper")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
 
-                    // MARK: - 2. Guest Information Banner
-                    if viewModel.isGuest || viewModel.currentUser == nil || viewModel.currentUser?.isMockAccount == true {
-                        guestInformationBanner
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: AppSpacing.lg) {
+                        // MARK: - 1. Account Identity Card
+                        accountIdentityCard
+                            .padding(.top, AppSpacing.sm)
+
+                        // MARK: - 2. Guest Information Banner
+                        if viewModel.isGuest || viewModel.currentUser == nil || viewModel.currentUser?.isMockAccount == true {
+                            guestInformationBanner
+                        }
+
+                        // MARK: - 3. Account Options Section
+                        accountOptionsSection
+
+                        // MARK: - 4. Session Action (Logout - Only for real sessions)
+                        if !viewModel.isGuest && viewModel.currentUser != nil {
+                            sessionActionSection
+                        }
+
+                        // MARK: - 5. Destructive Danger Zone
+                        destructiveSection
                     }
-
-                    // MARK: - 3. Account Options Section
-                    accountOptionsSection
-
-                    // MARK: - 4. Session Action (Logout - Only for real sessions)
-                    if !viewModel.isGuest && viewModel.currentUser != nil {
-                        sessionActionSection
-                    }
-
-                    // MARK: - 5. Destructive Danger Zone
-                    destructiveSection
+                    .padding(AppSpacing.screenHorizontal)
+                    .padding(.bottom, AppSpacing.xl)
                 }
-                .padding(AppSpacing.screenHorizontal)
-                .padding(.bottom, AppSpacing.xl)
             }
-            .background(
-                ZStack {
-                    AppColors.canvasBackground.ignoresSafeArea()
-
-                    Image("botanical_wallpaper")
-                        .resizable()
-                        .scaledToFill()
-                        .opacity(0.08)
-                        .ignoresSafeArea()
-                        .allowsHitTesting(false)
-                }
-            )
             .navigationTitle("Tài khoản & Bảo mật")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -110,21 +107,31 @@ public struct AccountManagementView: View {
             // Stylized Identity Emblem
             ZStack {
                 Circle()
-                    .fill(AppColors.surfaceSecondary)
-                    .frame(width: 60, height: 60)
+                    .stroke(AppColors.primary.opacity(0.25), lineWidth: 2)
+                    .frame(width: 66, height: 66)
 
-                Image(systemName: viewModel.isGuest ? "person.badge.shield.checkmark.fill" : "person.crop.circle.fill")
-                    .font(.system(size: 32))
-                    .foregroundColor(AppColors.primary)
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [AppColors.surfaceSecondary, AppColors.softGreen.opacity(0.6)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 58, height: 58)
+
+                Image(systemName: viewModel.isGuest ? "person.crop.circle.badge.questionmark" : "person.crop.circle.fill")
+                    .font(.system(size: 28, weight: .semibold))
+                    .foregroundColor(AppColors.forestGreen)
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(viewModel.isGuest ? "Tài khoản khách" : (viewModel.currentUser?.displayName ?? "Người dùng NutriLens"))
-                    .font(AppTypography.headlineBold)
+                Text(viewModel.isGuest ? "Tài khoản Khách" : (viewModel.currentUser?.displayName ?? "Người dùng NutriLens"))
+                    .font(.system(size: 18, weight: .bold))
                     .foregroundColor(AppColors.textPrimary)
 
                 if viewModel.isGuest {
-                    Text("Bạn đang sử dụng NutriLens dưới chế độ khách.")
+                    Text("Thiết bị lưu trữ cục bộ SwiftData")
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                 } else if let email = viewModel.currentUser?.email {
@@ -134,17 +141,17 @@ public struct AccountManagementView: View {
                 }
 
                 // Account Type Tag
-                HStack(spacing: 4) {
+                HStack(spacing: 5) {
                     Circle()
                         .fill(viewModel.isGuest ? AppColors.forestGreen : AppColors.primary)
                         .frame(width: 6, height: 6)
 
-                    Text(viewModel.isGuest ? "Chế độ Khách" : (viewModel.currentUser?.isMockAccount == true ? "Thử nghiệm (Mock)" : "Đã kích hoạt"))
-                        .font(AppTypography.captionBold)
+                    Text(viewModel.isGuest ? "Chế độ Khách" : (viewModel.currentUser?.isMockAccount == true ? "Thử nghiệm (Mock)" : "Đã xác thực"))
+                        .font(.system(size: 11, weight: .bold))
                         .foregroundColor(viewModel.isGuest ? AppColors.forestGreen : AppColors.primaryDark)
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 3)
+                .padding(.horizontal, 9)
+                .padding(.vertical, 4)
                 .background(AppColors.surfaceSecondary)
                 .clipShape(Capsule())
                 .padding(.top, 2)
@@ -152,51 +159,57 @@ public struct AccountManagementView: View {
 
             Spacer()
         }
-        .padding(AppSpacing.md)
+        .padding(16)
         .background(
-            RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                .fill(AppColors.surfacePrimary)
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
                 .stroke(AppColors.border, lineWidth: 1)
         )
-        .shadow(color: Color.black.opacity(0.02), radius: 6, x: 0, y: 2)
     }
 
     private var guestInformationBanner: some View {
-        HStack(alignment: .top, spacing: AppSpacing.sm) {
-            Image(systemName: "info.circle.fill")
-                .font(.system(size: 18))
-                .foregroundColor(AppColors.primary)
-                .padding(.top, 1)
+        HStack(alignment: .top, spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(AppColors.surfaceSecondary)
+                    .frame(width: 32, height: 32)
+                Image(systemName: "shield.lefthalf.filled")
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundColor(AppColors.primary)
+            }
 
             VStack(alignment: .leading, spacing: 3) {
-                Text("Lưu trữ dữ liệu cục bộ")
-                    .font(AppTypography.captionBold)
+                Text("Bảo mật dữ liệu trên máy")
+                    .font(.system(size: 13, weight: .bold))
                     .foregroundColor(AppColors.textPrimary)
 
-                Text("Tài khoản trực tuyến sẽ được bổ sung trong giai đoạn sau. Mọi dữ liệu nhật ký dinh dưỡng hiện tại được lưu an toàn 100% trên thiết bị của bạn.")
-                    .font(AppTypography.caption)
+                Text("Toàn bộ nhật ký bữa ăn và mục tiêu calo được lưu trữ an toàn trong SwiftData nội bộ của iPhone. Không đồng bộ hay gửi dữ liệu ra bên ngoài.")
+                    .font(.system(size: 12))
                     .foregroundColor(AppColors.textSecondary)
                     .lineSpacing(2)
             }
         }
-        .padding(AppSpacing.md)
+        .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(AppColors.surfaceSecondary.opacity(0.8))
-        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .shadow(color: Color.black.opacity(0.03), radius: 8, x: 0, y: 2)
         .overlay(
-            RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous)
-                .stroke(AppColors.primary.opacity(0.2), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(AppColors.primary.opacity(0.18), lineWidth: 1)
         )
     }
 
     private var accountOptionsSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+        VStack(alignment: .leading, spacing: 8) {
             Text("Tùy chọn tài khoản")
-                .font(AppTypography.headline)
-                .foregroundColor(AppColors.textPrimary)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(AppColors.textSecondary)
+                .padding(.leading, 4)
 
             VStack(spacing: 0) {
                 if viewModel.isGuest {
@@ -206,7 +219,7 @@ public struct AccountManagementView: View {
                         OptionRow(
                             icon: "arrow.up.circle.fill",
                             title: "Đăng nhập hoặc tạo tài khoản",
-                            subtitle: "Sẵn sàng liên kết khi có kết nối máy chủ",
+                            subtitle: "Sẵn sàng liên kết khi có dịch vụ đám mây",
                             iconColor: AppColors.primary
                         )
                     }
@@ -219,26 +232,28 @@ public struct AccountManagementView: View {
                 OptionRow(
                     icon: "externaldrive.fill",
                     title: "Dữ liệu trên thiết bị",
-                    subtitle: "Quản lý qua bộ nhớ SwiftData nội bộ",
+                    subtitle: "Bộ nhớ SwiftData độc lập, tốc độ cao",
                     iconColor: AppColors.forestGreen
                 )
             }
             .background(
-                RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                    .fill(AppColors.surfacePrimary)
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .stroke(AppColors.border, lineWidth: 1)
             )
         }
     }
 
     private var sessionActionSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+        VStack(alignment: .leading, spacing: 8) {
             Text("Phiên đăng nhập")
-                .font(AppTypography.headline)
-                .foregroundColor(AppColors.textPrimary)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(AppColors.textSecondary)
+                .padding(.leading, 4)
 
             Button {
                 viewModel.showingLogoutConfirmation = true
@@ -264,13 +279,14 @@ public struct AccountManagementView: View {
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(AppColors.textTertiary)
                 }
-                .padding(AppSpacing.md)
+                .padding(14)
                 .background(
-                    RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                        .fill(AppColors.surfacePrimary)
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(Color.white)
+                        .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .stroke(AppColors.border, lineWidth: 1)
                 )
             }
@@ -279,10 +295,11 @@ public struct AccountManagementView: View {
     }
 
     private var destructiveSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.xs) {
-            Text("Vùng thao tác an toàn")
-                .font(AppTypography.headline)
-                .foregroundColor(AppColors.textPrimary)
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Vùng nguy hiểm")
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(AppColors.textSecondary)
+                .padding(.leading, 4)
 
             Button {
                 viewModel.showingDeleteConfirmation = true
@@ -290,7 +307,7 @@ public struct AccountManagementView: View {
                 HStack(spacing: AppSpacing.md) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(AppColors.error.opacity(0.12))
+                            .fill(AppColors.error.opacity(0.10))
                             .frame(width: 36, height: 36)
 
                         Image(systemName: "trash.fill")
@@ -299,24 +316,25 @@ public struct AccountManagementView: View {
                     }
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(viewModel.isGuest ? "Xóa dữ liệu trên thiết bị" : "Xóa tài khoản")
+                        Text(viewModel.isGuest ? "Xóa dữ liệu thiết bị" : "Xóa tài khoản")
                             .font(AppTypography.bodyBold)
                             .foregroundColor(AppColors.error)
 
-                        Text(viewModel.isGuest ? "Đặt lại dữ liệu cục bộ về mặc định" : "Gỡ bỏ phiên đăng nhập và dữ liệu liên kết")
+                        Text(viewModel.isGuest ? "Dọn sạch nhật ký cục bộ về mặc định" : "Gỡ bỏ thông tin tài khoản trên máy")
                             .font(AppTypography.caption)
                             .foregroundColor(AppColors.textSecondary)
                     }
 
                     Spacer()
                 }
-                .padding(AppSpacing.md)
+                .padding(14)
                 .background(
-                    RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                        .fill(AppColors.surfacePrimary)
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(Color.white)
+                        .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .stroke(AppColors.error.opacity(0.3), lineWidth: 1)
                 )
             }
@@ -361,7 +379,7 @@ private struct OptionRow: View {
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundColor(AppColors.textTertiary)
         }
-        .padding(.horizontal, AppSpacing.md)
+        .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .contentShape(Rectangle())
     }
