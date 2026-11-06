@@ -30,6 +30,7 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
    - **Giới thiệu NutriLens:** Đã bổ sung Biểu tượng lá mầm thương hiệu lớn, Sứ mệnh phát triển, 4 Trụ cột công nghệ cốt lõi và Thông tin bản quyền, công nghệ chi tiết.
    - **Cài đặt ứng dụng:** Thay thế hoàn toàn form trắng mặc định bằng giao diện Botanical sang trọng với thẻ Quản lý tài khoản, Tùy chọn hiển thị & Cảm ứng, Bảo mật & Quyền riêng tư, và Thông tin ứng dụng.
    - **Đăng nhập (`LoginView`):** Đầy đủ Avatar Hero, Lời chào, Thẻ công nghệ món Việt, Điền nhanh tài khoản thử nghiệm, Đăng nhập email/mật khẩu, Nút "Tiếp tục với Apple", Nút "Trải nghiệm không cần tài khoản" (Khách), và Huy hiệu bảo mật Apple Keychain.
+   - **Tài khoản & Bảo mật (`AccountManagementView`):** Khắc phục triệt để khoảng trống 50% màn hình. Bổ sung Thẻ định danh Hero có nút *"Đăng nhập/Đăng ký ngay"*, Khối thông tin tài khoản (Phương thức, Email, Đổi mật khẩu, Chuyển tài khoản), Khối bảo mật sinh trắc học Face ID & Apple Keychain 256-bit, Khối lưu trữ & xuất dữ liệu (SwiftData, Xuất CSV/JSON, Dọn cache AI), Khối Đăng xuất bảo toàn dữ liệu, và Vùng nguy hiểm có xác nhận.
 
 3. **Khắc phục lỗi đè chữ lên thanh điều hướng:**
    - Xóa bỏ `NavigationStack` toolbar mặc định gây lỗi chồng chữ trên iOS 17+.
