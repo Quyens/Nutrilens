@@ -69,11 +69,31 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
   3. **Huy hiệu bữa ăn & thời gian thông minh:**
      - Tự động nhận diện biểu tượng bữa ăn (`🌅 Sáng`, `☀️ Trưa`, `🌙 Tối`, `🍎 Phụ`) cùng giờ ghi nhận thực tế và định lượng đạm, calo.
 
+### 1.7 Khám phá món ăn & Chi tiết món ăn Toàn Màn Hình ([`FoodExplorerView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/FoodExplorer/FoodExplorerView.swift), [`FoodDetailView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/FoodExplorer/FoodDetailView.swift))
+- **Vấn đề trước đây:** Màn hình Khám phá món ăn vẫn bị mở dưới dạng modal sheet kéo lên (`.sheet`), làm lộ thanh trạng thái và các chỉ số của Trang chủ bên trên, tiêu đề bị che lấp dưới Dynamic Island, nền bị giảm độ trong suốt (opacity 0.12) trông nhạt nhòa, và không có thanh điều hướng đóng/quay lại rõ ràng.
+- **Giải pháp thiết kế mới hoàn thiện:**
+  1. **Chuyển thành Trang Toàn Màn Hình 100% (`.fullScreenCover`):**
+     - Cả `FoodExplorerView` (từ Trang chủ & QuickAdd) và `FoodDetailView` (khi chọn món) đều được chuyển hoàn toàn sang `.fullScreenCover`.
+     - Phủ hình nền Botanical lá xanh `botanical_wallpaper` rực rỡ toàn bộ màn hình (`.ignoresSafeArea()`).
+  2. **Thanh điều hướng nổi an toàn dưới Dynamic Island (`topFloatingBar`):**
+     - Khoảng đệm `padding(.top, 54)` chuẩn xác bên dưới Dynamic Island.
+     - Nút viên nang trắng **"‹ Quay lại"** tiện lợi ở góc trái.
+     - Huy hiệu biểu tượng trung tâm **"Khám phá món ăn"** tinh tế.
+     - Nút tim lọc nhanh danh sách món yêu thích ở góc phải.
+  3. **Thẻ tìm kiếm & Danh mục phân loại dạng Card nổi cao cấp:**
+     - Thanh tìm kiếm ô trắng bo tròn có bóng đổ nhẹ và kính lúp xanh ngọc.
+     - Bộ lọc nhóm món ăn (*Món nước, Cơm & Xôi, Món sợi, Bánh mì...*) với viên nang trắng viền ngọc khi chưa chọn và xanh đậm khi được chọn.
+     - Lưới danh mục 35+ món ăn hiển thị thẻ trắng thanh lịch, hiển thị ảnh món, calo, đạm gram và nút lưu yêu thích.
+
 ---
 
-## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (12 Màn hình Hoàn chỉnh)
+## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (14 Màn hình Hoàn chỉnh)
 
 ````carousel
+![Khám Phá Món Ăn Toàn Màn Hình](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/food_explorer_fullscreen.png)
+<!-- slide -->
+![Chi Tiết Món Ăn & Tính Khẩu Phần Toàn Màn Hình](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/food_detail_fullscreen.png)
+<!-- slide -->
 ![Trang Chủ Đã Thiết Kế Lại Carousel Ngang Bữa Ăn](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/home_carousel_verified.png)
 <!-- slide -->
 ![Trang Chủ Bố Cục Mới](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/home_redesign.png)
@@ -107,8 +127,11 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
 
 | Tệp nguồn | Loại thay đổi | Mô tả |
 | :--- | :--- | :--- |
-| [`NutriLens/Features/Home/HomeView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Home/HomeView.swift) | Sửa đổi | Chuyển `TodaysMealsSection` thành horizontal carousel cố định 182pt, dời `VietnameseFoodDiscoverySection` xuống dưới, sửa padding Dynamic Island |
-| [`NutriLens/Features/Profile/ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift) | Sửa đổi | Thay toàn bộ `.sheet` bằng `.fullScreenCover`, thêm `unauthenticatedHeroCard`, xây dựng mới `PersonalInfoView`, `PreferencesView`, `AboutView` với nội dung đầy đủ |
+| [`NutriLens/Features/FoodExplorer/FoodExplorerView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/FoodExplorer/FoodExplorerView.swift) | Sửa đổi | Chuyển thành trang toàn màn hình, thanh điều hướng nổi Dynamic Island, nền botanical 100%, thẻ card trắng sang trọng |
+| [`NutriLens/Features/FoodExplorer/FoodDetailView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/FoodExplorer/FoodDetailView.swift) | Sửa đổi | Nâng cấp toàn diện với nền lá botanical, top floating bar có nút Quay lại an toàn, thẻ khẩu phần và đa lượng |
+| [`NutriLens/Features/Home/HomeView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Home/HomeView.swift) | Sửa đổi | Chuyển `showingFoodExplorer` sang `.fullScreenCover`, carousel ngang hôm nay cố định 182pt, padding Dynamic Island 52pt |
+| [`NutriLens/Features/History/QuickAddMealSheet.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/History/QuickAddMealSheet.swift) | Sửa đổi | Chuyển `showingFullExplorer` sang `.fullScreenCover` |
+| [`NutriLens/Features/Profile/ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift) | Sửa đổi | Thay toàn bộ `.sheet` bằng `.fullScreenCover`, thêm `unauthenticatedHeroCard`, các trang phụ trợ nội dung đầy đủ |
 | [`NutriLens/Features/Settings/SettingsView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsView.swift) | Sửa đổi | Nâng cấp toàn diện thành trang Botanical độc lập, bỏ Form xám mặc định |
 | [`NutriLens/App/AppRouter.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/App/AppRouter.swift) | Sửa đổi | Chuyển `SettingsView` và `AuthCoordinatorView` sang `.fullScreenCover` |
 | [`NutriLens/Features/Authentication/LoginView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Authentication/LoginView.swift) | Sửa đổi | Thêm đầy đủ Apple Sign-In, Guest mode, autofill demo, Keychain badge |

@@ -24,22 +24,36 @@ public struct FoodExplorerView: View {
     }
 
     public var body: some View {
-        NavigationStack {
-            ZStack {
-                // Fresh Premium Botanical Background
-                AppColors.canvasBackground
-                    .ignoresSafeArea()
+        ZStack(alignment: .top) {
+            // Fresh Premium Botanical Background
+            AppColors.canvasBackground
+                .ignoresSafeArea()
 
-                Image("botanical_wallpaper")
-                    .resizable()
-                    .scaledToFill()
-                    .opacity(0.12)
-                    .ignoresSafeArea()
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
 
-                ScrollView {
+            VStack(spacing: 0) {
+                // Dynamic Island Safe Top Floating Bar
+                topFloatingBar
+
+                ScrollView(showsIndicators: false) {
                     VStack(spacing: AppSpacing.lg) {
-                        // Header
-                        headerSection
+                        // Title header
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("Kho tàng ẩm thực Việt")
+                                .font(.system(size: 24, weight: .bold, design: .serif))
+                                .foregroundColor(Color(red: 0.08, green: 0.22, blue: 0.15))
+
+                            Text("35+ món ăn truyền thống chuẩn hóa calo & dinh dưỡng")
+                                .font(.system(size: 13))
+                                .foregroundColor(Color(red: 0.35, green: 0.48, blue: 0.40))
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 2)
+                        .padding(.top, 4)
 
                         // Search Bar
                         searchSection
@@ -65,33 +79,61 @@ public struct FoodExplorerView: View {
                         catalogSection
                     }
                     .padding(.horizontal, AppSpacing.screenHorizontal)
-                    .padding(.top, AppSpacing.sm)
+                    .padding(.top, AppSpacing.xs)
                     .padding(.bottom, AppSpacing.xxl)
                 }
             }
-            .navigationBarHidden(true)
-            .sheet(item: $viewModel.selectedDishForDetail) { dish in
-                NavigationStack {
-                    FoodDetailView(dish: dish, viewModel: viewModel)
+        }
+        .fullScreenCover(item: $viewModel.selectedDishForDetail) { dish in
+            FoodDetailView(dish: dish, viewModel: viewModel)
+        }
+        .onAppear {
+            viewModel.loadData()
+            if ProcessInfo.processInfo.arguments.contains("-startFoodDetail") {
+                if let firstDish = viewModel.filteredDishes.first {
+                    viewModel.openDishDetail(dish: firstDish)
                 }
-            }
-            .onAppear {
-                viewModel.loadData()
             }
         }
     }
 
-    // MARK: - Header
-    private var headerSection: some View {
-        HStack(alignment: .center) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Khám phá món ăn")
-                    .font(.system(size: 26, weight: .bold, design: .serif))
-                    .foregroundColor(AppColors.textPrimary)
+    // MARK: - Dynamic Island Safe Top Bar
+    private var topFloatingBar: some View {
+        HStack {
+            // Back Button Pill
+            Button(action: {
+                #if canImport(UIKit)
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                #endif
+                dismiss()
+            }) {
+                HStack(spacing: 5) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 13, weight: .bold))
+                    Text("Quay lại")
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .foregroundColor(AppColors.primaryGreen)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(Color.white.opacity(0.95))
+                .clipShape(Capsule())
+                .shadow(color: Color.black.opacity(0.08), radius: 6, x: 0, y: 2)
+                .overlay(
+                    Capsule().stroke(Color(red: 0.88, green: 0.93, blue: 0.90), lineWidth: 1)
+                )
+            }
 
-                Text("Kho tàng 35+ món Việt chuẩn dinh dưỡng")
-                    .font(AppTypography.caption)
-                    .foregroundColor(AppColors.textSecondary)
+            Spacer()
+
+            // Centered Title Badge
+            HStack(spacing: 6) {
+                Image(systemName: "fork.knife.circle.fill")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(AppColors.primaryGreen)
+                Text("Khám phá món ăn")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(Color(red: 0.08, green: 0.22, blue: 0.15))
             }
 
             Spacer()
@@ -101,11 +143,13 @@ public struct FoodExplorerView: View {
                 withAnimation(.easeInOut(duration: 0.25)) {
                     viewModel.onlyFavorites.toggle()
                 }
+                #if canImport(UIKit)
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                #endif
             }) {
-                HStack(spacing: 5) {
+                HStack(spacing: 4) {
                     Image(systemName: viewModel.onlyFavorites ? "heart.fill" : "heart")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.system(size: 13, weight: .bold))
                         .foregroundColor(viewModel.onlyFavorites ? Color(hex: "E97970") : AppColors.textSecondary)
 
                     if viewModel.favoritesCount > 0 {
@@ -116,27 +160,18 @@ public struct FoodExplorerView: View {
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
-                .background(viewModel.onlyFavorites ? Color(hex: "FDE8E7") : AppColors.surfacePrimary)
+                .background(viewModel.onlyFavorites ? Color(hex: "FDE8E7") : Color.white.opacity(0.95))
                 .clipShape(Capsule())
+                .shadow(color: Color.black.opacity(0.08), radius: 6, x: 0, y: 2)
                 .overlay(
-                    Capsule()
-                        .stroke(viewModel.onlyFavorites ? Color(hex: "E97970").opacity(0.5) : AppColors.border, lineWidth: 1)
+                    Capsule().stroke(viewModel.onlyFavorites ? Color(hex: "E97970").opacity(0.5) : Color(red: 0.88, green: 0.93, blue: 0.90), lineWidth: 1)
                 )
             }
             .accessibilityLabel("Lọc món yêu thích")
-
-            // Close button
-            Button(action: { dismiss() }) {
-                Image(systemName: "xmark")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(AppColors.textSecondary)
-                    .frame(width: 36, height: 36)
-                    .background(AppColors.surfacePrimary)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(AppColors.border, lineWidth: 1))
-            }
-            .accessibilityLabel("Đóng")
         }
+        .padding(.horizontal, AppSpacing.screenHorizontal)
+        .padding(.top, 54) // Dynamic Island safe
+        .padding(.bottom, 10)
     }
 
     // MARK: - Search Section
@@ -144,7 +179,7 @@ public struct FoodExplorerView: View {
         HStack(spacing: AppSpacing.xs) {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 16, weight: .medium))
-                .foregroundColor(AppColors.textSecondary)
+                .foregroundColor(AppColors.primaryGreen)
 
             TextField("Tìm kiếm theo tên, từ khóa hoặc mã...", text: $viewModel.searchQuery)
                 .font(AppTypography.body)
@@ -164,8 +199,9 @@ public struct FoodExplorerView: View {
         }
         .padding(.horizontal, AppSpacing.md)
         .padding(.vertical, 12)
-        .background(AppColors.surfacePrimary)
+        .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
+        .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 2)
         .overlay(
             RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous)
                 .stroke(AppColors.border, lineWidth: 1)
@@ -182,7 +218,9 @@ public struct FoodExplorerView: View {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             viewModel.selectedCategory = category
                         }
+                        #if canImport(UIKit)
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        #endif
                     }) {
                         HStack(spacing: 6) {
                             Image(systemName: category.icon)
@@ -194,8 +232,9 @@ public struct FoodExplorerView: View {
                         .foregroundColor(isSelected ? .white : AppColors.textPrimary)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 8)
-                        .background(isSelected ? AppColors.primaryGreen : AppColors.surfacePrimary)
+                        .background(isSelected ? AppColors.primaryGreen : Color.white)
                         .clipShape(Capsule())
+                        .shadow(color: Color.black.opacity(isSelected ? 0.08 : 0.03), radius: 4, x: 0, y: 2)
                         .overlay(
                             Capsule()
                                 .stroke(isSelected ? AppColors.primaryGreen : AppColors.border, lineWidth: 1)
@@ -310,9 +349,10 @@ public struct FoodExplorerView: View {
                                 .frame(maxWidth: 110, alignment: .leading)
                             }
                             .padding(6)
-                            .background(AppColors.surfacePrimary)
+                            .background(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
-                            .overlay(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+                            .shadow(color: Color.black.opacity(0.04), radius: 4, x: 0, y: 2)
+                            .overlay(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous).stroke(Color(red: 0.88, green: 0.93, blue: 0.90), lineWidth: 1))
                         }
                         .buttonStyle(.plain)
                     }
@@ -553,13 +593,13 @@ private struct FoodCatalogCard: View {
                 }
                 .padding(10)
             }
-            .background(AppColors.surfacePrimary)
+            .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous))
+            .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
             .overlay(
                 RoundedRectangle(cornerRadius: AppRadius.card, style: .continuous)
-                    .stroke(AppColors.border, lineWidth: 1)
+                    .stroke(Color(red: 0.88, green: 0.93, blue: 0.90), lineWidth: 1)
             )
-            .shadow(color: Color.black.opacity(0.04), radius: 4, x: 0, y: 2)
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("catalog_dish_\(dish.slug)")

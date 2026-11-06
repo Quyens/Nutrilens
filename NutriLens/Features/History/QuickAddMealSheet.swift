@@ -100,7 +100,7 @@ public struct QuickAddMealSheet: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingFullExplorer) {
+            .fullScreenCover(isPresented: $showingFullExplorer) {
                 FoodExplorerView()
             }
         }

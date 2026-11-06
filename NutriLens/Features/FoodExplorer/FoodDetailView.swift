@@ -40,28 +40,92 @@ public struct FoodDetailView: View {
             AppColors.canvasBackground
                 .ignoresSafeArea()
 
-            ScrollView {
-                VStack(spacing: AppSpacing.lg) {
-                    // Hero Image & Top Actions
-                    heroHeader
+            Image("botanical_wallpaper")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
 
-                    // Dish Title & Editorial Description
-                    dishInfoSection
+            VStack(spacing: 0) {
+                // Top floating bar with safe area
+                HStack {
+                    Button(action: {
+                        #if canImport(UIKit)
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        #endif
+                        dismiss()
+                    }) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 13, weight: .bold))
+                            Text("Quay lại")
+                                .font(.system(size: 14, weight: .semibold))
+                        }
+                        .foregroundColor(AppColors.primaryGreen)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(Color.white.opacity(0.95))
+                        .clipShape(Capsule())
+                        .shadow(color: Color.black.opacity(0.08), radius: 6, x: 0, y: 2)
+                        .overlay(
+                            Capsule().stroke(Color(red: 0.88, green: 0.93, blue: 0.90), lineWidth: 1)
+                        )
+                    }
 
-                    // Portion Calculator
-                    portionCalculatorSection
+                    Spacer()
 
-                    // Nutrition Breakdown Card
-                    nutritionBreakdownCard
+                    Text(dish.vietnameseName)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(Color(red: 0.08, green: 0.22, blue: 0.15))
+                        .lineLimit(1)
 
-                    // Data Provenance & Reliability
-                    provenanceCard
+                    Spacer()
 
-                    // Bottom spacing for sticky action button
-                    Color.clear.frame(height: 90)
+                    Button(action: {
+                        viewModel.toggleFavorite(dishId: dish.id)
+                        #if canImport(UIKit)
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        #endif
+                    }) {
+                        Image(systemName: isFav ? "heart.fill" : "heart")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(isFav ? Color(hex: "E97970") : AppColors.textPrimaryDark)
+                            .frame(width: 38, height: 38)
+                            .background(Color.white.opacity(0.95))
+                            .clipShape(Circle())
+                            .shadow(color: Color.black.opacity(0.08), radius: 6, x: 0, y: 2)
+                            .overlay(
+                                Circle().stroke(Color(red: 0.88, green: 0.93, blue: 0.90), lineWidth: 1)
+                            )
+                    }
                 }
                 .padding(.horizontal, AppSpacing.screenHorizontal)
-                .padding(.bottom, AppSpacing.xl)
+                .padding(.top, 54) // Dynamic Island Safe!
+                .padding(.bottom, 8)
+
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: AppSpacing.lg) {
+                        // Hero Image
+                        heroHeader
+
+                        // Dish Title & Editorial Description
+                        dishInfoSection
+
+                        // Portion Calculator
+                        portionCalculatorSection
+
+                        // Nutrition Breakdown Card
+                        nutritionBreakdownCard
+
+                        // Data Provenance & Reliability
+                        provenanceCard
+
+                        // Bottom spacing for sticky action button
+                        Color.clear.frame(height: 90)
+                    }
+                    .padding(.horizontal, AppSpacing.screenHorizontal)
+                    .padding(.bottom, AppSpacing.xl)
+                }
             }
 
             // Sticky Bottom Action Bar
@@ -78,59 +142,17 @@ public struct FoodDetailView: View {
 
     // MARK: - Hero Header
     private var heroHeader: some View {
-        ZStack(alignment: .top) {
-            // Food Hero Image
-            Image(dish.assetImageName)
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
-                .frame(height: 260)
-                .clipShape(RoundedRectangle(cornerRadius: AppRadius.cardLarge, style: .continuous))
-                .overlay(
-                    LinearGradient(
-                        colors: [Color.black.opacity(0.35), Color.clear, Color.black.opacity(0.4)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.cardLarge, style: .continuous))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: AppRadius.cardLarge, style: .continuous)
-                        .stroke(AppColors.border, lineWidth: 1)
-                )
-
-            // Top action buttons
-            HStack {
-                Button(action: { dismiss() }) {
-                    Image(systemName: "arrow.left")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(AppColors.textPrimaryDark)
-                        .frame(width: 40, height: 40)
-                        .background(Color.white.opacity(0.92))
-                        .clipShape(Circle())
-                        .shadow(color: Color.black.opacity(0.12), radius: 6, x: 0, y: 3)
-                }
-                .accessibilityLabel("Quay lại")
-
-                Spacer()
-
-                Button(action: {
-                    viewModel.toggleFavorite(dishId: dish.id)
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                }) {
-                    Image(systemName: isFav ? "heart.fill" : "heart")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(isFav ? Color(hex: "E97970") : AppColors.textPrimaryDark)
-                        .frame(width: 40, height: 40)
-                        .background(Color.white.opacity(0.92))
-                        .clipShape(Circle())
-                        .shadow(color: Color.black.opacity(0.12), radius: 6, x: 0, y: 3)
-                }
-                .accessibilityLabel(isFav ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích")
-            }
-            .padding(AppSpacing.md)
-        }
-        .padding(.top, AppSpacing.xs)
+        Image(dish.assetImageName)
+            .resizable()
+            .scaledToFill()
+            .frame(maxWidth: .infinity)
+            .frame(height: 230)
+            .clipShape(RoundedRectangle(cornerRadius: AppRadius.cardLarge, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: AppRadius.cardLarge, style: .continuous)
+                    .stroke(AppColors.border, lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 3)
     }
 
     // MARK: - Dish Info Section

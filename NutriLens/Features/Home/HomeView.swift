@@ -161,10 +161,15 @@ public struct HomeView: View {
             .sheet(isPresented: $showingWaterSheet) {
                 WaterIntakeSheet(viewModel: viewModel)
             }
-            .sheet(isPresented: $showingFoodExplorer, onDismiss: {
+            .fullScreenCover(isPresented: $showingFoodExplorer, onDismiss: {
                 Task { await viewModel.loadDashboard() }
             }) {
                 FoodExplorerView()
+            }
+            .onAppear {
+                if ProcessInfo.processInfo.arguments.contains("-startFoodExplorer") {
+                    showingFoodExplorer = true
+                }
             }
         }
     }
