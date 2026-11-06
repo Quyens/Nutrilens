@@ -11,62 +11,84 @@ import SwiftUI
 public struct SettingsView: View {
     @StateObject private var viewModel: SettingsViewModel
     @Environment(\.dismiss) private var dismiss
+    private let onOpenAccount: (() -> Void)?
 
-    public init(viewModel: SettingsViewModel) {
+    public init(viewModel: SettingsViewModel, onOpenAccount: (() -> Void)? = nil) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        self.onOpenAccount = onOpenAccount
     }
 
-    public init() {
+    public init(onOpenAccount: (() -> Void)? = nil) {
         _viewModel = StateObject(wrappedValue: SettingsViewModel())
+        self.onOpenAccount = onOpenAccount
     }
 
     public var body: some View {
         NavigationStack {
             Form {
-                Section("Preferences") {
-                    Toggle("Use Metric Units (g, kcal)", isOn: $viewModel.useMetricUnits)
-                    Toggle("Haptic Feedback", isOn: $viewModel.hapticFeedbackEnabled)
+                if let openAccount = onOpenAccount {
+                    Section("Tài khoản") {
+                        Button {
+                            dismiss()
+                            openAccount()
+                        } label: {
+                            HStack {
+                                Label("Quản lý tài khoản & Xác thực", systemImage: "person.badge.shield.checkmark.fill")
+                                    .foregroundColor(AppColors.textPrimary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(AppColors.textTertiary)
+                            }
+                        }
+                    }
                 }
 
-                Section("Privacy & Storage") {
+                Section("Tùy chọn") {
+                    Toggle("Sử dụng hệ mét (g, kcal)", isOn: $viewModel.useMetricUnits)
+                    Toggle("Phản hồi rung (Haptics)", isOn: $viewModel.hapticFeedbackEnabled)
+                }
+
+                Section("Bảo mật & Lưu trữ") {
                     HStack {
-                        Text("On-Device AI Processing")
+                        Text("Xử lý AI trên thiết bị")
                         Spacer()
-                        Text("Enabled")
+                        Text("Bật (On-Device)")
                             .foregroundColor(AppColors.primary)
                     }
 
                     HStack {
-                        Text("Data Storage")
+                        Text("Lưu trữ dữ liệu")
                         Spacer()
-                        Text("Local SwiftData Only")
+                        Text("Cục bộ (SwiftData)")
                             .foregroundColor(AppColors.textSecondary)
                     }
                 }
 
-                Section("About NutriLens") {
+                Section("Về NutriLens") {
                     HStack {
-                        Text("Version")
+                        Text("Phiên bản")
                         Spacer()
                         Text(viewModel.appVersion)
                             .foregroundColor(AppColors.textSecondary)
                     }
 
                     HStack {
-                        Text("Architecture")
+                        Text("Kiến trúc")
                         Spacer()
                         Text("Clean + MVVM")
                             .foregroundColor(AppColors.textSecondary)
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("Cài đặt")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
+                    Button("Xong") {
                         dismiss()
                     }
+                    .foregroundColor(AppColors.primaryDark)
                 }
             }
         }

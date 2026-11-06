@@ -159,6 +159,7 @@ public enum AppColors {
     /// Divider lines.
     public static var divider: Color { border }
     public static var borderSubtle: Color { border }
+    public static var cardBorder: Color { border }
     public static var shadowSubtle: Color { Color.black.opacity(0.03) }
 
     /// Disabled state representation.

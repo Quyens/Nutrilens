@@ -10,13 +10,16 @@ import SwiftUI
 public struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
     private let onOpenSettings: () -> Void
+    private let onOpenAccount: () -> Void
 
     public init(
         viewModel: ProfileViewModel,
-        onOpenSettings: @escaping () -> Void
+        onOpenSettings: @escaping () -> Void,
+        onOpenAccount: @escaping () -> Void = {}
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.onOpenSettings = onOpenSettings
+        self.onOpenAccount = onOpenAccount
     }
 
     public var body: some View {
@@ -54,6 +57,34 @@ public struct ProfileView: View {
                             TargetRow(title: "Target Protein", value: "\(Int(viewModel.profile.dailyProteinTargetGrams)) g")
                             TargetRow(title: "Target Carbs", value: "\(Int(viewModel.profile.dailyCarbTargetGrams)) g")
                             TargetRow(title: "Target Fat", value: "\(Int(viewModel.profile.dailyFatTargetGrams)) g")
+                        }
+                    }
+
+                    // Account & Security Card
+                    CardView {
+                        VStack(spacing: 0) {
+                            Button(action: onOpenAccount) {
+                                HStack {
+                                    Label {
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Tài khoản & Xác thực")
+                                                .font(AppTypography.subheadline)
+                                                .foregroundColor(AppColors.textPrimary)
+                                            Text(viewModel.currentSession.isGuest ? "Chế độ Khách (Guest)" : (viewModel.currentSession.user?.email ?? "Chưa đăng nhập"))
+                                                .font(AppTypography.caption)
+                                                .foregroundColor(AppColors.textSecondary)
+                                        }
+                                    } icon: {
+                                        Image(systemName: "person.badge.shield.checkmark.fill")
+                                            .foregroundColor(AppColors.primary)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(AppColors.textTertiary)
+                                }
+                                .padding(.vertical, AppSpacing.xs)
+                            }
                         }
                     }
 
@@ -98,8 +129,7 @@ private struct TargetRow: View {
                 .foregroundColor(AppColors.textSecondary)
             Spacer()
             Text(value)
-                .font(AppTypography.subheadline)
-                .fontWeight(.semibold)
+                .font(AppTypography.subheadlineBold)
                 .foregroundColor(AppColors.textPrimary)
         }
     }

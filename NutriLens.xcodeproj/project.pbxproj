@@ -10,6 +10,13 @@
 	<string>56</string>
 	<key>objects</key>
 	<dict>
+		<key>00192FB68436BD3091096378</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F0CD18A8A23827BE19921AAA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>006CA5C4C218E655EBD24508</key>
 		<dict>
 			<key>isa</key>
@@ -61,6 +68,17 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>0448C6C0801A2BFD6B01B82A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/GetAuthSessionUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>04CE524B13ECB95A351FA2C4</key>
 		<dict>
 			<key>isa</key>
@@ -85,6 +103,7 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
+				<string>E07EA73E507247A738DC8D41</string>
 				<string>F1CAEFD1B962FEBF9642436F</string>
 				<string>6725C34363B3B22D5417C409</string>
 				<string>0FF66653B89C45607D92BC54</string>
@@ -115,6 +134,24 @@
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0ABC2735952E31B36C0B0702</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4672D834636CC11A25555B28</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>0B0F14B8BE5A11AFD628E4E1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/RegisterView.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -224,12 +261,30 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>125F90E67D07015910B81D3D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9E9BDDBC21A99AF372250B97</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>12E64DDA7FA599B7CE06C578</key>
 		<dict>
 			<key>fileRef</key>
 			<string>51FF831A9407313E294F7614</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>13F612F73775A708068B3CDB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MockAuthenticationRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>15D8AF9362A5E8F55B8C0F36</key>
 		<dict>
@@ -253,6 +308,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>C60B5D0883404AAD877A004A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>18E2568775356DBE6236D854</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0B0F14B8BE5A11AFD628E4E1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -316,6 +378,17 @@
 			<string>0E094EEF7979623BDCD2CA88</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>1F47159FE2BB5FF9606EBB09</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/RegisterUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>23066A8650C21E68B0AC47E6</key>
 		<dict>
@@ -412,6 +485,7 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<string>5CBD453032EA1F98F0A931EF</string>
 				<string>9010A3AAF4085F498C13F04F</string>
 				<string>B0DFFEFDFCC4B656399DA403</string>
 				<string>D8B914479A7FB0181FA8765A</string>
@@ -430,6 +504,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>DD4AFBC09766AA2B17B9913B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>33103A0F064A7B8B61ADD704</key>
+		<dict>
+			<key>fileRef</key>
+			<string>99C49D9F43D871030904D289</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -604,6 +685,17 @@
 			<string>D7D428C96FAF80D1520FEA4F</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>4672D834636CC11A25555B28</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/LoginUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>47C56A0BE9A86378C73D5571</key>
 		<dict>
@@ -825,6 +917,28 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>59CBE8A78EADA95EC02B1A77</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/ForgotPasswordView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5CBD453032EA1F98F0A931EF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLensTests/UnitTests/AuthenticationTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>5D449CEED23D849D467AD262</key>
 		<dict>
 			<key>fileRef</key>
@@ -893,6 +1007,20 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>6516399D66A334F689972715</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BABEBD58300E04EDC6423604</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>656D72B141810121DDB46A40</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9FC1E96689373881971529AA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>66EE9CB032280A0109E8129F</key>
 		<dict>
 			<key>isa</key>
@@ -950,6 +1078,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>6822CEB5E7B073CBF1148CBC</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/EmailVerificationStatusView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>686424683C03721F1776789D</key>
 		<dict>
 			<key>isa</key>
@@ -975,6 +1114,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>6C60AB740CB3403C693DE02B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/AuthenticationSession.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>6C8578E58F1DDFC4A0FCB75A</key>
 		<dict>
 			<key>fileRef</key>
@@ -989,12 +1139,30 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>6D5BDA4BE7A7C6ACC450E561</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F8A3DDB57EECE6DCE9993F63</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>6E4283BAAFE67C5FB558E6EC</key>
 		<dict>
 			<key>fileRef</key>
 			<string>0EB506FBB99C432F3C3094E9</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>6E59DC463A57D174BBF9A07A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/SignInWithAppleUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>6E73BD67BF2AA95CD3B22F24</key>
 		<dict>
@@ -1047,6 +1215,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>7279709655EC4827E73EAA92</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A5E1D833BB3D5EB27D17CADE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>730829ABE91B9E9559449C71</key>
 		<dict>
 			<key>buildConfigurations</key>
@@ -1071,6 +1246,20 @@
 			<string>NutriLens/AI/Preprocessing/ImagePreprocessor.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7563BD737F1E3C526C436FA6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>E226813443FA14CAE81DC8AE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>75730767A02F08D6DA0F6757</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1F47159FE2BB5FF9606EBB09</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>769479B046EDA9DB322DA707</key>
 		<dict>
@@ -1115,6 +1304,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>7AED24108F394E67CBC25601</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6822CEB5E7B073CBF1148CBC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>7C2F7FF4F02DDAEC1AB3B0F5</key>
 		<dict>
 			<key>fileRef</key>
@@ -1139,6 +1335,13 @@
 			<string>NutriLens/Domain/UseCases/LogMealUseCase.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7EC9DA657C534DC8B418DFD0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6C60AB740CB3403C693DE02B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>8130ACA506949AE401DF3F57</key>
 		<dict>
@@ -1214,31 +1417,53 @@
 				<string>1AE8DE115079F5AFB45177FB</string>
 				<string>E1597FCCCFC43387B2EA653D</string>
 				<string>D7F7A88443F92F0B9DF4306D</string>
+				<string>9BD8B78C43738926DFCAB1F7</string>
+				<string>E226813443FA14CAE81DC8AE</string>
+				<string>9FC1E96689373881971529AA</string>
+				<string>6822CEB5E7B073CBF1148CBC</string>
+				<string>59CBE8A78EADA95EC02B1A77</string>
+				<string>9E9BDDBC21A99AF372250B97</string>
+				<string>0B0F14B8BE5A11AFD628E4E1</string>
+				<string>99C49D9F43D871030904D289</string>
 				<string>D7D428C96FAF80D1520FEA4F</string>
 				<string>BBA4B1631856B3E27379AD6F</string>
 				<string>64886736C3CED67712A168F6</string>
 				<string>CEB2171EA91A84CE413EA11A</string>
 				<string>0E094EEF7979623BDCD2CA88</string>
 				<string>750675C6CF628DD5F617DD63</string>
+				<string>AFA64BC2F46814D57B945361</string>
 				<string>B25A2DE47D321EDB5D614C50</string>
 				<string>E71F14F5155DA576208DE4BD</string>
 				<string>C7EFFFE6167220C31A59D517</string>
+				<string>13F612F73775A708068B3CDB</string>
 				<string>DCD50C86C7BC8B054235F2A6</string>
 				<string>0CBFC6C0C433ACA666509112</string>
 				<string>AEED6892412F88AF0D4E605E</string>
 				<string>D11C3D583C00DE11ABB3426C</string>
 				<string>FBDE76F38D4BE56FDDF81709</string>
 				<string>DD4AFBC09766AA2B17B9913B</string>
+				<string>A5E1D833BB3D5EB27D17CADE</string>
 				<string>66EE9CB032280A0109E8129F</string>
 				<string>8BC2375919DC37CFF8C2C1B1</string>
 				<string>006CA5C4C218E655EBD24508</string>
 				<string>389352F4258426F45FE26326</string>
+				<string>D2782DDF29386274653410FF</string>
+				<string>BABEBD58300E04EDC6423604</string>
+				<string>0448C6C0801A2BFD6B01B82A</string>
 				<string>3AC219BC1FBBC08B728EDC21</string>
 				<string>D4EC8199E854142FD4F365FC</string>
 				<string>B23D69EC9BFC1A005C136BA2</string>
 				<string>7E03693C705EF154817E9462</string>
+				<string>4672D834636CC11A25555B28</string>
+				<string>F0CD18A8A23827BE19921AAA</string>
 				<string>9D2C3647C0FEAE14DA842DF2</string>
 				<string>AFA747805022B6E1383D30A8</string>
+				<string>1F47159FE2BB5FF9606EBB09</string>
+				<string>FC5CE4970C1FD90B577407C9</string>
+				<string>6E59DC463A57D174BBF9A07A</string>
+				<string>B583D04DD052B46FC10707FB</string>
+				<string>F8A3DDB57EECE6DCE9993F63</string>
+				<string>6C60AB740CB3403C693DE02B</string>
 				<string>4A31187A7971632C74C66AB6</string>
 				<string>6E73BD67BF2AA95CD3B22F24</string>
 				<string>719DBDB2681386AE1EEB1C8D</string>
@@ -1364,31 +1589,53 @@
 				<string>35BD2D24F5732465ED0DF098</string>
 				<string>18FDEFC3749166A45BBB9522</string>
 				<string>9A98C7BD98D4C02A6976697C</string>
+				<string>F8B5D62ECBF43B6B572CC567</string>
+				<string>7563BD737F1E3C526C436FA6</string>
+				<string>656D72B141810121DDB46A40</string>
+				<string>7AED24108F394E67CBC25601</string>
+				<string>A782BDB12D04D8B2B22446EF</string>
+				<string>125F90E67D07015910B81D3D</string>
+				<string>18E2568775356DBE6236D854</string>
+				<string>33103A0F064A7B8B61ADD704</string>
 				<string>4462C0E728C0E7BA2FB71087</string>
 				<string>5D449CEED23D849D467AD262</string>
 				<string>4AD4BDA23F5907643B283D75</string>
 				<string>8526B74A36B1009F5AD4557D</string>
 				<string>1EA1ABA056B66945F307BAF6</string>
 				<string>10B9AFF4B2B019E1C000F138</string>
+				<string>FAF8FAA6C8B5E32332DAFB9B</string>
 				<string>28E15A4C7773D00F888DA8D6</string>
 				<string>E724B1E414A65E8039CB19DB</string>
 				<string>62B28BDE729712647B58A6CF</string>
+				<string>E4C649B8A58404507FB4D937</string>
 				<string>858EE11A0FE326A781FF3D34</string>
 				<string>15D8AF9362A5E8F55B8C0F36</string>
 				<string>AEF55656A963A851C59151D0</string>
 				<string>24BCD74085D15EB4258CFC1F</string>
 				<string>688E5C247BB9804635987543</string>
 				<string>32CBAE8982E4F8DE16A08441</string>
+				<string>7279709655EC4827E73EAA92</string>
 				<string>A97DECA4C1711C749BD47A61</string>
 				<string>88C6A61314405ED68A60C6B0</string>
 				<string>B83DA3FC01130753727D3F15</string>
 				<string>DECA62EDB6ADD86101C1D24B</string>
+				<string>E14176DFB01AA0AC010F8898</string>
+				<string>6516399D66A334F689972715</string>
+				<string>EFAEEFA3636DC0B3D50E63D8</string>
 				<string>0769EBEDDFE199A70F86B251</string>
 				<string>4ED0505E53EAC630A768CFB2</string>
 				<string>E8889AE048B16B7FECD56CB5</string>
 				<string>722307ED626EC9E9D0A954AA</string>
+				<string>0ABC2735952E31B36C0B0702</string>
+				<string>00192FB68436BD3091096378</string>
 				<string>641D8A0A05481BA8A3D344C3</string>
 				<string>4D0E4516185840E0209383DE</string>
+				<string>75730767A02F08D6DA0F6757</string>
+				<string>9ED96A67F49EC9EA1E8101DC</string>
+				<string>CFE65CE3C730CEE399ED4950</string>
+				<string>FFFB0241C56062D33AE81E47</string>
+				<string>6D5BDA4BE7A7C6ACC450E561</string>
+				<string>7EC9DA657C534DC8B418DFD0</string>
 				<string>6734C59128AFA5F368A34E73</string>
 				<string>47C56A0BE9A86378C73D5571</string>
 				<string>DD1110DC6E6029A6025D90E8</string>
@@ -1466,6 +1713,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>99C49D9F43D871030904D289</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/WelcomeAuthView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>99FFD6D157A8231DF52E9212</key>
 		<dict>
 			<key>fileRef</key>
@@ -1479,6 +1737,17 @@
 			<string>D7F7A88443F92F0B9DF4306D</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>9BD8B78C43738926DFCAB1F7</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/AccountManagementView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>9D2C3647C0FEAE14DA842DF2</key>
 		<dict>
@@ -1572,6 +1841,35 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>9E9BDDBC21A99AF372250B97</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/LoginView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9ED96A67F49EC9EA1E8101DC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FC5CE4970C1FD90B577407C9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>9FC1E96689373881971529AA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/AuthViewModel.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>A2B8588E071E9547FAA5B476</key>
 		<dict>
 			<key>isa</key>
@@ -1580,6 +1878,24 @@
 			<string>77474958807A89E8DD56E424</string>
 			<key>targetProxy</key>
 			<string>EA48666EEC4BE6835411A27E</string>
+		</dict>
+		<key>A5E1D833BB3D5EB27D17CADE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/RepositoryInterfaces/AuthenticationRepositoryProtocol.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A782BDB12D04D8B2B22446EF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>59CBE8A78EADA95EC02B1A77</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>A96EA249977253D9F8C8E2F1</key>
 		<dict>
@@ -1638,6 +1954,17 @@
 			<string>AEED6892412F88AF0D4E605E</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>AFA64BC2F46814D57B945361</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/AuthenticationRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>AFA747805022B6E1383D30A8</key>
 		<dict>
@@ -1707,6 +2034,17 @@
 			<string>3431F9C4602DD4561D4664C1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>B583D04DD052B46FC10707FB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/AuthError.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>B5CAE33C202CA73358362965</key>
 		<dict>
@@ -1793,6 +2131,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Features/Nutrition/NutritionAnalyticsView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BABEBD58300E04EDC6423604</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/DeleteAccountUseCase.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1987,6 +2336,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>CFE65CE3C730CEE399ED4950</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6E59DC463A57D174BBF9A07A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>D0FF03998DDA8DDBDFA28B8E</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -2006,6 +2362,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Data/Repositories/UserRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D2782DDF29386274653410FF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/ContinueAsGuestUseCase.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2262,6 +2629,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>E07EA73E507247A738DC8D41</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5CBD453032EA1F98F0A931EF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>E12DD9C9B2D7EB39AFDD6A5C</key>
 		<dict>
 			<key>explicitFileType</key>
@@ -2275,6 +2649,13 @@
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
+		<key>E14176DFB01AA0AC010F8898</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D2782DDF29386274653410FF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>E1597FCCCFC43387B2EA653D</key>
 		<dict>
 			<key>isa</key>
@@ -2283,6 +2664,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Features/Nutrition/NutritionResultView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E226813443FA14CAE81DC8AE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/Authentication/AuthCoordinatorView.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2296,6 +2688,13 @@
 			<string>NutriLens/Features/FoodRecognition/CameraService.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E4C649B8A58404507FB4D937</key>
+		<dict>
+			<key>fileRef</key>
+			<string>13F612F73775A708068B3CDB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>E640830F5D474A293C115092</key>
 		<dict>
@@ -2395,6 +2794,24 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>EFAEEFA3636DC0B3D50E63D8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0448C6C0801A2BFD6B01B82A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F0CD18A8A23827BE19921AAA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/LogoutUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>F117A3359E74F8FD2B3E99B1</key>
 		<dict>
 			<key>isa</key>
@@ -2487,6 +2904,24 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>F8A3DDB57EECE6DCE9993F63</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/AuthUser.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8B5D62ECBF43B6B572CC567</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9BD8B78C43738926DFCAB1F7</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>F8C11F1832EF84A327194F08</key>
 		<dict>
 			<key>buildSettings</key>
@@ -2547,6 +2982,13 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>FAF8FAA6C8B5E32332DAFB9B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AFA64BC2F46814D57B945361</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>FBAD619B488551B3090D8690</key>
 		<dict>
 			<key>fileRef</key>
@@ -2572,10 +3014,28 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>FC5CE4970C1FD90B577407C9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/RequestPasswordResetUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>FE17B5C55F84E828B280B184</key>
 		<dict>
 			<key>fileRef</key>
 			<string>9E619DF4F7B9D8B2661D840F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FFFB0241C56062D33AE81E47</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B583D04DD052B46FC10707FB</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>

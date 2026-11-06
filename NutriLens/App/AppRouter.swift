@@ -42,6 +42,7 @@ public struct MainTabView: View {
     @State private var selectedTab: AppTab = .home
     @State private var isPresentingManualLog: Bool = false
     @State private var isPresentingSettings: Bool = false
+    @State private var isPresentingAuth: Bool = false
 
     public init() {}
 
@@ -116,10 +117,14 @@ public struct MainTabView: View {
                 case .profile:
                     ProfileView(
                         viewModel: ProfileViewModel(
-                            userRepository: environment.userRepository
+                            userRepository: environment.userRepository,
+                            authenticationRepository: environment.authenticationRepository
                         ),
                         onOpenSettings: {
                             isPresentingSettings = true
+                        },
+                        onOpenAccount: {
+                            isPresentingAuth = true
                         }
                     )
                 }
@@ -145,7 +150,22 @@ public struct MainTabView: View {
             )
         }
         .sheet(isPresented: $isPresentingSettings) {
-            SettingsView()
+            SettingsView(onOpenAccount: {
+                isPresentingAuth = true
+            })
+        }
+        .sheet(isPresented: $isPresentingAuth) {
+            AuthCoordinatorView(
+                viewModel: environment.makeAuthViewModel(
+                    initialStep: .accountManagement,
+                    onAuthCompleted: {
+                        isPresentingAuth = false
+                    }
+                ),
+                onDismiss: {
+                    isPresentingAuth = false
+                }
+            )
         }
     }
 }

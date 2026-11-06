@@ -11,19 +11,28 @@ import SwiftUI
 @MainActor
 public final class ProfileViewModel: ObservableObject {
     @Published public private(set) var profile: UserProfile = UserProfile()
+    @Published public private(set) var currentSession: AuthenticationSession = .unauthenticated
     @Published public private(set) var isLoading: Bool = false
     @Published public var isEditing: Bool = false
 
     private let userRepository: UserRepositoryProtocol
+    private let authenticationRepository: AuthenticationRepositoryProtocol?
 
-    public init(userRepository: UserRepositoryProtocol) {
+    public init(
+        userRepository: UserRepositoryProtocol,
+        authenticationRepository: AuthenticationRepositoryProtocol? = nil
+    ) {
         self.userRepository = userRepository
+        self.authenticationRepository = authenticationRepository
     }
 
     public func loadProfile() async {
         isLoading = true
         if let loaded = try? await userRepository.getUserProfile() {
             self.profile = loaded
+        }
+        if let session = try? await authenticationRepository?.getCurrentSession() {
+            self.currentSession = session
         }
         isLoading = false
     }
