@@ -92,11 +92,38 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
      - Bộ lọc nhóm món ăn (*Món nước, Cơm & Xôi, Món sợi, Bánh mì...*) với viên nang trắng viền ngọc khi chưa chọn và xanh đậm khi được chọn.
      - Lưới danh mục 35+ món ăn hiển thị thẻ trắng thanh lịch, hiển thị ảnh món, calo, đạm gram và nút lưu yêu thích.
 
+### 1.8 Nâng cấp Cài đặt ứng dụng theo chuẩn kiểm duyệt Apple App Store ([`SettingsView`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsView.swift), [`SettingsViewModel`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsViewModel.swift))
+- **Vấn đề trước đây:**
+  - Phần Thông tin ứng dụng hiển thị thông số kỹ thuật nội bộ của lập trình viên: *"Kiến trúc hệ thống: Clean + MVVM + SwiftData"*. Đây là lỗi thường bị Apple từ chối trong App Store Review (Guideline 2.1 App Completeness vì để sót debug/internal copy).
+  - Thiếu Điều khoản sử dụng (EULA) và Chính sách quyền riêng tư (Privacy Policy) có thể tra cứu trực tiếp trong cài đặt (vi phạm bắt buộc Apple Guideline 5.1.1 & 5.1.2 đối với app Health & Fitness / Food & Drink).
+  - Thiếu Khuyến cáo y tế (Medical Disclaimer) bắt buộc đối với các tính năng ước lượng calo & dinh dưỡng AI.
+  - Người dùng nếu lỡ từ chối cấp quyền Camera/Ảnh không có lối tắt mở trực tiếp mục Cài đặt hệ thống của iOS để cấp lại quyền.
+- **Giải pháp thiết kế mới hoàn thiện chuẩn App Store:**
+  1. **Thẻ Tài khoản & Xác thực:** Phím tắt quản lý trạng thái tài khoản & bảo mật (Apple Keychain, đăng xuất an toàn).
+  2. **Thẻ Trải nghiệm & Hiển thị:** Đơn vị hệ mét (g, ml, kcal), Phản hồi rung xúc giác (Haptics), và thêm mới **Công tắc Nhắc nhở bữa ăn hàng ngày** (Daily meal reminder notifications).
+  3. **Thẻ Bảo mật & Quyền riêng tư:**
+     - Huy hiệu xử lý AI On-Device: *"Core ML On-Device • Không gửi ảnh ra ngoài"*.
+     - Huy hiệu lưu trữ: *"Mã hóa an toàn trong SwiftData nội bộ"*.
+     - Phím tắt mở trực tiếp **Cài đặt iOS** (`UIApplication.openSettingsURLString`) để quản lý quyền Camera & Thư viện ảnh.
+     - Phím bấm **"Dọn dẹp bộ nhớ đệm AI"** để giải phóng dung lượng ảnh quét tạm thời.
+  4. **Thẻ Pháp lý & Hỗ trợ (Bắt buộc theo App Store Guidelines):**
+     - **Chính sách quyền riêng tư:** Trình đọc toàn màn hình chuẩn xác, cam kết bảo vệ dữ liệu sức khỏe và không theo dõi người dùng.
+     - **Điều khoản sử dụng (EULA):** Trình đọc toàn màn hình với banner **Khuyến cáo y tế quan trọng (Medical Disclaimer)**: NutriLens hỗ trợ theo dõi thói quen dinh dưỡng, không thay thế cho chẩn đoán hoặc điều trị chuyên khoa.
+     - **Đánh giá NutriLens trên App Store:** Kích hoạt đánh giá 5 sao chuẩn StoreKit.
+     - **Hỗ trợ kỹ thuật & Góp ý:** Liên hệ email `support@nutrilens.vn` có tính năng sao chép nhanh và thông báo.
+  5. **Thẻ Thông tin ứng dụng:**
+     - Tên ứng dụng: `NutriLens`.
+     - Phiên bản ứng dụng chuẩn: Lấy động từ `CFBundleShortVersionString` và `CFBundleVersion`.
+     - Nguồn cơ sở dữ liệu: **Viện Dinh Dưỡng Quốc Gia (NIN)** theo đúng quy tắc dự án.
+     - Bản quyền: `© 2026 NutriLens. All rights reserved.`
+
 ---
 
-## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (14 Màn hình Hoàn chỉnh)
+## 2. Bộ ảnh chụp thực tế trên iPhone 17 Simulator (15 Màn hình Hoàn chỉnh)
 
 ````carousel
+![Cài Đặt Ứng Dụng Chuẩn App Store](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/settings_appstore_verified.png)
+<!-- slide -->
 ![Khám Phá Món Ăn Toàn Màn Hình](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/food_explorer_fullscreen.png)
 <!-- slide -->
 ![Chi Tiết Món Ăn & Tính Khẩu Phần Toàn Màn Hình](/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/profile_redesign/food_detail_fullscreen.png)
@@ -139,6 +166,7 @@ Dựa trên hình ảnh thực tế bạn chụp lại khi mở các màn hình:
 | [`NutriLens/Features/Home/HomeView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Home/HomeView.swift) | Sửa đổi | Chuyển `showingFoodExplorer` sang `.fullScreenCover`, carousel ngang hôm nay cố định 182pt, padding Dynamic Island 52pt |
 | [`NutriLens/Features/History/QuickAddMealSheet.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/History/QuickAddMealSheet.swift) | Sửa đổi | Chuyển `showingFullExplorer` sang `.fullScreenCover` |
 | [`NutriLens/Features/Profile/ProfileView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Profile/ProfileView.swift) | Sửa đổi | Thay toàn bộ `.sheet` bằng `.fullScreenCover`, thêm `unauthenticatedHeroCard`, các trang phụ trợ nội dung đầy đủ |
-| [`NutriLens/Features/Settings/SettingsView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsView.swift) | Sửa đổi | Nâng cấp toàn diện thành trang Botanical độc lập, bỏ Form xám mặc định |
+| [`NutriLens/Features/Settings/SettingsView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsView.swift) | Sửa đổi | Nâng cấp toàn diện chuẩn Apple App Store: bỏ debug text, thêm chính sách quyền riêng tư, điều khoản EULA & khuyến cáo y tế |
+| [`NutriLens/Features/Settings/SettingsViewModel.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Settings/SettingsViewModel.swift) | Sửa đổi | Bổ sung quản lý thông báo nhắc nhở, dọn dẹp cache, điều hướng Cài đặt hệ thống iOS và StoreKit Review |
 | [`NutriLens/App/AppRouter.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/App/AppRouter.swift) | Sửa đổi | Chuyển `SettingsView` và `AuthCoordinatorView` sang `.fullScreenCover` |
 | [`NutriLens/Features/Authentication/LoginView.swift`](file:///Users/vanquyen/Documents/NutrilensIOS/NutriLens/Features/Authentication/LoginView.swift) | Sửa đổi | Thêm đầy đủ Apple Sign-In, Guest mode, autofill demo, Keychain badge |
