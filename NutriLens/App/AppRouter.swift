@@ -64,7 +64,9 @@ public struct MainTabView: View {
                         viewModel: HomeViewModel(
                             getDailySummaryUseCase: environment.getDailySummaryUseCase,
                             mealRepository: environment.mealRepository,
-                            userRepository: environment.userRepository
+                            userRepository: environment.userRepository,
+                            getDailyHydrationUseCase: environment.getDailyHydrationUseCase,
+                            addHydrationUseCase: environment.addHydrationUseCase
                         ),
                         onScanTapped: {
                             selectedTab = .scan
@@ -112,7 +114,13 @@ public struct MainTabView: View {
                     NutritionAnalyticsView(
                         viewModel: NutritionAnalyticsViewModel(
                             getNutritionAnalyticsUseCase: environment.getNutritionAnalyticsUseCase
-                        )
+                        ),
+                        onNavigateToLog: {
+                            isPresentingManualLog = true
+                        },
+                        onNavigateToScan: {
+                            selectedTab = .scan
+                        }
                     )
 
                 case .profile:
@@ -150,10 +158,12 @@ public struct MainTabView: View {
             )
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .sheet(isPresented: $isPresentingManualLog) {
+        .fullScreenCover(isPresented: $isPresentingManualLog) {
             LogMealView(
                 viewModel: LogMealViewModel(
                     logMealUseCase: environment.logMealUseCase,
+                    unitFormattingService: environment.unitFormattingService,
+                    hapticFeedbackService: environment.hapticFeedbackService,
                     onDismiss: { isPresentingManualLog = false }
                 ),
                 onCancel: { isPresentingManualLog = false }
@@ -196,6 +206,8 @@ public struct MainTabView: View {
                 isPresentingAuth = true
             } else if ProcessInfo.processInfo.arguments.contains("-startSettings") {
                 isPresentingSettings = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startManualLog") {
+                isPresentingManualLog = true
             }
         }
     }

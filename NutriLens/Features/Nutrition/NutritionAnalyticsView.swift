@@ -12,10 +12,18 @@ import Charts
 
 public struct NutritionAnalyticsView: View {
     @ObservedObject public var viewModel: NutritionAnalyticsViewModel
+    public var onNavigateToLog: (() -> Void)?
+    public var onNavigateToScan: (() -> Void)?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    public init(viewModel: NutritionAnalyticsViewModel) {
+    public init(
+        viewModel: NutritionAnalyticsViewModel,
+        onNavigateToLog: (() -> Void)? = nil,
+        onNavigateToScan: (() -> Void)? = nil
+    ) {
         self.viewModel = viewModel
+        self.onNavigateToLog = onNavigateToLog
+        self.onNavigateToScan = onNavigateToScan
     }
 
     public var body: some View {
@@ -51,8 +59,9 @@ public struct NutritionAnalyticsView: View {
                         if data.totalCalories == 0 && data.recordedDaysCount == 0 {
                             AnalyticsEmptyView(
                                 periodTitle: data.formattedPeriodTitle,
-                                onLogFirstMeal: {
-                                    // Trigger refresh
+                                onNavigateToScan: onNavigateToScan,
+                                onNavigateToLog: onNavigateToLog,
+                                onRefresh: {
                                     Task { await viewModel.loadAnalytics() }
                                 }
                             )
@@ -1084,7 +1093,9 @@ private struct InsightRowCard: View {
 
 private struct AnalyticsEmptyView: View {
     let periodTitle: String
-    let onLogFirstMeal: () -> Void
+    var onNavigateToScan: (() -> Void)? = nil
+    var onNavigateToLog: (() -> Void)? = nil
+    let onRefresh: () -> Void
 
     var body: some View {
         CardView(padding: AppSpacing.xl, cornerRadius: AppRadius.card) {
@@ -1097,23 +1108,52 @@ private struct AnalyticsEmptyView: View {
                     .font(AppTypography.cardTitle)
                     .foregroundColor(AppColors.textPrimaryDark)
 
-                Text("Trong khoảng thời gian \(periodTitle), bạn chưa ghi nhận bữa ăn nào. Hãy quét món ăn để xem thống kê calo và vi chất dinh dưỡng nhé!")
+                Text("Trong khoảng thời gian \(periodTitle), bạn chưa ghi nhận bữa ăn nào. Hãy quét món ăn bằng AI hoặc ghi nhanh để xem thống kê calo và vi chất dinh dưỡng nhé!")
                     .font(AppTypography.body)
                     .foregroundColor(AppColors.textSecondaryMuted)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, AppSpacing.sm)
 
-                Button(action: onLogFirstMeal) {
-                    HStack(spacing: 6) {
-                        Image(systemName: "arrow.clockwise")
-                        Text("Làm mới")
+                VStack(spacing: 10) {
+                    if let onNavigateToScan = onNavigateToScan {
+                        Button(action: onNavigateToScan) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "camera.fill")
+                                Text("Quét món ăn bằng AI")
+                            }
+                            .font(AppTypography.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(AppColors.primaryGreen)
+                            .clipShape(Capsule())
+                        }
                     }
-                    .font(AppTypography.headline)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, AppSpacing.lg)
-                    .padding(.vertical, 10)
-                    .background(AppColors.primaryGreen)
-                    .clipShape(Capsule())
+
+                    if let onNavigateToLog = onNavigateToLog {
+                        Button(action: onNavigateToLog) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "square.and.pencil")
+                                Text("Ghi món thủ công")
+                            }
+                            .font(AppTypography.subheadlineBold)
+                            .foregroundColor(AppColors.primaryGreen)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(AppColors.surfaceSecondary)
+                            .clipShape(Capsule())
+                        }
+                    }
+
+                    Button(action: onRefresh) {
+                        HStack(spacing: 6) {
+                            Image(systemName: "arrow.clockwise")
+                            Text("Làm mới")
+                        }
+                        .font(AppTypography.caption)
+                        .foregroundColor(AppColors.textTertiary)
+                        .padding(.top, 4)
+                    }
                 }
                 .padding(.top, AppSpacing.xs)
             }

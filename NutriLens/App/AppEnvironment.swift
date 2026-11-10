@@ -16,6 +16,11 @@ public final class AppEnvironment: ObservableObject {
     public let foodRecognitionRepository: FoodRecognitionRepositoryProtocol
     public let foodFavoritesRepository: FoodFavoritesRepositoryProtocol
     public let authenticationRepository: AuthenticationRepositoryProtocol
+    public let hydrationRepository: HydrationRepositoryProtocol
+
+    // Services
+    public let unitFormattingService: UnitFormattingServiceProtocol
+    public let hapticFeedbackService: HapticFeedbackServiceProtocol
 
     // Use Cases
     public let getDailySummaryUseCase: GetDailyNutritionSummaryUseCaseProtocol
@@ -23,6 +28,12 @@ public final class AppEnvironment: ObservableObject {
     public let getMealHistoryUseCase: GetMealHistoryUseCaseProtocol
     public let recognizeFoodUseCase: RecognizeFoodUseCaseProtocol
     public let getNutritionAnalyticsUseCase: GetNutritionAnalyticsUseCaseProtocol
+
+    // Hydration Use Cases
+    public let addHydrationUseCase: AddHydrationUseCaseProtocol
+    public let getDailyHydrationUseCase: GetDailyHydrationUseCaseProtocol
+    public let getHydrationHistoryUseCase: GetHydrationHistoryUseCaseProtocol
+    public let deleteHydrationUseCase: DeleteHydrationUseCaseProtocol
 
     // Auth Use Cases
     public let getAuthSessionUseCase: GetAuthSessionUseCaseProtocol
@@ -41,6 +52,9 @@ public final class AppEnvironment: ObservableObject {
         foodRecognitionRepository: FoodRecognitionRepositoryProtocol,
         foodFavoritesRepository: FoodFavoritesRepositoryProtocol = FoodFavoritesRepository(),
         authenticationRepository: AuthenticationRepositoryProtocol = AuthenticationRepository(),
+        hydrationRepository: HydrationRepositoryProtocol = HydrationRepository(),
+        unitFormattingService: UnitFormattingServiceProtocol = UnitFormattingService.shared,
+        hapticFeedbackService: HapticFeedbackServiceProtocol = HapticFeedbackService.shared,
         isMockAuth: Bool = false
     ) {
         self.mealRepository = mealRepository
@@ -48,6 +62,9 @@ public final class AppEnvironment: ObservableObject {
         self.foodRecognitionRepository = foodRecognitionRepository
         self.foodFavoritesRepository = foodFavoritesRepository
         self.authenticationRepository = authenticationRepository
+        self.hydrationRepository = hydrationRepository
+        self.unitFormattingService = unitFormattingService
+        self.hapticFeedbackService = hapticFeedbackService
         self.isMockAuth = isMockAuth
 
         self.getDailySummaryUseCase = GetDailyNutritionSummaryUseCase(
@@ -61,6 +78,12 @@ public final class AppEnvironment: ObservableObject {
             mealRepository: mealRepository,
             userRepository: userRepository
         )
+
+        // Hydration use cases
+        self.addHydrationUseCase = AddHydrationUseCase(repository: hydrationRepository)
+        self.getDailyHydrationUseCase = GetDailyHydrationUseCase(repository: hydrationRepository)
+        self.getHydrationHistoryUseCase = GetHydrationHistoryUseCase(repository: hydrationRepository)
+        self.deleteHydrationUseCase = DeleteHydrationUseCase(repository: hydrationRepository)
 
         // Auth use cases
         self.getAuthSessionUseCase = GetAuthSessionUseCase(repository: authenticationRepository)
@@ -101,6 +124,7 @@ public final class AppEnvironment: ObservableObject {
         let foodRepo = FoodRecognitionRepository()
         let favoritesRepo = FoodFavoritesRepository()
         let authRepo = AuthenticationRepository()
+        let hydrationRepo = HydrationRepository()
 
         return AppEnvironment(
             mealRepository: mealRepo,
@@ -108,6 +132,7 @@ public final class AppEnvironment: ObservableObject {
             foodRecognitionRepository: foodRepo,
             foodFavoritesRepository: favoritesRepo,
             authenticationRepository: authRepo,
+            hydrationRepository: hydrationRepo,
             isMockAuth: false
         )
     }
@@ -122,6 +147,12 @@ public final class AppEnvironment: ObservableObject {
             recentlyViewedIds: ["dish_com_tam", "dish_bun_cha"]
         )
         let authRepo = MockAuthenticationRepository()
+        let hydrationRepo = MockHydrationRepository(
+            initialRecords: [
+                HydrationRecord(amountLiters: 0.5, notes: "Buổi sáng"),
+                HydrationRecord(amountLiters: 0.5, notes: "Buổi trưa")
+            ]
+        )
 
         return AppEnvironment(
             mealRepository: mealRepo,
@@ -129,6 +160,7 @@ public final class AppEnvironment: ObservableObject {
             foodRecognitionRepository: foodRepo,
             foodFavoritesRepository: favoritesRepo,
             authenticationRepository: authRepo,
+            hydrationRepository: hydrationRepo,
             isMockAuth: true
         )
     }
