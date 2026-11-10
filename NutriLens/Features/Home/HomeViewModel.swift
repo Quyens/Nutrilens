@@ -35,6 +35,8 @@ public final class HomeViewModel: ObservableObject {
     private let getDailySummaryUseCase: GetDailyNutritionSummaryUseCaseProtocol
     private let mealRepository: MealRepositoryProtocol
     private let userRepository: UserRepositoryProtocol
+    private let getDailyHydrationUseCase: GetDailyHydrationUseCaseProtocol
+    private let addHydrationUseCase: AddHydrationUseCaseProtocol
 
     private var todayWaterKey: String {
         let formatter = DateFormatter()
@@ -45,11 +47,15 @@ public final class HomeViewModel: ObservableObject {
     public init(
         getDailySummaryUseCase: GetDailyNutritionSummaryUseCaseProtocol,
         mealRepository: MealRepositoryProtocol,
-        userRepository: UserRepositoryProtocol
+        userRepository: UserRepositoryProtocol,
+        getDailyHydrationUseCase: GetDailyHydrationUseCaseProtocol = GetDailyHydrationUseCase(repository: HydrationRepository()),
+        addHydrationUseCase: AddHydrationUseCaseProtocol = AddHydrationUseCase(repository: HydrationRepository())
     ) {
         self.getDailySummaryUseCase = getDailySummaryUseCase
         self.mealRepository = mealRepository
         self.userRepository = userRepository
+        self.getDailyHydrationUseCase = getDailyHydrationUseCase
+        self.addHydrationUseCase = addHydrationUseCase
     }
 
     public func loadDashboard() async {
@@ -58,7 +64,7 @@ public final class HomeViewModel: ObservableObject {
         } else {
             state = .loading
         }
-        loadWaterIntake()
+        await loadWaterIntake()
         do {
             async let summaryTask = getDailySummaryUseCase.execute(for: Date())
             async let mealsTask = mealRepository.fetchMeals(for: Date())
@@ -77,21 +83,41 @@ public final class HomeViewModel: ObservableObject {
         }
     }
 
-    public func loadWaterIntake() {
-        let saved = UserDefaults.standard.double(forKey: todayWaterKey)
-        if saved > 0 {
-            self.waterIntakeLiters = saved
-        } else {
-            // Default 1.8 L if unrecorded today
-            self.waterIntakeLiters = 1.8
-            UserDefaults.standard.set(1.8, forKey: todayWaterKey)
+    public func loadWaterIntake() async {
+        do {
+            let result = try await getDailyHydrationUseCase.execute(for: Date())
+            if result.totalLiters > 0 {
+                self.waterIntakeLiters = result.totalLiters
+            } else {
+                let saved = UserDefaults.standard.double(forKey: todayWaterKey)
+                if saved > 0 {
+                    self.waterIntakeLiters = saved
+                    _ = try? await addHydrationUseCase.execute(amountLiters: saved, timestamp: Date(), notes: "Chuyển tiếp từ phiên trước")
+                } else {
+                    self.waterIntakeLiters = 1.8
+                }
+            }
+        } catch {
+            let saved = UserDefaults.standard.double(forKey: todayWaterKey)
+            self.waterIntakeLiters = saved > 0 ? saved : 1.8
         }
     }
 
     public func addWater(liters: Double) {
+        HapticFeedbackService.shared.impact(.light)
         let updated = min(max(self.waterIntakeLiters + liters, 0), 5.0)
         self.waterIntakeLiters = (updated * 10).rounded() / 10
         UserDefaults.standard.set(self.waterIntakeLiters, forKey: todayWaterKey)
+
+        if liters > 0 {
+            Task {
+                _ = try? await addHydrationUseCase.execute(
+                    amountLiters: liters,
+                    timestamp: Date(),
+                    notes: "Ghi nhận từ Trang chủ"
+                )
+            }
+        }
     }
 
     public func setWater(liters: Double) {

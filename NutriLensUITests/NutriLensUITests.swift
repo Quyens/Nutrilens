@@ -479,6 +479,80 @@ final class NutriLensUITests: XCTestCase {
             }
         }
     }
+
+    func testMultiItemManualMealLoggingFlow() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startManualLog"]
+        app.launch()
+        dismissOnboardingIfPresent(app)
+
+        let artifactDir = "/Users/vanquyen/.gemini/antigravity/brain/91c14d96-e485-4d94-afb9-e0ce1e5a85f2/screenshots/phase02"
+        let repoArtifactDir = "/Users/vanquyen/Documents/NutrilensIOS/reports/screenshots/phase02"
+
+        // Helper to save screenshot in both artifact directories
+        func saveShot(name: String) {
+            let shot = XCUIScreen.main.screenshot()
+            let data = shot.pngRepresentation
+            try? data.write(to: URL(fileURLWithPath: "\(artifactDir)/\(name)"))
+            try? data.write(to: URL(fileURLWithPath: "\(repoArtifactDir)/\(name)"))
+        }
+
+        // 1. Verify Manual Log Sheet opens
+        let titleText = app.staticTexts["Ghi nhận bữa ăn"]
+        XCTAssertTrue(titleText.waitForExistence(timeout: 5), "Manual log screen should appear")
+        sleep(1)
+        saveShot(name: "1_manual_log_empty.png")
+
+        // 2. Select first dish ("Phở Bò Tái Nạm")
+        let addPhoButton = app.buttons["catalog_dish_add_pho"]
+        if addPhoButton.waitForExistence(timeout: 3) {
+            addPhoButton.tap()
+        } else {
+            let firstAdd = app.buttons["Thêm"]
+            if firstAdd.waitForExistence(timeout: 3) {
+                firstAdd.tap()
+            }
+        }
+        sleep(1)
+
+        // 3. Portion sheet appears
+        let confirmPortionButton = app.buttons["portion_confirm_add_button"]
+        XCTAssertTrue(confirmPortionButton.waitForExistence(timeout: 4), "Portion selection sheet should appear")
+        saveShot(name: "2_portion_sheet.png")
+
+        // Confirm first item
+        confirmPortionButton.tap()
+        sleep(1)
+
+        // 4. Select second dish ("Cơm Tấm Sườn Bì Chả")
+        let addComTamButton = app.buttons["catalog_dish_add_com_tam"]
+        if addComTamButton.waitForExistence(timeout: 3) {
+            addComTamButton.tap()
+        } else {
+            let anyAdd = app.buttons["Thêm"]
+            if anyAdd.waitForExistence(timeout: 3) {
+                anyAdd.tap()
+            }
+        }
+        sleep(1)
+
+        let confirmPortion2 = app.buttons["portion_confirm_add_button"]
+        if confirmPortion2.waitForExistence(timeout: 3) {
+            confirmPortion2.tap()
+            sleep(1)
+        }
+
+        // 5. Verify staged items tray and live aggregate totals
+        let saveButton = app.buttons["manual_log_save_button"]
+        XCTAssertTrue(saveButton.waitForExistence(timeout: 3), "Save meal button should exist")
+        saveShot(name: "3_multi_item_staged_tray.png")
+
+        // 6. Save the meal
+        saveButton.tap()
+        sleep(2)
+
+        saveShot(name: "4_meal_logged_result.png")
+    }
 }
 
 

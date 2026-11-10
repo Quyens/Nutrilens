@@ -124,3 +124,41 @@ public final class MealSDModel {
         )
     }
 }
+
+@Model
+public final class HydrationRecordSDModel {
+    @Attribute(.unique) public var id: UUID
+    public var timestamp: Date
+    public var amountLiters: Double
+    public var notes: String?
+
+    public init(
+        id: UUID = UUID(),
+        timestamp: Date = Date(),
+        amountLiters: Double,
+        notes: String? = nil
+    ) {
+        self.id = id
+        self.timestamp = timestamp
+        self.amountLiters = amountLiters
+        self.notes = notes
+    }
+
+    public convenience init(from domain: HydrationRecord) {
+        self.init(
+            id: domain.id,
+            timestamp: domain.timestamp,
+            amountLiters: domain.amountLiters,
+            notes: domain.notes
+        )
+    }
+
+    public func toDomain() -> HydrationRecord {
+        HydrationRecord(
+            id: id,
+            timestamp: timestamp,
+            amountLiters: amountLiters,
+            notes: notes
+        )
+    }
+}

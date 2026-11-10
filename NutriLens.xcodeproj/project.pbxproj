@@ -68,6 +68,13 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>023B6D3C839AAAA89D0ECE34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3F9B86840316E93CD3B5BCF2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>0448C6C0801A2BFD6B01B82A</key>
 		<dict>
 			<key>isa</key>
@@ -108,6 +115,7 @@
 				<string>6725C34363B3B22D5417C409</string>
 				<string>0FF66653B89C45607D92BC54</string>
 				<string>27490521EE012B2C9D1F3B7E</string>
+				<string>0793FD2B615A9E94810E38AA</string>
 				<string>0BFB1F3270C90E7B150CF658</string>
 				<string>113CDB34599351DB21CD8402</string>
 			</array>
@@ -120,6 +128,20 @@
 		<dict>
 			<key>fileRef</key>
 			<string>3AC219BC1FBBC08B728EDC21</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>078D0F5B7AE2C47ABC9D6F38</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FE1B125EC1E10E92AB6E733F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>0793FD2B615A9E94810E38AA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>30DDA99F1B45B391CE947152</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -268,12 +290,30 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>1168C91E8B2ED1B1B1695BC2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>7285010FDEBF6BD403DB5F2B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>125F90E67D07015910B81D3D</key>
 		<dict>
 			<key>fileRef</key>
 			<string>9E9BDDBC21A99AF372250B97</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>128DA9C775A860458137CF46</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/DeleteHydrationUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>12E64DDA7FA599B7CE06C578</key>
 		<dict>
@@ -397,6 +437,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>22FB2D3DDFA5FBD64DA19B4B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BC575741E159D51320B2EFC3</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>23066A8650C21E68B0AC47E6</key>
 		<dict>
 			<key>fileRef</key>
@@ -456,6 +503,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>2B1E977AF9C521D3F567A90D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C4F8C2EE1EC1FC193E2DA98C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>2BEE0371756C2B6285E9C2F2</key>
 		<dict>
 			<key>fileRef</key>
@@ -497,6 +551,7 @@
 				<string>B0DFFEFDFCC4B656399DA403</string>
 				<string>D8B914479A7FB0181FA8765A</string>
 				<string>776E64E393AEEA2BE2E4D9C6</string>
+				<string>30DDA99F1B45B391CE947152</string>
 				<string>E74CC9E9B47B8098D982282A</string>
 				<string>B11FA3435070BB63BF4FB1C9</string>
 			</array>
@@ -504,6 +559,17 @@
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>NutriLensTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>30DDA99F1B45B391CE947152</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLensTests/UnitTests/MealLoggingV2Tests.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -667,6 +733,17 @@
 			<string>NutriLens.app</string>
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>3F9B86840316E93CD3B5BCF2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/AddHydrationUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>3F9C2148FDFB49E37E290913</key>
 		<dict>
@@ -1136,6 +1213,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>6945E96C76791B0EBA38320F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Core/Utilities/HapticFeedbackService.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>6982010D77F9B5CBDF96F01A</key>
 		<dict>
 			<key>fileRef</key>
@@ -1204,6 +1292,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>6E8FA1EF4E7D53FCC439EC54</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Core/Utilities/UnitFormattingService.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>6F9F09AB20B6EDAE1026A0D6</key>
 		<dict>
 			<key>fileRef</key>
@@ -1257,6 +1356,17 @@
 			<string>A5E1D833BB3D5EB27D17CADE</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>7285010FDEBF6BD403DB5F2B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/GetDailyHydrationUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>730829ABE91B9E9559449C71</key>
 		<dict>
@@ -1339,6 +1449,13 @@
 			<string>NutriLensTests/UnitTests/MealDiaryTests.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>78B42AF3D376365894B038F8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>128DA9C775A860458137CF46</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>7AED24108F394E67CBC25601</key>
 		<dict>
@@ -1427,6 +1544,8 @@
 				<string>DF1CB1DCA4EE0D363CE7359D</string>
 				<string>9D4E84AACA3FEF495AB52185</string>
 				<string>04CE524B13ECB95A351FA2C4</string>
+				<string>6945E96C76791B0EBA38320F</string>
+				<string>6E8FA1EF4E7D53FCC439EC54</string>
 				<string>1DB6FEBD03BA6D60D56D6CCB</string>
 				<string>F5A7C679614A507B959C30E2</string>
 				<string>BAD7907A10466B13303F73F2</string>
@@ -1475,10 +1594,12 @@
 				<string>AFA64BC2F46814D57B945361</string>
 				<string>B25A2DE47D321EDB5D614C50</string>
 				<string>E71F14F5155DA576208DE4BD</string>
+				<string>FE1B125EC1E10E92AB6E733F</string>
 				<string>C7EFFFE6167220C31A59D517</string>
 				<string>13F612F73775A708068B3CDB</string>
 				<string>DCD50C86C7BC8B054235F2A6</string>
 				<string>0CBFC6C0C433ACA666509112</string>
+				<string>E6223631B0DCD8A1C7F89719</string>
 				<string>AEED6892412F88AF0D4E605E</string>
 				<string>D11C3D583C00DE11ABB3426C</string>
 				<string>FBDE76F38D4BE56FDDF81709</string>
@@ -1486,12 +1607,17 @@
 				<string>A5E1D833BB3D5EB27D17CADE</string>
 				<string>66EE9CB032280A0109E8129F</string>
 				<string>8BC2375919DC37CFF8C2C1B1</string>
+				<string>CDD9A1DCE64FF21B16759954</string>
 				<string>006CA5C4C218E655EBD24508</string>
 				<string>389352F4258426F45FE26326</string>
+				<string>3F9B86840316E93CD3B5BCF2</string>
 				<string>D2782DDF29386274653410FF</string>
 				<string>BABEBD58300E04EDC6423604</string>
+				<string>128DA9C775A860458137CF46</string>
 				<string>0448C6C0801A2BFD6B01B82A</string>
+				<string>7285010FDEBF6BD403DB5F2B</string>
 				<string>3AC219BC1FBBC08B728EDC21</string>
+				<string>BC575741E159D51320B2EFC3</string>
 				<string>D4EC8199E854142FD4F365FC</string>
 				<string>B23D69EC9BFC1A005C136BA2</string>
 				<string>7E03693C705EF154817E9462</string>
@@ -1507,6 +1633,7 @@
 				<string>6C60AB740CB3403C693DE02B</string>
 				<string>4A31187A7971632C74C66AB6</string>
 				<string>6E73BD67BF2AA95CD3B22F24</string>
+				<string>C4F8C2EE1EC1FC193E2DA98C</string>
 				<string>719DBDB2681386AE1EEB1C8D</string>
 				<string>62DC3512BA93426D8B8B70D1</string>
 				<string>0EB506FBB99C432F3C3094E9</string>
@@ -1604,6 +1731,8 @@
 				<string>9656B078BD52190DDFA4950D</string>
 				<string>27831E01FBD299B1D3A6DB1B</string>
 				<string>FBAD619B488551B3090D8690</string>
+				<string>E86D2A94AD564588AD0156A9</string>
+				<string>A2BEA72198B0BA038F80A3FD</string>
 				<string>4B3897EF523069900F43B51C</string>
 				<string>B6DCB79BF7528DEDD9559361</string>
 				<string>769479B046EDA9DB322DA707</string>
@@ -1652,10 +1781,12 @@
 				<string>FAF8FAA6C8B5E32332DAFB9B</string>
 				<string>28E15A4C7773D00F888DA8D6</string>
 				<string>E724B1E414A65E8039CB19DB</string>
+				<string>078D0F5B7AE2C47ABC9D6F38</string>
 				<string>62B28BDE729712647B58A6CF</string>
 				<string>E4C649B8A58404507FB4D937</string>
 				<string>858EE11A0FE326A781FF3D34</string>
 				<string>15D8AF9362A5E8F55B8C0F36</string>
+				<string>DDA1FC0A155280DF7161956B</string>
 				<string>AEF55656A963A851C59151D0</string>
 				<string>24BCD74085D15EB4258CFC1F</string>
 				<string>688E5C247BB9804635987543</string>
@@ -1663,12 +1794,17 @@
 				<string>7279709655EC4827E73EAA92</string>
 				<string>A97DECA4C1711C749BD47A61</string>
 				<string>88C6A61314405ED68A60C6B0</string>
+				<string>A3CB70063B1455BAD0E32C07</string>
 				<string>B83DA3FC01130753727D3F15</string>
 				<string>DECA62EDB6ADD86101C1D24B</string>
+				<string>023B6D3C839AAAA89D0ECE34</string>
 				<string>E14176DFB01AA0AC010F8898</string>
 				<string>6516399D66A334F689972715</string>
+				<string>78B42AF3D376365894B038F8</string>
 				<string>EFAEEFA3636DC0B3D50E63D8</string>
+				<string>1168C91E8B2ED1B1B1695BC2</string>
 				<string>0769EBEDDFE199A70F86B251</string>
+				<string>22FB2D3DDFA5FBD64DA19B4B</string>
 				<string>4ED0505E53EAC630A768CFB2</string>
 				<string>E8889AE048B16B7FECD56CB5</string>
 				<string>722307ED626EC9E9D0A954AA</string>
@@ -1684,6 +1820,7 @@
 				<string>7EC9DA657C534DC8B418DFD0</string>
 				<string>6734C59128AFA5F368A34E73</string>
 				<string>47C56A0BE9A86378C73D5571</string>
+				<string>2B1E977AF9C521D3F567A90D</string>
 				<string>DD1110DC6E6029A6025D90E8</string>
 				<string>8D60F1E102AC4D859000307D</string>
 				<string>6E4283BAAFE67C5FB558E6EC</string>
@@ -1924,6 +2061,20 @@
 			<string>77474958807A89E8DD56E424</string>
 			<key>targetProxy</key>
 			<string>EA48666EEC4BE6835411A27E</string>
+		</dict>
+		<key>A2BEA72198B0BA038F80A3FD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6E8FA1EF4E7D53FCC439EC54</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>A3CB70063B1455BAD0E32C07</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CDD9A1DCE64FF21B16759954</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>A5E1D833BB3D5EB27D17CADE</key>
 		<dict>
@@ -2220,6 +2371,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>BC575741E159D51320B2EFC3</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/GetHydrationHistoryUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>BCE6F3E7B66EAEDC69462549</key>
 		<dict>
 			<key>children</key>
@@ -2295,6 +2457,17 @@
 			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
+		</dict>
+		<key>C4F8C2EE1EC1FC193E2DA98C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/HydrationRecord.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>C60B5D0883404AAD877A004A</key>
 		<dict>
@@ -2386,6 +2559,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Core/DesignSystem/LoadingSkeleton.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CDD9A1DCE64FF21B16759954</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/RepositoryInterfaces/HydrationRepositoryProtocol.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2644,6 +2828,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>DDA1FC0A155280DF7161956B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>E6223631B0DCD8A1C7F89719</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>DDA36D109DC0518180BF4D24</key>
 		<dict>
 			<key>fileRef</key>
@@ -2785,6 +2976,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>E6223631B0DCD8A1C7F89719</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MockHydrationRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>E640830F5D474A293C115092</key>
 		<dict>
 			<key>fileRef</key>
@@ -2825,6 +3027,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>587F1514410E963AF57E63C8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>E86D2A94AD564588AD0156A9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6945E96C76791B0EBA38320F</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -3131,6 +3340,17 @@
 			<string>9E619DF4F7B9D8B2661D840F</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>FE1B125EC1E10E92AB6E733F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/HydrationRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>FFFB0241C56062D33AE81E47</key>
 		<dict>
