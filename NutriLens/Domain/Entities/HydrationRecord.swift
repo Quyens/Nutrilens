@@ -26,3 +26,4 @@ public struct HydrationRecord: Identifiable, Equatable, Hashable, Codable, Senda
         self.notes = notes
     }
 }
+

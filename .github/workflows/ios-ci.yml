@@ -1,0 +1,84 @@
+name: NutriLens iOS CI Pipeline
+
+on:
+  push:
+    branches: [ main, 'feature/**', 'checkpoint/**' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    name: Build, Test and Verify (macOS)
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Select Xcode Version
+        run: |
+          echo "Selecting available Xcode developer environment..."
+          sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer || sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Prepare Test Output Directory
+        run: |
+          mkdir -p build/logs
+          mkdir -p build/test-results
+
+      - name: Clean DerivedData
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData/NutriLens*
+
+      - name: Build NutriLens (Simulator Destination)
+        run: |
+          set -o pipefail
+          xcodebuild clean build \
+            -project NutriLens.xcodeproj \
+            -scheme NutriLens \
+            -destination "platform=iOS Simulator,name=iPhone 16,OS=latest" \
+            CODE_SIGNING_ALLOWED=NO \
+            | tee build/logs/xcodebuild-build.log
+
+      - name: Run Unit Tests Suite
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project NutriLens.xcodeproj \
+            -scheme NutriLens \
+            -destination "platform=iOS Simulator,name=iPhone 16,OS=latest" \
+            -only-testing:NutriLensTests \
+            -resultBundlePath build/test-results/UnitTests.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            | tee build/logs/xcodebuild-unittests.log
+
+      - name: Run UI Tests Suite
+        if: always()
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project NutriLens.xcodeproj \
+            -scheme NutriLens \
+            -destination "platform=iOS Simulator,name=iPhone 16,OS=latest" \
+            -only-testing:NutriLensUITests \
+            -resultBundlePath build/test-results/UITests.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            | tee build/logs/xcodebuild-uitests.log
+
+      - name: Upload Test Logs Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nutrilens-build-and-test-logs
+          path: build/logs/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload Test Results Bundles
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nutrilens-xcresults-bundles
+          path: build/test-results/
+          if-no-files-found: ignore
+          retention-days: 14

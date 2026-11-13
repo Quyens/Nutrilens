@@ -52,6 +52,10 @@ public final class HapticFeedbackService: HapticFeedbackServiceProtocol {
         #endif
     }
 
+    public func success() {
+        notification(.success)
+    }
+
     public func selection() {
         #if canImport(UIKit)
         guard isHapticsEnabled else { return }
@@ -61,3 +65,4 @@ public final class HapticFeedbackService: HapticFeedbackServiceProtocol {
         #endif
     }
 }
+

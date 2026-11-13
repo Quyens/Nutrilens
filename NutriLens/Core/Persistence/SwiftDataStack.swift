@@ -17,7 +17,13 @@ public final class SwiftDataStack: @unchecked Sendable {
         let schema = Schema([
             MealSDModel.self,
             FoodItemSDModel.self,
-            HydrationRecordSDModel.self
+            HydrationRecordSDModel.self,
+            CustomFoodSDModel.self,
+            RecipeSDModel.self,
+            RecipeIngredientSDModel.self,
+            PlannedMealSDModel.self,
+            PlannedFoodItemSDModel.self,
+            PackagedFoodSDModel.self
         ])
         let config = ModelConfiguration(
             schema: schema,

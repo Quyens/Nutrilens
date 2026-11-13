@@ -27,4 +27,7 @@ public enum AppRadius {
     public static let lg: CGFloat = card
     public static let xl: CGFloat = sheet
     public static let xxl: CGFloat = pill
+
+    public static let medium: CGFloat = md
+    public static let large: CGFloat = card
 }

@@ -15,6 +15,7 @@ import UIKit
 
 public struct MealHistoryView: View {
     @StateObject private var viewModel: MealHistoryViewModel
+    @State private var showingWeeklyPlanner: Bool = false
 
     public init(viewModel: MealHistoryViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -54,6 +55,14 @@ public struct MealHistoryView: View {
             }
             .refreshable {
                 await viewModel.loadHistory()
+            }
+            // Weekly Meal Planner
+            .fullScreenCover(isPresented: $showingWeeklyPlanner, onDismiss: {
+                Task {
+                    await viewModel.loadHistory()
+                }
+            }) {
+                WeeklyMealPlannerView()
             }
             // Detail Sheet
             .sheet(item: $viewModel.selectedMealForDetails) { meal in
@@ -171,6 +180,28 @@ public struct MealHistoryView: View {
             Spacer()
 
             HStack(spacing: 8) {
+                // Weekly Planner Shortcut Button
+                Button {
+                    #if canImport(UIKit)
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    #endif
+                    showingWeeklyPlanner = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "calendar.badge.clock")
+                            .font(.system(size: 12.5, weight: .semibold))
+                        Text("Kế hoạch")
+                            .font(.system(size: 12, weight: .semibold))
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 7)
+                    .background(Color.white)
+                    .foregroundColor(AppColors.primaryGreen)
+                    .clipShape(Capsule())
+                    .shadow(color: Color.black.opacity(0.06), radius: 4, y: 2)
+                }
+                .accessibilityIdentifier("diary_weekly_planner_button")
+
                 // Today Button
                 if !Calendar.current.isDateInToday(viewModel.selectedDate) {
                     Button {

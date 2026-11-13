@@ -100,6 +100,15 @@ public struct StagedMealItem: Identifiable, Equatable, Hashable {
 }
 
 // MARK: - ViewModel
+public enum MealLogCatalogSource: String, CaseIterable, Identifiable {
+    case vietnamese = "Món Việt (35+)"
+    case customFoods = "Món của bạn"
+    case recipes = "Công thức"
+    case packagedFoods = "Đóng gói (Barcode)"
+
+    public var id: String { rawValue }
+}
+
 @MainActor
 public final class LogMealViewModel: ObservableObject {
     // Staged items in this meal
@@ -111,6 +120,12 @@ public final class LogMealViewModel: ObservableObject {
     @Published public var mealNotes: String = ""
     @Published public private(set) var isSaving: Bool = false
     @Published public var errorMessage: String? = nil
+
+    // Multi-source Catalog State
+    @Published public var selectedCatalogSource: MealLogCatalogSource = .vietnamese
+    @Published public var customFoods: [CustomFood] = []
+    @Published public var recipes: [Recipe] = []
+    @Published public var packagedFoods: [PackagedFood] = []
 
     // Food Catalog Search State
     @Published public var searchQuery: String = ""
@@ -130,12 +145,18 @@ public final class LogMealViewModel: ObservableObject {
 
     // Dependencies
     private let logMealUseCase: LogMealUseCaseProtocol
+    private let getCustomFoodsUseCase: GetCustomFoodsUseCaseProtocol?
+    private let getRecipesUseCase: GetRecipesUseCaseProtocol?
+    private let getPackagedFoodsUseCase: GetPackagedFoodsUseCase?
     public let unitFormattingService: UnitFormattingServiceProtocol
     public let hapticFeedbackService: HapticFeedbackServiceProtocol
     private let onDismiss: () -> Void
 
     public init(
         logMealUseCase: LogMealUseCaseProtocol,
+        getCustomFoodsUseCase: GetCustomFoodsUseCaseProtocol? = nil,
+        getRecipesUseCase: GetRecipesUseCaseProtocol? = nil,
+        getPackagedFoodsUseCase: GetPackagedFoodsUseCase? = nil,
         unitFormattingService: UnitFormattingServiceProtocol = UnitFormattingService.shared,
         hapticFeedbackService: HapticFeedbackServiceProtocol = HapticFeedbackService.shared,
         initialMealType: MealType = .lunch,
@@ -143,11 +164,37 @@ public final class LogMealViewModel: ObservableObject {
         onDismiss: @escaping () -> Void = {}
     ) {
         self.logMealUseCase = logMealUseCase
+        self.getCustomFoodsUseCase = getCustomFoodsUseCase
+        self.getRecipesUseCase = getRecipesUseCase
+        self.getPackagedFoodsUseCase = getPackagedFoodsUseCase
         self.unitFormattingService = unitFormattingService
         self.hapticFeedbackService = hapticFeedbackService
         self.selectedMealType = initialMealType
         self.selectedDate = initialDate
         self.onDismiss = onDismiss
+        loadPersonalLibrary()
+    }
+
+    public func loadPersonalLibrary() {
+        Task {
+            if let getCustomFoodsUseCase {
+                if let foods = try? await getCustomFoodsUseCase.execute() {
+                    self.customFoods = foods
+                }
+            }
+            if let getRecipesUseCase {
+                if let recs = try? await getRecipesUseCase.execute() {
+                    self.recipes = recs
+                }
+            }
+            if let getPackagedFoodsUseCase {
+                if let pkgs = try? await getPackagedFoodsUseCase.executeSearch(query: "") {
+                    self.packagedFoods = pkgs
+                }
+            } else {
+                self.packagedFoods = BundledPackagedFoodCatalogue.shared.items
+            }
+        }
     }
 
     // MARK: - Calculated Totals
@@ -222,7 +269,128 @@ public final class LogMealViewModel: ObservableObject {
         return categories
     }
 
+    public var filteredCustomFoods: [CustomFood] {
+        let clean = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+            .folding(options: .diacriticInsensitive, locale: .current)
+            .lowercased()
+        if clean.isEmpty { return customFoods }
+        return customFoods.filter { food in
+            let name = food.name.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            let brand = (food.brand ?? "").folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            let cat = food.category.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            return name.contains(clean) || brand.contains(clean) || cat.contains(clean)
+        }
+    }
+
+    public var filteredRecipes: [Recipe] {
+        let clean = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+            .folding(options: .diacriticInsensitive, locale: .current)
+            .lowercased()
+        if clean.isEmpty { return recipes }
+        return recipes.filter { recipe in
+            let name = recipe.name.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            let notes = (recipe.notes ?? "").folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            let ing = recipe.ingredients.contains {
+                $0.name.folding(options: .diacriticInsensitive, locale: .current).lowercased().contains(clean)
+            }
+            return name.contains(clean) || notes.contains(clean) || ing
+        }
+    }
+
+    public var filteredPackagedFoods: [PackagedFood] {
+        let clean = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+            .folding(options: .diacriticInsensitive, locale: .current)
+            .lowercased()
+        if clean.isEmpty { return packagedFoods }
+        return packagedFoods.filter { food in
+            let name = food.productName.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            let brand = (food.brand ?? "").folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            let cat = food.category.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            let bar = food.barcode
+            return name.contains(clean) || brand.contains(clean) || cat.contains(clean) || bar.contains(clean)
+        }
+    }
+
     // MARK: - Staged Item Management
+    public func addCustomFood(_ food: CustomFood, grams: Double) {
+        hapticFeedbackService.impact(.medium)
+        let scaled = food.scaled(to: grams)
+        let item = StagedMealItem(
+            name: food.name,
+            vietnameseName: food.name,
+            sourceDishSlug: nil,
+            portionGrams: grams,
+            servingUnit: food.servingUnit,
+            calories: scaled.caloriesPerServing,
+            proteinGrams: scaled.proteinGrams,
+            carbGrams: scaled.carbGrams,
+            fatGrams: scaled.fatGrams,
+            fiberGrams: scaled.fiberGrams,
+            isCustom: true,
+            standardServingGrams: food.servingGrams,
+            standardCalories: food.caloriesPerServing,
+            standardProtein: food.proteinGrams,
+            standardCarbs: food.carbGrams,
+            standardFat: food.fatGrams,
+            standardFiber: food.fiberGrams
+        )
+        stagedItems.append(item)
+        errorMessage = nil
+    }
+
+    public func addRecipe(_ recipe: Recipe, servings: Double) {
+        hapticFeedbackService.impact(.medium)
+        let scaled = recipe.scaledNutrition(forServings: servings)
+        let totalWeight = recipe.standardServingGrams * servings
+        let item = StagedMealItem(
+            name: recipe.name,
+            vietnameseName: recipe.name,
+            sourceDishSlug: nil,
+            portionGrams: totalWeight,
+            servingUnit: "phần",
+            calories: scaled.calories,
+            proteinGrams: scaled.proteinGrams,
+            carbGrams: scaled.carbGrams,
+            fatGrams: scaled.fatGrams,
+            fiberGrams: scaled.fiberGrams,
+            isCustom: true,
+            standardServingGrams: recipe.standardServingGrams,
+            standardCalories: recipe.perServingNutrition.calories,
+            standardProtein: recipe.perServingNutrition.proteinGrams,
+            standardCarbs: recipe.perServingNutrition.carbGrams,
+            standardFat: recipe.perServingNutrition.fatGrams,
+            standardFiber: recipe.perServingNutrition.fiberGrams
+        )
+        stagedItems.append(item)
+        errorMessage = nil
+    }
+
+    public func addPackagedFood(_ food: PackagedFood, multiplier: Double = 1.0) {
+        hapticFeedbackService.impact(.medium)
+        let scaled = food.nutrition.scaled(by: multiplier)
+        let totalWeight = food.serving.servingGramsEquivalent * multiplier
+        let item = StagedMealItem(
+            name: food.fullDisplayTitle,
+            vietnameseName: food.fullDisplayTitle,
+            sourceDishSlug: nil,
+            portionGrams: totalWeight,
+            servingUnit: food.serving.servingUnit,
+            calories: scaled.calories,
+            proteinGrams: scaled.proteinGrams,
+            carbGrams: scaled.carbGrams,
+            fatGrams: scaled.fatGrams,
+            fiberGrams: scaled.fiberGrams ?? 0,
+            isCustom: false,
+            standardServingGrams: food.serving.servingGramsEquivalent,
+            standardCalories: food.nutrition.calories,
+            standardProtein: food.nutrition.proteinGrams,
+            standardCarbs: food.nutrition.carbGrams,
+            standardFat: food.nutrition.fatGrams,
+            standardFiber: food.nutrition.fiberGrams ?? 0
+        )
+        stagedItems.append(item)
+        errorMessage = nil
+    }
     public func addDishFromDatabase(_ dish: VietnameseDishProfile, grams: Double) {
         hapticFeedbackService.impact(.medium)
         let ratio = max(grams, 10.0) / max(dish.standardServingGrams, 1.0)

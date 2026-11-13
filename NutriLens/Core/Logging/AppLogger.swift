@@ -16,5 +16,6 @@ public enum AppLogger {
     public static let data = Logger(subsystem: subsystem, category: "Persistence")
     public static let nutrition = Logger(subsystem: subsystem, category: "Nutrition")
     public static let ui = Logger(subsystem: subsystem, category: "UI")
+    public static let hardware = Logger(subsystem: subsystem, category: "Hardware")
     public static let security = Logger(subsystem: subsystem, category: "Security")
 }

@@ -14,10 +14,12 @@ import UIKit
 #endif
 
 public struct FoodRecognitionView: View {
+    @EnvironmentObject private var environment: AppEnvironment
     @StateObject private var viewModel: FoodRecognitionViewModel
     @StateObject private var cameraService = CameraService()
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var scanLaserOffset: CGFloat = -120
+    @State private var isPresentingBarcodeScanner: Bool = false
 
     private let onMealSaved: ((MealRecord) -> Void)?
     private let onDismiss: (() -> Void)?
@@ -63,6 +65,9 @@ public struct FoodRecognitionView: View {
         }
         .sheet(isPresented: $viewModel.isPresentingDishPicker) {
             dishPickerSheet
+        }
+        .fullScreenCover(isPresented: $isPresentingBarcodeScanner) {
+            BarcodeScannerView(viewModel: environment.makeBarcodeScannerViewModel())
         }
         .onAppear {
             cameraService.startSession()
@@ -171,6 +176,19 @@ public struct FoodRecognitionView: View {
             .clipShape(Capsule())
 
             Spacer()
+
+            // Barcode Scanner shortcut
+            Button {
+                isPresentingBarcodeScanner = true
+            } label: {
+                Image(systemName: "barcode.viewfinder")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(.ultraThinMaterial)
+                    .clipShape(Circle())
+            }
+            .accessibilityLabel("Quét mã vạch thực phẩm")
 
             // Flash button (only if camera hardware available)
             if cameraService.isCameraAvailable {

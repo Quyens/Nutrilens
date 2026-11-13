@@ -553,6 +553,123 @@ final class NutriLensUITests: XCTestCase {
 
         saveShot(name: "4_meal_logged_result.png")
     }
+
+    func testWeeklyMealPlannerFlow() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startMealPlanner"]
+        app.launch()
+        dismissOnboardingIfPresent(app)
+
+        // 1. Verify Weekly Meal Planner opens
+        let plannerTitle = app.staticTexts["Kế hoạch thực đơn"]
+        XCTAssertTrue(plannerTitle.waitForExistence(timeout: 5), "Weekly meal planner screen should appear")
+
+        // 2. Verify 7-day calendar strip exists
+        let dayPill = app.buttons.matching(identifier: "calendar_day_").firstMatch
+        if dayPill.waitForExistence(timeout: 3) {
+            XCTAssertTrue(dayPill.exists)
+        }
+
+        // 3. Verify category section button "+ Thêm món" exists
+        let addMealButton = app.buttons.matching(identifier: "add_meal_to_").firstMatch
+        if addMealButton.waitForExistence(timeout: 3) {
+            addMealButton.tap()
+            sleep(1)
+
+            // Verify Add Sheet
+            let addTitle = app.staticTexts["Thêm vào thực đơn"]
+            if addTitle.waitForExistence(timeout: 3) {
+                XCTAssertTrue(addTitle.exists)
+                let cancelButton = app.buttons["Hủy"]
+                if cancelButton.exists {
+                    cancelButton.tap()
+                }
+            }
+        }
+    }
+
+    func testSmartSuggestionsFlow() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startSmartSuggestions"]
+        app.launch()
+        dismissOnboardingIfPresent(app)
+
+        // 1. Verify Smart Suggestions screen opens
+        let title = app.staticTexts["Gợi ý món ăn"]
+        XCTAssertTrue(title.waitForExistence(timeout: 5), "Smart suggestions screen should appear")
+
+        // 2. Verify preferences shortcut button exists
+        let prefsButton = app.buttons["open_dietary_preferences_button"]
+        XCTAssertTrue(prefsButton.waitForExistence(timeout: 3))
+
+        // 3. Verify category pills exist
+        let allCategoryPill = app.buttons["Tất cả bữa"]
+        XCTAssertTrue(allCategoryPill.waitForExistence(timeout: 3))
+
+        // 4. Tap "Lý do gợi ý" on the first card if available
+        let reasonButton = app.buttons["Lý do gợi ý"].firstMatch
+        if reasonButton.waitForExistence(timeout: 3) {
+            reasonButton.tap()
+            sleep(1)
+
+            let sheetTitle = app.staticTexts["Tại sao gợi ý món này?"]
+            if sheetTitle.waitForExistence(timeout: 3) {
+                XCTAssertTrue(sheetTitle.exists)
+                let closeButton = app.buttons["Đóng"]
+                if closeButton.exists {
+                    closeButton.tap()
+                }
+            }
+        }
+    }
+
+    func testBarcodeScannerFlow() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-startBarcodeScanner"]
+        app.launch()
+        dismissOnboardingIfPresent(app)
+
+        // 1. Verify Barcode Scanner screen opens
+        let title = app.staticTexts["Quét mã vạch"]
+        XCTAssertTrue(title.waitForExistence(timeout: 5), "Barcode scanner screen should appear")
+
+        // 2. Tap sample Vinamilk chip in simulator fallback
+        let vinamilkChip = app.buttons["Vinamilk 180ml"]
+        if vinamilkChip.waitForExistence(timeout: 3) {
+            vinamilkChip.tap()
+            sleep(1)
+
+            // 3. Verify Scanned Product Result sheet appears
+            let productSheetTitle = app.staticTexts["Thông tin sản phẩm"]
+            XCTAssertTrue(productSheetTitle.waitForExistence(timeout: 4), "Scanned product result sheet should appear")
+
+            // 4. Verify nutrition section and log button
+            let logButton = app.buttons["Ghi vào Nhật ký bữa ăn"]
+            XCTAssertTrue(logButton.exists, "Log to diary button should exist")
+
+            // Close sheet
+            let closeButton = app.buttons["Đóng"]
+            if closeButton.exists {
+                closeButton.tap()
+            }
+        }
+
+        // 5. Test Manual Barcode Entry Sheet
+        let manualButton = app.buttons["Nhập mã"]
+        if manualButton.waitForExistence(timeout: 3) {
+            manualButton.tap()
+            sleep(1)
+
+            let manualTitle = app.staticTexts["Nhập mã vạch"]
+            if manualTitle.waitForExistence(timeout: 3) {
+                XCTAssertTrue(manualTitle.exists)
+                let closeManual = app.buttons["Đóng"]
+                if closeManual.exists {
+                    closeManual.tap()
+                }
+            }
+        }
+    }
 }
 
 

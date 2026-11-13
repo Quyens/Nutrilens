@@ -844,212 +844,28 @@ private struct PersonalInfoView: View {
 
 private struct PreferencesView: View {
     let onDismiss: () -> Void
-
-    @State private var selectedStyle: String = "vietnamese"
-    @State private var selectedAllergens: Set<String> = []
-
-    private let styles: [(id: String, name: String, desc: String, icon: String)] = [
-        ("vietnamese", "Món Việt 3 miền (Mặc định)", "Ưu tiên ẩm thực truyền thống & đặc sản địa phương", "fork.knife"),
-        ("vegetarian", "Ăn chay / Thuần chay", "Tự động gợi ý các món chay dinh dưỡng", "leaf.fill"),
-        ("lowcarb", "Keto / Low-Carb", "Hạn chế tinh bột, tập trung đạm & chất béo tốt", "bolt.fill"),
-        ("eatclean", "Eat Clean / Thanh đạm", "Ưu tiên thực phẩm nguyên bản, ít gia vị dầu mỡ", "sparkles")
-    ]
-
-    private let allergens: [(id: String, name: String, icon: String)] = [
-        ("seafood", "Hải sản (Tôm, Cua, Mực)", "fish.fill"),
-        ("peanut", "Đậu phộng / Lạc", "circle.grid.2x1.fill"),
-        ("egg", "Trứng gia cầm", "oval.fill"),
-        ("dairy", "Sữa & Lactose", "cup.and.saucer.fill"),
-        ("gluten", "Gluten / Bột mì", "allergens"),
-        ("chili", "Ớt / Cay nồng", "flame.fill")
-    ]
+    @State private var profile: UserDietaryProfile = UserDietaryProfile()
+    private let repo = UserDietaryProfileRepository()
 
     var body: some View {
-        ZStack(alignment: .top) {
-            Image("botanical_wallpaper")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
-
-            VStack(spacing: 0) {
-                // Top Bar
-                HStack {
-                    HStack(spacing: 8) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.white)
-                                .frame(width: 38, height: 38)
-                                .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
-                            Image(systemName: "fork.knife.circle.fill")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(AppColors.primary)
-                        }
-
-                        VStack(alignment: .leading, spacing: 1) {
-                            Text("Sở thích dinh dưỡng")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(AppColors.textPrimary)
-                            Text("Khẩu vị & Cảnh báo dị ứng")
-                                .font(.system(size: 11))
-                                .foregroundColor(AppColors.textSecondary)
-                        }
-                    }
-
-                    Spacer()
-
-                    Button(action: onDismiss) {
-                        Text("Xong")
-                            .font(AppTypography.bodyBold)
-                            .foregroundColor(AppColors.forestGreen)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 7)
-                            .background(Color.white)
-                            .clipShape(Capsule())
-                            .shadow(color: Color.black.opacity(0.06), radius: 6, y: 2)
-                    }
+        EditDietaryPreferencesSheet(
+            initialProfile: profile,
+            onSave: { updated in
+                Task {
+                    try? await repo.saveDietaryProfile(updated)
                 }
-                .padding(.horizontal, AppSpacing.screenHorizontal)
-                .padding(.top, 54)
-                .padding(.bottom, 8)
-
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 16) {
-                        // 1. Dietary Style Card
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Trường phái ẩm thực")
-                                .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(AppColors.textPrimary)
-
-                            VStack(spacing: 8) {
-                                ForEach(styles, id: \.id) { item in
-                                    Button {
-                                        selectedStyle = item.id
-                                    } label: {
-                                        HStack(spacing: 12) {
-                                            ZStack {
-                                                Circle()
-                                                    .stroke(selectedStyle == item.id ? AppColors.primary : AppColors.border, lineWidth: 2)
-                                                    .frame(width: 20, height: 20)
-                                                if selectedStyle == item.id {
-                                                    Circle()
-                                                        .fill(AppColors.primary)
-                                                        .frame(width: 10, height: 10)
-                                                }
-                                            }
-
-                                            VStack(alignment: .leading, spacing: 2) {
-                                                Text(item.name)
-                                                    .font(AppTypography.bodyBold)
-                                                    .foregroundColor(AppColors.textPrimary)
-                                                Text(item.desc)
-                                                    .font(.system(size: 11))
-                                                    .foregroundColor(AppColors.textSecondary)
-                                            }
-
-                                            Spacer()
-                                        }
-                                        .padding(12)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                                .fill(selectedStyle == item.id ? AppColors.surfaceSecondary : Color.white)
-                                        )
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                                .stroke(selectedStyle == item.id ? AppColors.primary : AppColors.border, lineWidth: 1)
-                                        )
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                            }
-                        }
-                        .padding(16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .fill(Color.white)
-                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
-                        )
-                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
-
-                        // 2. Allergen Warnings Card
-                        VStack(alignment: .leading, spacing: 12) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Cảnh báo dị ứng thực phẩm")
-                                    .font(.system(size: 15, weight: .bold))
-                                    .foregroundColor(AppColors.textPrimary)
-                                Text("NutriLens sẽ hiển thị cảnh báo khi nhận diện món ăn có chứa các thành phần:")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(AppColors.textSecondary)
-                            }
-
-                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
-                                ForEach(allergens, id: \.id) { allergen in
-                                    let isSelected = selectedAllergens.contains(allergen.id)
-                                    Button {
-                                        if isSelected {
-                                            selectedAllergens.remove(allergen.id)
-                                        } else {
-                                            selectedAllergens.insert(allergen.id)
-                                        }
-                                    } label: {
-                                        HStack(spacing: 8) {
-                                            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                                                .font(.system(size: 15))
-                                                .foregroundColor(isSelected ? AppColors.primary : AppColors.textTertiary)
-                                            Text(allergen.name)
-                                                .font(.system(size: 12, weight: .semibold))
-                                                .foregroundColor(isSelected ? AppColors.primaryDark : AppColors.textPrimary)
-                                                .lineLimit(1)
-                                            Spacer()
-                                        }
-                                        .padding(.horizontal, 10)
-                                        .padding(.vertical, 10)
-                                        .background(isSelected ? AppColors.surfaceSecondary : Color.white)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                        .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(isSelected ? AppColors.primary : AppColors.border, lineWidth: 1))
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                            }
-                        }
-                        .padding(16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .fill(Color.white)
-                                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
-                        )
-                        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
-
-                        // 3. AI Recognition Optimization Card
-                        HStack(alignment: .top, spacing: 12) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(AppColors.surfaceSecondary)
-                                    .frame(width: 36, height: 36)
-                                Image(systemName: "sparkles")
-                                    .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(AppColors.primary)
-                            }
-
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text("Tối ưu hóa ẩm thực Việt")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(AppColors.textPrimary)
-                                Text("Hệ thống AI on-device tự động ưu tiên nhận diện 5.000+ món ăn truyền thống 3 miền, tính toán calo chuẩn xác theo nguyên liệu và khẩu phần thực tế.")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(AppColors.textSecondary)
-                                    .lineSpacing(2)
-                            }
-                        }
-                        .padding(14)
-                        .background(Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(AppColors.border, lineWidth: 1))
-                    }
-                    .padding(.horizontal, AppSpacing.screenHorizontal)
-                    .padding(.top, 4)
-                    .padding(.bottom, 40)
+                onDismiss()
+            },
+            onClear: {
+                Task {
+                    try? await repo.clearDietaryProfile()
                 }
+                onDismiss()
+            }
+        )
+        .task {
+            if let loaded = try? await repo.getDietaryProfile() {
+                profile = loaded
             }
         }
     }

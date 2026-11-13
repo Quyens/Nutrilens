@@ -21,7 +21,9 @@ public enum AppColors {
     public static let softCoral = Color(hex: "F5C6C2")
     public static let proteinBlue = Color(hex: "6CA9E8")
     public static let carbsOrange = Color(hex: "F3A34B")
+    public static let carbOrange = carbsOrange
     public static let fatCoral = Color(hex: "E97970")
+    public static let fatRed = fatCoral
     public static let textPrimaryDark = Color(hex: "233B2D")
     public static let textSecondaryMuted = Color(hex: "819187")
     public static let borderGreenLight = Color(hex: "E8EEE7")
@@ -80,6 +82,10 @@ public enum AppColors {
     public static var cardBackground: Color { surfacePrimary }
     public static var elevatedSurface: Color { surfaceSecondary }
     public static var primarySubtle: Color { surfaceSecondary }
+    public static var surfaceBackground: Color { surfaceSecondary }
+    public static var deepForest: Color { Color(hex: "13281E") }
+    public static var leafGreen: Color { primaryGreen }
+    public static var softSage: Color { softGreen }
 
     /// Primary text: High-contrast deep pine (#233B2D) in Light Mode, Bright Ivory in Dark Mode.
     public static var textPrimary: Color {
