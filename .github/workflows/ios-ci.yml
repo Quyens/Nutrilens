@@ -2,14 +2,19 @@ name: NutriLens iOS CI Pipeline
 
 on:
   push:
-    branches: [ main, 'feature/**', 'checkpoint/**' ]
+    branches: [ main, 'feature/**', 'checkpoint/**', 'fix/**' ]
   pull_request:
     branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build-and-test:
     name: Build, Test and Verify (macOS)
-    runs-on: macos-14
+    runs-on: macos-15
+    timeout-minutes: 60
 
     steps:
       - name: Checkout Source Code
@@ -17,8 +22,14 @@ jobs:
 
       - name: Select Xcode Version
         run: |
-          echo "Selecting available Xcode developer environment..."
-          sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer || sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+          echo "Selecting available Xcode developer environment on macOS 15..."
+          if [ -d "/Applications/Xcode_16.4.app" ]; then
+            sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+          elif [ -d "/Applications/Xcode_16.app" ]; then
+            sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer
+          elif [ -d "/Applications/Xcode.app" ]; then
+            sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+          fi
           xcodebuild -version
 
       - name: Prepare Test Output Directory
