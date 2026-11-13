@@ -22,3 +22,4 @@ public final class DeleteHydrationUseCase: DeleteHydrationUseCaseProtocol, Senda
         try await repository.deleteHydration(id: id)
     }
 }
+

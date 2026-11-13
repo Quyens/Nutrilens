@@ -194,3 +194,4 @@ All changes have been staged and committed to branch `feature/phase02-meal-loggi
   - `NutriLens/Data/LocalStorage/SwiftDataEntities.swift`
   - `NutriLensUITests/NutriLensUITests.swift`
   - `NutriLens.xcodeproj/project.pbxproj`
+

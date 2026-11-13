@@ -18,6 +18,8 @@ public struct LogMealView: View {
     private let onCancel: () -> Void
 
     @State private var selectedDishForPortion: VietnameseDishProfile? = nil
+    @State private var selectedCustomFoodForPortion: CustomFood? = nil
+    @State private var selectedRecipeForServings: Recipe? = nil
     @State private var pendingPortionGrams: Double = 400
 
     public init(
@@ -107,6 +109,36 @@ public struct LogMealView: View {
                 },
                 onCancel: {
                     selectedDishForPortion = nil
+                }
+            )
+        }
+        .sheet(item: $selectedCustomFoodForPortion) { food in
+            CustomFoodPortionSheet(
+                food: food,
+                initialGrams: food.servingGrams,
+                unitFormatting: viewModel.unitFormattingService,
+                haptics: viewModel.hapticFeedbackService,
+                onAdd: { grams in
+                    viewModel.addCustomFood(food, grams: grams)
+                    selectedCustomFoodForPortion = nil
+                },
+                onCancel: {
+                    selectedCustomFoodForPortion = nil
+                }
+            )
+        }
+        .sheet(item: $selectedRecipeForServings) { recipe in
+            RecipeServingsSheet(
+                recipe: recipe,
+                initialServings: 1.0,
+                unitFormatting: viewModel.unitFormattingService,
+                haptics: viewModel.hapticFeedbackService,
+                onAdd: { servings in
+                    viewModel.addRecipe(recipe, servings: servings)
+                    selectedRecipeForServings = nil
+                },
+                onCancel: {
+                    selectedRecipeForServings = nil
                 }
             )
         }
@@ -349,16 +381,30 @@ public struct LogMealView: View {
     // MARK: - Food Catalog Search Section
     private var foodCatalogSearchSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                Text("Kho 35+ món ăn Việt Nam")
-                    .font(AppTypography.headline)
-                    .foregroundColor(AppColors.textPrimary)
-
-                Spacer()
-
-                Text("\(viewModel.filteredCatalogDishes.count) món")
-                    .font(.system(size: 12))
-                    .foregroundColor(AppColors.textSecondary)
+            // Source Segmented Control
+            HStack(spacing: 6) {
+                ForEach(MealLogCatalogSource.allCases) { source in
+                    let isSelected = viewModel.selectedCatalogSource == source
+                    Button {
+                        viewModel.hapticFeedbackService.selection()
+                        withAnimation(.spring(response: 0.25)) {
+                            viewModel.selectedCatalogSource = source
+                        }
+                    } label: {
+                        Text(source.rawValue)
+                            .font(.system(size: 11, weight: isSelected ? .bold : .medium))
+                            .foregroundColor(isSelected ? .white : AppColors.textPrimary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 7)
+                            .background(
+                                isSelected
+                                ? AnyView(AppColors.primaryGreen)
+                                : AnyView(AppColors.surfaceSecondary)
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
             }
 
             // Search Bar
@@ -366,7 +412,7 @@ public struct LogMealView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(AppColors.primary)
 
-                TextField("Tìm món (VD: Phở bò, Cơm tấm, Bún chả...)", text: $viewModel.searchQuery)
+                TextField(searchPlaceholderForSource, text: $viewModel.searchQuery)
                     .font(.system(size: 14))
 
                 if !viewModel.searchQuery.isEmpty {
@@ -382,6 +428,42 @@ public struct LogMealView: View {
             .background(AppColors.surfaceSecondary.opacity(0.6))
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
 
+            // Body based on selectedCatalogSource
+            switch viewModel.selectedCatalogSource {
+            case .vietnamese:
+                vietnameseCatalogList
+            case .customFoods:
+                customFoodsCatalogList
+            case .recipes:
+                recipesCatalogList
+            case .packagedFoods:
+                packagedFoodsCatalogList
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
+        )
+        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+    }
+
+    private var searchPlaceholderForSource: String {
+        switch viewModel.selectedCatalogSource {
+        case .vietnamese:
+            return "Tìm món (VD: Phở bò, Cơm tấm, Bún chả...)"
+        case .customFoods:
+            return "Tìm trong món riêng của bạn..."
+        case .recipes:
+            return "Tìm công thức, nguyên liệu..."
+        case .packagedFoods:
+            return "Tìm thực phẩm đóng gói, thương hiệu, barcode..."
+        }
+    }
+
+    private var vietnameseCatalogList: some View {
+        VStack(alignment: .leading, spacing: 12) {
             // Category Filter Scroll
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
@@ -440,13 +522,132 @@ public struct LogMealView: View {
                 }
             }
         }
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .fill(Color.white)
-                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 3)
-        )
-        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+    }
+
+    private var customFoodsCatalogList: some View {
+        VStack(spacing: 10) {
+            if viewModel.filteredCustomFoods.isEmpty {
+                VStack(spacing: 10) {
+                    Text("Chưa có món ăn riêng nào phù hợp")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(AppColors.textSecondary)
+                    Button {
+                        viewModel.customName = viewModel.searchQuery
+                        viewModel.isPresentingCustomItemSheet = true
+                    } label: {
+                        Text("Thêm món tùy chỉnh nhanh")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(AppColors.primaryGreen)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+            } else {
+                ForEach(viewModel.filteredCustomFoods.prefix(12)) { food in
+                    Button {
+                        selectedCustomFoodForPortion = food
+                    } label: {
+                        HStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(food.name)
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                Text("\(food.category) • \(Int(food.caloriesPerServing)) kcal / \(Int(food.servingGrams))g")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(AppColors.textSecondary)
+                            }
+                            Spacer()
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 20))
+                                .foregroundColor(AppColors.primaryGreen)
+                        }
+                        .padding(12)
+                        .background(AppColors.surfaceSecondary.opacity(0.5))
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+    }
+
+    private var recipesCatalogList: some View {
+        VStack(spacing: 10) {
+            if viewModel.filteredRecipes.isEmpty {
+                VStack(spacing: 10) {
+                    Text("Chưa có công thức nào phù hợp")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(AppColors.textSecondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+            } else {
+                ForEach(viewModel.filteredRecipes.prefix(12)) { recipe in
+                    Button {
+                        selectedRecipeForServings = recipe
+                    } label: {
+                        HStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(recipe.name)
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                Text("\(recipe.ingredients.count) nguyên liệu • \(Int(recipe.perServingNutrition.calories)) kcal / phần")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(AppColors.textSecondary)
+                            }
+                            Spacer()
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 20))
+                                .foregroundColor(AppColors.primaryGreen)
+                        }
+                        .padding(12)
+                        .background(AppColors.surfaceSecondary.opacity(0.5))
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+    }
+
+    private var packagedFoodsCatalogList: some View {
+        VStack(spacing: 10) {
+            if viewModel.filteredPackagedFoods.isEmpty {
+                VStack(spacing: 10) {
+                    Text("Chưa có sản phẩm đóng gói phù hợp")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(AppColors.textSecondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+            } else {
+                ForEach(viewModel.filteredPackagedFoods.prefix(15)) { food in
+                    Button {
+                        viewModel.addPackagedFood(food)
+                    } label: {
+                        HStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(food.fullDisplayTitle)
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundColor(AppColors.textPrimary)
+                                    .multilineTextAlignment(.leading)
+                                Text("\(food.category) • \(Int(food.nutrition.calories)) kcal / \(Int(food.serving.servingSize))\(food.serving.servingUnit)")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(AppColors.textSecondary)
+                            }
+                            Spacer()
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 20))
+                                .foregroundColor(AppColors.primaryGreen)
+                        }
+                        .padding(12)
+                        .background(AppColors.surfaceSecondary.opacity(0.5))
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
     }
 
     // MARK: - Notes Card
@@ -945,5 +1146,255 @@ private struct CustomFoodEntrySheet: View {
             }
         }
         .presentationDetents([.medium, .large])
+    }
+}
+
+// MARK: - Custom Food Portion Sheet
+private struct CustomFoodPortionSheet: View {
+    let food: CustomFood
+    let initialGrams: Double
+    let unitFormatting: UnitFormattingServiceProtocol
+    let haptics: HapticFeedbackServiceProtocol
+    let onAdd: (Double) -> Void
+    let onCancel: () -> Void
+
+    @State private var selectedGrams: Double
+
+    init(
+        food: CustomFood,
+        initialGrams: Double,
+        unitFormatting: UnitFormattingServiceProtocol,
+        haptics: HapticFeedbackServiceProtocol,
+        onAdd: @escaping (Double) -> Void,
+        onCancel: @escaping () -> Void
+    ) {
+        self.food = food
+        self.initialGrams = initialGrams
+        self.unitFormatting = unitFormatting
+        self.haptics = haptics
+        self.onAdd = onAdd
+        self.onCancel = onCancel
+        _selectedGrams = State(initialValue: initialGrams)
+    }
+
+    private var scaledFood: CustomFood {
+        food.scaled(to: selectedGrams)
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
+                // Food Header
+                VStack(spacing: 4) {
+                    Text(food.name)
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(AppColors.textPrimary)
+                    Text(food.category)
+                        .font(.system(size: 12))
+                        .foregroundColor(AppColors.textSecondary)
+                }
+                .padding(.top, 16)
+
+                // Calories Display
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text("\(Int(scaledFood.caloriesPerServing))")
+                        .font(.system(size: 40, weight: .heavy, design: .rounded))
+                        .foregroundColor(AppColors.primaryGreen)
+                    Text("kcal")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(AppColors.textSecondary)
+                }
+
+                // 4 Macros
+                HStack(spacing: 8) {
+                    MacroPill(title: "Đạm", value: "\(scaledFood.proteinGrams)g", color: Color(hex: "4A90E2"))
+                    MacroPill(title: "Carbs", value: "\(scaledFood.carbGrams)g", color: Color(hex: "F5A623"))
+                    MacroPill(title: "Béo", value: "\(scaledFood.fatGrams)g", color: Color(hex: "E97970"))
+                    MacroPill(title: "Xơ", value: "\(scaledFood.fiberGrams)g", color: Color(hex: "27AE60"))
+                }
+                .padding(.horizontal, 16)
+
+                // Slider & Stepper
+                VStack(spacing: 12) {
+                    HStack {
+                        Text("Khẩu phần ăn:")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(AppColors.textPrimary)
+
+                        Spacer()
+
+                        Text("\(Int(selectedGrams))g")
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .foregroundColor(AppColors.primaryGreen)
+                    }
+
+                    Slider(value: $selectedGrams, in: 20...1000, step: 10)
+                        .tint(AppColors.primaryGreen)
+                }
+                .padding(16)
+                .background(AppColors.surfaceSecondary.opacity(0.6))
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .padding(.horizontal, 16)
+
+                Spacer()
+
+                Button {
+                    haptics.impact(.medium)
+                    onAdd(selectedGrams)
+                } label: {
+                    Text("Thêm vào bữa ăn")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(AppColors.primaryGreen)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 20)
+            }
+            .navigationTitle("Chọn lượng món ăn")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Hủy", action: onCancel)
+                }
+            }
+        }
+        .presentationDetents([.medium])
+    }
+}
+
+// MARK: - Recipe Servings Sheet
+private struct RecipeServingsSheet: View {
+    let recipe: Recipe
+    let initialServings: Double
+    let unitFormatting: UnitFormattingServiceProtocol
+    let haptics: HapticFeedbackServiceProtocol
+    let onAdd: (Double) -> Void
+    let onCancel: () -> Void
+
+    @State private var selectedServings: Double
+
+    init(
+        recipe: Recipe,
+        initialServings: Double,
+        unitFormatting: UnitFormattingServiceProtocol,
+        haptics: HapticFeedbackServiceProtocol,
+        onAdd: @escaping (Double) -> Void,
+        onCancel: @escaping () -> Void
+    ) {
+        self.recipe = recipe
+        self.initialServings = initialServings
+        self.unitFormatting = unitFormatting
+        self.haptics = haptics
+        self.onAdd = onAdd
+        self.onCancel = onCancel
+        _selectedServings = State(initialValue: initialServings)
+    }
+
+    private var scaledNutrition: RecipeNutritionSnapshot {
+        recipe.scaledNutrition(forServings: selectedServings)
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
+                // Recipe Header
+                VStack(spacing: 4) {
+                    Text(recipe.name)
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(AppColors.textPrimary)
+                    Text("\(recipe.ingredients.count) nguyên liệu • Chuẩn: \(recipe.servings) phần")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppColors.textSecondary)
+                }
+                .padding(.top, 16)
+
+                // Calories Display
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text("\(Int(scaledNutrition.calories))")
+                        .font(.system(size: 40, weight: .heavy, design: .rounded))
+                        .foregroundColor(AppColors.primaryGreen)
+                    Text("kcal")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(AppColors.textSecondary)
+                }
+
+                // 4 Macros
+                HStack(spacing: 8) {
+                    MacroPill(title: "Đạm", value: "\(scaledNutrition.proteinGrams)g", color: Color(hex: "4A90E2"))
+                    MacroPill(title: "Carbs", value: "\(scaledNutrition.carbGrams)g", color: Color(hex: "F5A623"))
+                    MacroPill(title: "Béo", value: "\(scaledNutrition.fatGrams)g", color: Color(hex: "E97970"))
+                    MacroPill(title: "Xơ", value: "\(scaledNutrition.fiberGrams)g", color: Color(hex: "27AE60"))
+                }
+                .padding(.horizontal, 16)
+
+                // Servings Stepper
+                HStack {
+                    Text("Số phần ăn vào bữa:")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(AppColors.textPrimary)
+
+                    Spacer()
+
+                    HStack(spacing: 12) {
+                        Button {
+                            if selectedServings > 0.5 {
+                                selectedServings -= 0.5
+                            }
+                        } label: {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(selectedServings > 0.5 ? AppColors.primaryGreen : AppColors.textTertiary)
+                        }
+                        .disabled(selectedServings <= 0.5)
+
+                        Text(String(format: selectedServings.truncatingRemainder(dividingBy: 1) == 0 ? "%.0f" : "%.1f", selectedServings))
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .frame(minWidth: 32)
+
+                        Button {
+                            if selectedServings < 10 {
+                                selectedServings += 0.5
+                            }
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(AppColors.primaryGreen)
+                        }
+                    }
+                }
+                .padding(16)
+                .background(AppColors.surfaceSecondary.opacity(0.6))
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .padding(.horizontal, 16)
+
+                Spacer()
+
+                Button {
+                    haptics.impact(.medium)
+                    onAdd(selectedServings)
+                } label: {
+                    Text("Thêm vào bữa ăn")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(AppColors.primaryGreen)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 20)
+            }
+            .navigationTitle("Chọn số phần công thức")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Hủy", action: onCancel)
+                }
+            }
+        }
+        .presentationDetents([.medium])
     }
 }

@@ -12,6 +12,11 @@ public struct FoodExplorerView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var environment: AppEnvironment
     @StateObject private var viewModel: FoodExplorerViewModel
+    @State private var isPresentingMyFoodsAndRecipes: Bool = false
+    @State private var isPresentingWeeklyPlanner: Bool = false
+    @State private var isPresentingSmartSuggestions: Bool = false
+    @State private var isPresentingBarcodeScanner: Bool = false
+    @State private var isPresentingPackagedFoodLibrary: Bool = false
 
     public init(viewModel: FoodExplorerViewModel? = nil) {
         // Will initialize via state object or injected
@@ -58,6 +63,18 @@ public struct FoodExplorerView: View {
                         // Search Bar
                         searchSection
 
+                        // Smart Meal Suggestions Banner (Phase 05)
+                        smartSuggestionsShortcutBanner
+
+                        // Personal Food Library & Recipes Hub Banner
+                        myFoodsAndRecipesEntryBanner
+
+                        // Weekly Meal Planner Banner
+                        weeklyPlannerEntryBanner
+
+                        // Packaged Food & Barcode Banner (Phase 06)
+                        packagedFoodEntryBanner
+
                         // Category Filter Pills
                         categoryFilterSection
 
@@ -86,6 +103,21 @@ public struct FoodExplorerView: View {
         }
         .fullScreenCover(item: $viewModel.selectedDishForDetail) { dish in
             FoodDetailView(dish: dish, viewModel: viewModel)
+        }
+        .fullScreenCover(isPresented: $isPresentingMyFoodsAndRecipes) {
+            MyFoodsAndRecipesView()
+        }
+        .fullScreenCover(isPresented: $isPresentingWeeklyPlanner) {
+            WeeklyMealPlannerView()
+        }
+        .fullScreenCover(isPresented: $isPresentingSmartSuggestions) {
+            SmartSuggestionsView()
+        }
+        .fullScreenCover(isPresented: $isPresentingBarcodeScanner) {
+            BarcodeScannerView(viewModel: environment.makeBarcodeScannerViewModel())
+        }
+        .fullScreenCover(isPresented: $isPresentingPackagedFoodLibrary) {
+            PackagedFoodLibraryView(viewModel: environment.makeBarcodeScannerViewModel())
         }
         .onAppear {
             viewModel.loadData()
@@ -206,6 +238,255 @@ public struct FoodExplorerView: View {
             RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous)
                 .stroke(AppColors.border, lineWidth: 1)
         )
+    }
+
+    // MARK: - Personal Food Library & Recipes Banner
+    private var myFoodsAndRecipesEntryBanner: some View {
+        Button(action: {
+            #if canImport(UIKit)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+            isPresentingMyFoodsAndRecipes = true
+        }) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppColors.surfaceSecondary)
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "book.pages.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(AppColors.primaryGreen)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    HStack(spacing: 6) {
+                        Text("Món ăn & Công thức của bạn")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(AppColors.textPrimary)
+
+                        Text("Mới")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(AppColors.primaryGreen)
+                            .clipShape(Capsule())
+                    }
+
+                    Text("Quản lý món ăn riêng, thư viện công thức & vi chất cá nhân")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppColors.textSecondary)
+                        .lineLimit(1)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(AppColors.primaryGreen)
+                    .padding(8)
+                    .background(AppColors.surfaceSecondary)
+                    .clipShape(Circle())
+            }
+            .padding(14)
+            .background(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(AppColors.border, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var smartSuggestionsShortcutBanner: some View {
+        Button(action: {
+            #if canImport(UIKit)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+            isPresentingSmartSuggestions = true
+        }) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppColors.mintSurface)
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(AppColors.primaryGreen)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    HStack(spacing: 6) {
+                        Text("Gợi ý dành cho bạn")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(AppColors.textPrimary)
+
+                        Text("AI • Cá nhân")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(AppColors.primaryGreen)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(AppColors.mintSurface)
+                            .clipShape(Capsule())
+                    }
+
+                    Text("Khám phá món ngon phù hợp với sở thích của bạn")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppColors.textSecondary)
+                        .lineLimit(1)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(AppColors.primaryGreen)
+                    .padding(8)
+                    .background(AppColors.mintSurface)
+                    .clipShape(Circle())
+            }
+            .padding(14)
+            .background(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(Color(red: 0.88, green: 0.93, blue: 0.90), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("explorer_smart_suggestions_banner")
+    }
+
+    private var weeklyPlannerEntryBanner: some View {
+        Button(action: {
+            #if canImport(UIKit)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+            isPresentingWeeklyPlanner = true
+        }) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppColors.surfaceSecondary)
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "calendar.badge.clock")
+                        .font(.system(size: 20))
+                        .foregroundColor(AppColors.primaryGreen)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    HStack(spacing: 6) {
+                        Text("Kế hoạch thực đơn tuần")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(AppColors.textPrimary)
+
+                        Text("7 ngày")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(AppColors.primaryGreen)
+                            .clipShape(Capsule())
+                    }
+
+                    Text("Lên lịch món ăn cả tuần & tự động tính toán dinh dưỡng")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppColors.textSecondary)
+                        .lineLimit(1)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(AppColors.primaryGreen)
+                    .padding(8)
+                    .background(AppColors.surfaceSecondary)
+                    .clipShape(Circle())
+            }
+            .padding(14)
+            .background(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(AppColors.border, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("explorer_weekly_planner_banner")
+    }
+
+    // MARK: - Packaged Food & Barcode Banner (Phase 06)
+    private var packagedFoodEntryBanner: some View {
+        Button(action: {
+            #if canImport(UIKit)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+            isPresentingBarcodeScanner = true
+        }) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppColors.surfaceSecondary)
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "barcode.viewfinder")
+                        .font(.system(size: 20))
+                        .foregroundColor(AppColors.primaryGreen)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    HStack(spacing: 6) {
+                        Text("Quét mã vạch & Đóng gói")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(AppColors.textPrimary)
+
+                        Text("Barcode")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(AppColors.primaryGreen)
+                            .clipShape(Capsule())
+                    }
+
+                    Text("Tra cứu dinh dưỡng sản phẩm siêu thị & đóng gói")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppColors.textSecondary)
+                        .lineLimit(1)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(AppColors.textTertiary)
+                    .padding(8)
+                    .background(AppColors.surfaceSecondary)
+                    .clipShape(Circle())
+            }
+            .padding(14)
+            .background(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(AppColors.border, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("explorer_barcode_scanner_banner")
     }
 
     // MARK: - Category Filters

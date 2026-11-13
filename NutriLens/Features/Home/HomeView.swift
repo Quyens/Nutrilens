@@ -23,6 +23,8 @@ public struct HomeView: View {
     @State private var selectedMealForDetail: MealRecord? = nil
     @State private var showingWaterSheet: Bool = false
     @State private var showingFoodExplorer: Bool = false
+    @State private var showingMealPlanner: Bool = false
+    @State private var showingSmartSuggestions: Bool = false
 
     public init(
         viewModel: HomeViewModel,
@@ -166,9 +168,22 @@ public struct HomeView: View {
             }) {
                 FoodExplorerView()
             }
+            .fullScreenCover(isPresented: $showingMealPlanner, onDismiss: {
+                Task { await viewModel.loadDashboard() }
+            }) {
+                WeeklyMealPlannerView()
+            }
+            .fullScreenCover(isPresented: $showingSmartSuggestions, onDismiss: {
+                Task { await viewModel.loadDashboard() }
+            }) {
+                SmartSuggestionsView()
+            }
             .onAppear {
                 if ProcessInfo.processInfo.arguments.contains("-startFoodExplorer") {
                     showingFoodExplorer = true
+                }
+                if ProcessInfo.processInfo.arguments.contains("-startMealPlanner") {
+                    showingMealPlanner = true
                 }
             }
         }
@@ -2038,5 +2053,109 @@ private struct QuickFoodChip: View {
             .overlay(Capsule().stroke(AppColors.softGreen, lineWidth: 0.8))
         }
         .buttonStyle(.plain)
+    }
+}
+
+// MARK: - WEEKLY PLANNER COMPACT PILL (Phase 04)
+private struct WeeklyPlannerHomeBanner: View {
+    let onOpenPlanner: () -> Void
+
+    var body: some View {
+        Button(action: {
+            #if canImport(UIKit)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+            onOpenPlanner()
+        }) {
+            HStack(spacing: 8) {
+                Image(systemName: "calendar.badge.clock")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(Color(red: 0.12, green: 0.58, blue: 0.33))
+
+                Text("Kế hoạch tuần")
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(red: 0.08, green: 0.20, blue: 0.14))
+                    .lineLimit(1)
+
+                Spacer(minLength: 2)
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(Color(red: 0.12, green: 0.58, blue: 0.33).opacity(0.55))
+            }
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity)
+            .frame(height: 44)
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color.white.opacity(0.96),
+                        Color(red: 0.95, green: 0.985, blue: 0.96)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .clipShape(Capsule())
+            .overlay(
+                Capsule()
+                    .stroke(Color(red: 0.86, green: 0.93, blue: 0.89), lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.03), radius: 4, x: 0, y: 1.5)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("home_weekly_planner_banner")
+    }
+}
+
+// MARK: - SMART SUGGESTIONS COMPACT PILL (Phase 05)
+private struct SmartSuggestionsHomeBanner: View {
+    let onOpenSuggestions: () -> Void
+
+    var body: some View {
+        Button(action: {
+            #if canImport(UIKit)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+            onOpenSuggestions()
+        }) {
+            HStack(spacing: 8) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(Color(red: 0.16, green: 0.62, blue: 0.35))
+
+                Text("Gợi ý món ăn")
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(red: 0.08, green: 0.20, blue: 0.14))
+                    .lineLimit(1)
+
+                Spacer(minLength: 2)
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(Color(red: 0.16, green: 0.62, blue: 0.35).opacity(0.55))
+            }
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity)
+            .frame(height: 44)
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color.white.opacity(0.96),
+                        Color(red: 0.96, green: 0.99, blue: 0.97)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .clipShape(Capsule())
+            .overlay(
+                Capsule()
+                    .stroke(Color(red: 0.86, green: 0.93, blue: 0.89), lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.03), radius: 4, x: 0, y: 1.5)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("home_smart_suggestions_banner")
     }
 }

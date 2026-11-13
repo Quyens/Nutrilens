@@ -22,3 +22,4 @@ public final class GetHydrationHistoryUseCase: GetHydrationHistoryUseCaseProtoco
         try await repository.fetchHydration(from: startDate, to: endDate)
     }
 }
+

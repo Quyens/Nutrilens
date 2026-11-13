@@ -44,6 +44,26 @@ public struct MainTabView: View {
     @State private var isPresentingSettings: Bool = false
     @State private var isPresentingAuth: Bool = false
     @State private var authInitialStep: AuthStep = .accountManagement
+    @State private var isPresentingMyFoods: Bool = false
+    @State private var isPresentingCreateFood: Bool = false
+    @State private var isPresentingSampleRecipeDetail: Bool = false
+    @State private var isPresentingWeeklyPlanner: Bool = false
+    @State private var isPresentingAddPlannedMeal: Bool = false
+    @State private var isPresentingPlannedFoodPicker: Bool = false
+    @State private var isPresentingPlannedMealDetail: Bool = false
+    @State private var isPresentingCopyDayPlan: Bool = false
+    @State private var isPresentingLogPlannedMealConfirmation: Bool = false
+    @State private var isPresentingSmartSuggestions: Bool = false
+    @State private var isPresentingSuggestionExplanation: Bool = false
+    @State private var isPresentingIngredientReview: Bool = false
+    @State private var isPresentingDietaryPreferences: Bool = false
+    @State private var isPresentingAddSuggestionToPlan: Bool = false
+    @State private var isPresentingBarcodeScanner: Bool = false
+    @State private var isPresentingPackagedFoodLibrary: Bool = false
+    @State private var isPresentingScannedProductResult: Bool = false
+    @State private var isPresentingCreatePackagedFood: Bool = false
+    @State private var isPresentingPackagedFoodDetail: Bool = false
+    @State private var isPresentingUnknownBarcodePrompt: Bool = false
 
     public init() {}
 
@@ -162,6 +182,9 @@ public struct MainTabView: View {
             LogMealView(
                 viewModel: LogMealViewModel(
                     logMealUseCase: environment.logMealUseCase,
+                    getCustomFoodsUseCase: environment.getCustomFoodsUseCase,
+                    getRecipesUseCase: environment.getRecipesUseCase,
+                    getPackagedFoodsUseCase: environment.getPackagedFoodsUseCase,
                     unitFormattingService: environment.unitFormattingService,
                     hapticFeedbackService: environment.hapticFeedbackService,
                     onDismiss: { isPresentingManualLog = false }
@@ -189,6 +212,194 @@ public struct MainTabView: View {
                 }
             )
         }
+        .fullScreenCover(isPresented: $isPresentingMyFoods) {
+            MyFoodsAndRecipesView()
+        }
+        .sheet(isPresented: $isPresentingCreateFood) {
+            CreateEditCustomFoodView()
+        }
+        .fullScreenCover(isPresented: $isPresentingSampleRecipeDetail) {
+            RecipeDetailView(recipe: MockRecipeRepository.sampleRecipes.first ?? Recipe(name: "Salad Ức Gà Thảo Mộc", servings: 2))
+        }
+        .fullScreenCover(isPresented: $isPresentingWeeklyPlanner) {
+            WeeklyMealPlannerView()
+        }
+        .sheet(isPresented: $isPresentingAddPlannedMeal) {
+            AddPlannedMealSheet(initialDate: Date(), initialCategory: .lunch) { _ in }
+        }
+        .sheet(isPresented: $isPresentingPlannedFoodPicker) {
+            PlannedFoodSourcePickerSheet { _ in }
+        }
+        .sheet(isPresented: $isPresentingPlannedMealDetail) {
+            let sampleDish = VietnameseNutritionDatabase.dishes.first!
+            let sampleMeal = PlannedMeal(
+                scheduledDate: Date(),
+                mealCategory: .lunch,
+                foodItems: [
+                    PlannedFoodItem.fromVietnameseDish(sampleDish, quantityGrams: 450)
+                ],
+                notes: "Bữa trưa công sở giàu đạm",
+                status: .planned
+            )
+            PlannedMealDetailSheet(
+                meal: sampleMeal,
+                onLogToDiary: {},
+                onMarkSkipped: {},
+                onRestore: {},
+                onDuplicateToTomorrow: {},
+                onEdit: {},
+                onDelete: {}
+            )
+        }
+        .sheet(isPresented: $isPresentingCopyDayPlan) {
+            CopyDayPlanSheet(sourceDate: Date(), mealsCount: 3) { _, _, _ in }
+        }
+        .sheet(isPresented: $isPresentingLogPlannedMealConfirmation) {
+            let sampleDish = VietnameseNutritionDatabase.dishes.first!
+            let sampleMeal = PlannedMeal(
+                scheduledDate: Date(),
+                mealCategory: .lunch,
+                foodItems: [
+                    PlannedFoodItem.fromVietnameseDish(sampleDish, quantityGrams: 450)
+                ],
+                notes: "Bữa trưa dinh dưỡng",
+                status: .planned
+            )
+            LogPlannedMealConfirmationSheet(plannedMeal: sampleMeal) { _, _, _, _ in }
+        }
+        .fullScreenCover(isPresented: $isPresentingSmartSuggestions) {
+            SmartSuggestionsView(viewModel: environment.makeSmartSuggestionsViewModel())
+        }
+        .sheet(isPresented: $isPresentingSuggestionExplanation) {
+            let sampleDish = VietnameseNutritionDatabase.dishes.first!
+            let sampleSuggestion = MealSuggestion(
+                foodSource: .vietnameseDatabase,
+                sourceId: sampleDish.slug,
+                displayName: sampleDish.vietnameseName,
+                dishCategory: sampleDish.category,
+                suggestedServing: "1 phần chuẩn (\(Int(sampleDish.standardServingGrams))g)",
+                suggestedServingGrams: sampleDish.standardServingGrams,
+                availableNutritionEstimate: PlannedNutritionSnapshot(
+                    calories: sampleDish.caloriesPerServing,
+                    proteinGrams: sampleDish.proteinPerServing,
+                    carbGrams: sampleDish.carbPerServing,
+                    fatGrams: sampleDish.fatPerServing,
+                    fiberGrams: sampleDish.fiberPerServing
+                ),
+                recommendationScore: 88,
+                explanationReasons: ["Phù hợp bữa trưa", "Giàu đạm (32g)", "Đổi món so với hôm qua"],
+                explanationFactors: [
+                    SuggestionExplanationFactor(title: "Phù hợp với bữa trưa", detail: "Món ăn truyền thống thường được ưa chuộng cho bữa trưa.", systemIcon: "sun.max.fill", scoreImpact: 25),
+                    SuggestionExplanationFactor(title: "Hàm lượng đạm cao (32g Protein)", detail: "Cung cấp lượng đạm dồi dào, phù hợp mục tiêu dinh dưỡng cơ bắp.", systemIcon: "figure.strengthtraining.traditional", scoreImpact: 20),
+                    SuggestionExplanationFactor(title: "Giúp đổi vị & đa dạng thực đơn", detail: "Bạn chưa dùng món này gần đây, thích hợp để làm mới khẩu vị trong tuần.", systemIcon: "leaf.arrow.triangle.circlepath", scoreImpact: 10)
+                ],
+                ingredientVerificationStatus: .verified,
+                documentedIngredients: VietnameseDishIngredientMetadata.metadata(forSlug: sampleDish.slug)?.documentedIngredients ?? [],
+                allergenWarnings: VietnameseDishIngredientMetadata.metadata(forSlug: sampleDish.slug)?.allergens ?? []
+            )
+            RecommendationExplanationSheet(suggestion: sampleSuggestion) {
+                isPresentingSuggestionExplanation = false
+            }
+        }
+        .sheet(isPresented: $isPresentingIngredientReview) {
+            let sampleDish = VietnameseNutritionDatabase.dishes.first!
+            let meta = VietnameseDishIngredientMetadata.metadata(forSlug: sampleDish.slug)
+            let sampleSuggestion = MealSuggestion(
+                foodSource: .vietnameseDatabase,
+                sourceId: sampleDish.slug,
+                displayName: sampleDish.vietnameseName,
+                dishCategory: sampleDish.category,
+                suggestedServing: "1 phần chuẩn (\(Int(sampleDish.standardServingGrams))g)",
+                suggestedServingGrams: sampleDish.standardServingGrams,
+                availableNutritionEstimate: PlannedNutritionSnapshot(
+                    calories: sampleDish.caloriesPerServing,
+                    proteinGrams: sampleDish.proteinPerServing,
+                    carbGrams: sampleDish.carbPerServing,
+                    fatGrams: sampleDish.fatPerServing,
+                    fiberGrams: sampleDish.fiberPerServing
+                ),
+                recommendationScore: 88,
+                explanationReasons: ["Phù hợp bữa trưa"],
+                ingredientVerificationStatus: .verified,
+                documentedIngredients: meta?.documentedIngredients ?? [],
+                allergenWarnings: meta?.allergens ?? []
+            )
+            IngredientReviewSheet(
+                suggestion: sampleSuggestion,
+                userProfile: UserDietaryProfile()
+            ) {
+                isPresentingIngredientReview = false
+            }
+        }
+        .sheet(isPresented: $isPresentingDietaryPreferences) {
+            EditDietaryPreferencesSheet(
+                initialProfile: UserDietaryProfile(),
+                onSave: { _ in isPresentingDietaryPreferences = false },
+                onClear: { isPresentingDietaryPreferences = false }
+            )
+        }
+        .sheet(isPresented: $isPresentingAddSuggestionToPlan) {
+            let sampleDish = VietnameseNutritionDatabase.dishes.first!
+            let sampleSuggestion = MealSuggestion(
+                foodSource: .vietnameseDatabase,
+                sourceId: sampleDish.slug,
+                displayName: sampleDish.vietnameseName,
+                dishCategory: sampleDish.category,
+                suggestedServing: "1 phần chuẩn (\(Int(sampleDish.standardServingGrams))g)",
+                suggestedServingGrams: sampleDish.standardServingGrams,
+                availableNutritionEstimate: PlannedNutritionSnapshot(
+                    calories: sampleDish.caloriesPerServing,
+                    proteinGrams: sampleDish.proteinPerServing,
+                    carbGrams: sampleDish.carbPerServing,
+                    fatGrams: sampleDish.fatPerServing,
+                    fiberGrams: sampleDish.fiberPerServing
+                ),
+                recommendationScore: 88,
+                explanationReasons: ["Phù hợp bữa trưa"],
+                ingredientVerificationStatus: .verified
+            )
+            AddSuggestionToPlanSheet(
+                suggestion: sampleSuggestion,
+                initialDate: Date(),
+                initialCategory: .lunch
+            ) { _, _, _, _, _ in
+                isPresentingAddSuggestionToPlan = false
+            }
+        }
+        // Phase 06: Barcode Scanner & Packaged Food Management
+        .fullScreenCover(isPresented: $isPresentingBarcodeScanner) {
+            BarcodeScannerView(viewModel: environment.makeBarcodeScannerViewModel())
+        }
+        .fullScreenCover(isPresented: $isPresentingPackagedFoodLibrary) {
+            PackagedFoodLibraryView(viewModel: environment.makeBarcodeScannerViewModel())
+        }
+        .sheet(isPresented: $isPresentingScannedProductResult) {
+            let vm = environment.makeBarcodeScannerViewModel()
+            let sampleProduct = BundledPackagedFoodCatalogue.shared.items.first!
+            let _ = {
+                vm.activeProduct = sampleProduct
+                vm.activeLookupSource = .bundledCatalogue
+                vm.evaluateSafety(for: sampleProduct)
+            }()
+            ScannedProductResultSheet(viewModel: vm)
+        }
+        .sheet(isPresented: $isPresentingCreatePackagedFood) {
+            let vm = environment.makeBarcodeScannerViewModel()
+            CreateEditPackagedFoodView(viewModel: vm, initialBarcode: "8939999888882")
+        }
+        .sheet(isPresented: $isPresentingPackagedFoodDetail) {
+            let vm = environment.makeBarcodeScannerViewModel()
+            let sampleProduct = BundledPackagedFoodCatalogue.shared.items[1] // Mì Hảo Hảo
+            NavigationStack {
+                PackagedFoodDetailView(viewModel: vm, product: sampleProduct)
+            }
+        }
+        .alert("Chưa tìm thấy thông tin sản phẩm", isPresented: $isPresentingUnknownBarcodePrompt) {
+            Button("Thêm sản phẩm mới") {}
+            Button("Thử lại", role: .cancel) {}
+        } message: {
+            Text("Mã vạch 8930000000019 chưa có trong danh mục của NutriLens. Bạn có muốn tự thêm vào thư viện cá nhân?")
+        }
         .onAppear {
             if ProcessInfo.processInfo.arguments.contains("-startTabHistory") {
                 selectedTab = .history
@@ -208,6 +419,61 @@ public struct MainTabView: View {
                 isPresentingSettings = true
             } else if ProcessInfo.processInfo.arguments.contains("-startManualLog") {
                 isPresentingManualLog = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startMyFoods") {
+                isPresentingMyFoods = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startCreateCustomFood") {
+                isPresentingCreateFood = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startRecipeDetail") {
+                isPresentingSampleRecipeDetail = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startMealPlanner") {
+                isPresentingWeeklyPlanner = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startAddPlannedMeal") {
+                isPresentingAddPlannedMeal = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startPlannedFoodPicker") {
+                isPresentingPlannedFoodPicker = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startPlannedMealDetail") {
+                isPresentingPlannedMealDetail = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startCopyDayPlan") {
+                isPresentingCopyDayPlan = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startDiaryLoggingConfirmation") {
+                isPresentingLogPlannedMealConfirmation = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startSmartSuggestions") {
+                isPresentingSmartSuggestions = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startSuggestionExplanation") {
+                isPresentingSuggestionExplanation = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startIngredientReview") {
+                isPresentingIngredientReview = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startDietaryPreferences") {
+                isPresentingDietaryPreferences = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startAddSuggestionToPlan") {
+                isPresentingAddSuggestionToPlan = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startBarcodeScanner") {
+                isPresentingBarcodeScanner = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startScannedProductResult") {
+                isPresentingScannedProductResult = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startCreatePackagedFood") {
+                isPresentingCreatePackagedFood = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startPackagedFoodDetail") {
+                isPresentingPackagedFoodDetail = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startPackagedFoodLibrary") {
+                isPresentingPackagedFoodLibrary = true
+            } else if ProcessInfo.processInfo.arguments.contains("-startUnknownBarcode") {
+                isPresentingBarcodeScanner = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    isPresentingUnknownBarcodePrompt = true
+                }
+            } else if ProcessInfo.processInfo.arguments.contains("-startTabHistoryWithBarcodeMeal") {
+                selectedTab = .history
+                let sampleProduct = BundledPackagedFoodCatalogue.shared.items.first!
+                let mealItem = sampleProduct.toFoodItem()
+                let meal = MealRecord(
+                    timestamp: Date(),
+                    mealType: .breakfast,
+                    items: [mealItem]
+                )
+                Task {
+                    try? await environment.mealRepository.saveMeal(meal)
+                }
             }
         }
     }

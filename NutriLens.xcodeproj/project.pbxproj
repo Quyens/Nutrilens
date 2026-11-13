@@ -28,6 +28,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>01648A59CA5A03A250D4BAC1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48C8C820401DC0D41DB93B13</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>01BDDF8E0F7A96F569B7EFA5</key>
 		<dict>
 			<key>buildSettings</key>
@@ -75,6 +82,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>044792C4947F2511320E3C7C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0BBE48EEB91E5591EF6EAFF5</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>0448C6C0801A2BFD6B01B82A</key>
 		<dict>
 			<key>isa</key>
@@ -83,6 +97,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Domain/UseCases/GetAuthSessionUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>04B18A70BEDAF45ED4D2EA17</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/BarcodeScannerViewModel.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -104,6 +129,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>05B40938A7AC6482310DF505</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/LogPlannedMealConfirmationSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>05F859BDC99EA738DEF41E3E</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -111,6 +147,8 @@
 			<key>files</key>
 			<array>
 				<string>E07EA73E507247A738DC8D41</string>
+				<string>776A61D308A0E707AD667FBD</string>
+				<string>DBC07DD3424968B0B702F9CF</string>
 				<string>F1CAEFD1B962FEBF9642436F</string>
 				<string>6725C34363B3B22D5417C409</string>
 				<string>0FF66653B89C45607D92BC54</string>
@@ -118,11 +156,38 @@
 				<string>0793FD2B615A9E94810E38AA</string>
 				<string>0BFB1F3270C90E7B150CF658</string>
 				<string>113CDB34599351DB21CD8402</string>
+				<string>6DCA37462DCF4103EC9A21F1</string>
+				<string>927EE659491BFBA8FB917EDE</string>
 			</array>
 			<key>isa</key>
 			<string>PBXSourcesBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
+		</dict>
+		<key>06183C774037CF5FA356DBC0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>35EDCE0444B177DCD336944E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>072AC518F5F249A42D0106E3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>E6E8644277E1A4E43197544D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>075645949EC6C6D1F6B6E9DF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/BarcodeValue.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>0769EBEDDFE199A70F86B251</key>
 		<dict>
@@ -144,6 +209,17 @@
 			<string>30DDA99F1B45B391CE947152</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>089766967A8F2871655D534E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/SaveRecipeUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>0A12868AFB82216EE923DFC2</key>
 		<dict>
@@ -191,6 +267,28 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>0BBE48EEB91E5591EF6EAFF5</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/IngredientPickerSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0BD5CFD1FDCD822374EE5868</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/AddPlannedMealSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>0BFB1F3270C90E7B150CF658</key>
 		<dict>
 			<key>fileRef</key>
@@ -215,6 +313,24 @@
 			<string>NutriLens/Data/Repositories/MockFoodRecognitionRepository.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0D3633D9DBF2BDDA2A845455</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/WeeklyMealPlan.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0DEB19F7C7B9B5B1E29072AF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>368A0F6FB3F6FAC4E5F916EF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>0E094EEF7979623BDCD2CA88</key>
 		<dict>
@@ -251,6 +367,24 @@
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
+		<key>0F2C5A3E1085A430FD4F368E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9F3B23246EBACC9032E217E1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>0F65A3FEAEB0F18B3036E36E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/PackagedFoodDetailView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>0FF66653B89C45607D92BC54</key>
 		<dict>
 			<key>fileRef</key>
@@ -264,6 +398,17 @@
 			<string>750675C6CF628DD5F617DD63</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>10E24C6CF461B6931A5EFB74</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/SmartSuggestions/IngredientReviewSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>110672ADD857B4EE14F07CE0</key>
 		<dict>
@@ -297,6 +442,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>117F4E5D234E1744FEF0A575</key>
+		<dict>
+			<key>fileRef</key>
+			<string>7DE89BA0C4AE03A55B7254BE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>125F90E67D07015910B81D3D</key>
 		<dict>
 			<key>fileRef</key>
@@ -322,6 +474,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>132FE5439EF467B8887C1199</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0BD5CFD1FDCD822374EE5868</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>13F612F73775A708068B3CDB</key>
 		<dict>
 			<key>isa</key>
@@ -330,6 +489,42 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Data/Repositories/MockAuthenticationRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1487B2590A697A43448BFB06</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CF1D0A9974989AEBB95A1849</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>15282A016A56CF7903EC5065</key>
+		<dict>
+			<key>fileRef</key>
+			<string>18AAE86361D1810A96904CD9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>154599C602B4B902B84CACD8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/CustomFood.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>15927386B9CBC475242C84F7</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/CustomFoodDetailView.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -358,6 +553,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>18AAE86361D1810A96904CD9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/SavePlannedMealUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>18E2568775356DBE6236D854</key>
 		<dict>
 			<key>fileRef</key>
@@ -372,6 +578,28 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>1924333FDB9AE7E1129B5363</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/SmartSuggestions/SmartSuggestionsViewModel.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1A9B039A959E2EE4358B916F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/SmartSuggestions/RecommendationExplanationSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>1AE8DE115079F5AFB45177FB</key>
 		<dict>
 			<key>isa</key>
@@ -383,10 +611,24 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>1B0670F41FF166411FCAE8E3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>48D807F9408D2C190C4A561F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>1B17B053C11B26441873F00D</key>
 		<dict>
 			<key>fileRef</key>
 			<string>71DD01F3D180B29121168F13</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1B301946E609EBC20C2B370A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5FF1C9C6ADE6035EDBBA18E0</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -407,6 +649,17 @@
 			<string>39C5BB1BE4D95A2C628F82EB</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>1DAF831CE7B30F1E7F8833FA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/PlannedMeal.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>1DB6FEBD03BA6D60D56D6CCB</key>
 		<dict>
@@ -434,6 +687,28 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Domain/UseCases/RegisterUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2091840AB422B5A596368458</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Services/MealPlanCalendarHelper.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>213012C4CC93D02FF1AFAB3F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MockRecipeRepository.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -472,10 +747,28 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>280A5DC2A150036B9B6FA0CE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/AllergenType.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>28E15A4C7773D00F888DA8D6</key>
 		<dict>
 			<key>fileRef</key>
 			<string>B25A2DE47D321EDB5D614C50</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>28F38EB3290BF7261CE20917</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5F1E2589BAEA82A7732C3BEF</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -502,6 +795,13 @@
 			<string>NutriLens/Features/Home/HomeViewModel.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2B1040F9DA2F3EFC9ADE2831</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F5AA4BCF76D115B346E33D4D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>2B1E977AF9C521D3F567A90D</key>
 		<dict>
@@ -535,6 +835,24 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>2E935CBD515DD223AB1D2B8D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>92C274A554266394041307E1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>2EBF9FA44B04BC1E757B8E8C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/DeleteCustomFoodUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>3069F710B502C1BB27D3BCBD</key>
 		<dict>
 			<key>fileRef</key>
@@ -547,6 +865,8 @@
 			<key>children</key>
 			<array>
 				<string>5CBD453032EA1F98F0A931EF</string>
+				<string>CDE31A6224FE5B09D4A40DCE</string>
+				<string>449148F0C950D2B9750024F1</string>
 				<string>9010A3AAF4085F498C13F04F</string>
 				<string>B0DFFEFDFCC4B656399DA403</string>
 				<string>D8B914479A7FB0181FA8765A</string>
@@ -554,6 +874,8 @@
 				<string>30DDA99F1B45B391CE947152</string>
 				<string>E74CC9E9B47B8098D982282A</string>
 				<string>B11FA3435070BB63BF4FB1C9</string>
+				<string>C8E175E635C908253AD55839</string>
+				<string>D315D20230916E8C3448716E</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -573,12 +895,30 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>325B521EFF3E6C86A7BE8D18</key>
+		<dict>
+			<key>fileRef</key>
+			<string>280A5DC2A150036B9B6FA0CE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>32CBAE8982E4F8DE16A08441</key>
 		<dict>
 			<key>fileRef</key>
 			<string>DD4AFBC09766AA2B17B9913B</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>32DE34AE2758723853BD4565</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/SavePackagedFoodUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>33103A0F064A7B8B61ADD704</key>
 		<dict>
@@ -591,6 +931,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>AA7A640D39F07FD665CCBF88</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3425AED86809E155C811BEB8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C523458E19B1F83899BEBAFC</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -612,6 +959,28 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>34B8AC80B8FD3DF1F60EDFD2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MealPlanRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3522766C16B423586000D728</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/SmartMealSuggestionsUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>354799794BF581772A9A7416</key>
 		<dict>
 			<key>isa</key>
@@ -629,6 +998,17 @@
 			<string>1AE8DE115079F5AFB45177FB</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>35EDCE0444B177DCD336944E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/SmartSuggestions/SuggestionCardView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>36616C13E05E27EF41E233E1</key>
 		<dict>
@@ -648,6 +1028,35 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>368A0F6FB3F6FAC4E5F916EF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/PackagedFoodNutrition.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37038A360DD31DCE5FB5BB77</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BDE7FE4810D1D80364E2DB17</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>372A212A42C914EC3A00BA2F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/CopyDayPlanSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>389352F4258426F45FE26326</key>
 		<dict>
 			<key>isa</key>
@@ -658,6 +1067,13 @@
 			<string>NutriLens/Domain/RepositoryInterfaces/UserRepositoryProtocol.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>38F201E64F8EE33FBAE062A3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C5FFF3B557927B97E51D37B4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>399D2585F0FB43DBE432CA02</key>
 		<dict>
@@ -692,6 +1108,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>3A2B1DD7AF835270D89BF11D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0D3633D9DBF2BDDA2A845455</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>3A5C34423CBB466B8167B619</key>
 		<dict>
 			<key>fileRef</key>
@@ -710,6 +1133,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>3AF01D31FEBC5BC81E557C2C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CF846ACB056893EB91BDD92B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>3CF19EDAE4F067AE7423D570</key>
 		<dict>
 			<key>isa</key>
@@ -720,6 +1150,13 @@
 			<string>NutriLens/Core/DesignSystem/SearchField.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3D8310DCD7C21E410537A1ED</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9D1FC42C71E0E96A8C3FF984</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>3F93017162986AF0B91B4056</key>
 		<dict>
@@ -756,6 +1193,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>3FBEC71F55AF436AEF5C0A4A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/RecipeRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>40FE00BD605F55E0E45A6318</key>
 		<dict>
 			<key>isa</key>
@@ -767,12 +1215,34 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>42318388BF8298A25415CD62</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/BarcodeScannerView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>423BD22560CE73C003267272</key>
 		<dict>
 			<key>fileRef</key>
 			<string>A9C62B07AAF81EF658A40357</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>42B57A90E68E770935A2362F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/SmartSuggestionsFilter.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>444F6C0E003D0B660A75132E</key>
 		<dict>
@@ -789,6 +1259,24 @@
 		<dict>
 			<key>fileRef</key>
 			<string>D7D428C96FAF80D1520FEA4F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>449148F0C950D2B9750024F1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLensTests/UnitTests/CustomFoodsAndRecipesTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>462510408120DF059335A60E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>213012C4CC93D02FF1AFAB3F</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -810,6 +1298,42 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>47F83019877DA3D02257F6DF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>69BF0662903852AFBD95097D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>488345B7AB7841077C5E7E96</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1924333FDB9AE7E1129B5363</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>48C8C820401DC0D41DB93B13</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/MicronutrientProfile.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>48D807F9408D2C190C4A561F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/PlannedMealDetailSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>4A31187A7971632C74C66AB6</key>
 		<dict>
 			<key>isa</key>
@@ -818,6 +1342,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Domain/Entities/FoodExplorerCategory.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4A76823140ACD5AC5E716679</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MockMealPlanRepository.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -860,10 +1395,31 @@
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
+		<key>4C7CB8BA619BE82F59B4CC52</key>
+		<dict>
+			<key>fileRef</key>
+			<string>7D7402AB732E6CD7C184537A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4C8F3CBE910F25252CFAAD68</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D5AA69F2CC64FF67EDD8C940</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>4D0E4516185840E0209383DE</key>
 		<dict>
 			<key>fileRef</key>
 			<string>AFA747805022B6E1383D30A8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4E31A21414EA03E3A03243E7</key>
+		<dict>
+			<key>fileRef</key>
+			<string>2091840AB422B5A596368458</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -926,6 +1482,28 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>4F6BF1260480EEAF9AADF420</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/MyFoodsAndRecipesViewModel.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>514995415BDD17B27CF406FE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/ScannedProductResultSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>51FF831A9407313E294F7614</key>
 		<dict>
 			<key>isa</key>
@@ -936,6 +1514,27 @@
 			<string>NutriLens/Core/DesignSystem/NutritionSummaryCard.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>54B9CF7CF70207959E4342F0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>34B8AC80B8FD3DF1F60EDFD2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>55B40F0D7267E06BB1D086C8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>089766967A8F2871655D534E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5630B62FC94CE3C5FA669614</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0F65A3FEAEB0F18B3036E36E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>56EA2DDD7EA6B62E92CB9329</key>
 		<dict>
@@ -1023,6 +1622,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>5944E99DDFF20757D4C427FE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/LogPlannedMealToDiaryUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>59CBE8A78EADA95EC02B1A77</key>
 		<dict>
 			<key>isa</key>
@@ -1052,6 +1662,27 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>5DBCC07D500C3D6236D7582F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A634740DAEECB7F720D0B2DF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5E3A1E5BEB6B2D98D3F3F756</key>
+		<dict>
+			<key>fileRef</key>
+			<string>86ED2D562FA155D20C561BA8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5E98C46914F1BCB9A29DFCEF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>7C3EA2BA0C8FA779EB3B05F5</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>5EE9A7DFD74B92718D518A00</key>
 		<dict>
 			<key>fileRef</key>
@@ -1059,10 +1690,60 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>5F1E2589BAEA82A7732C3BEF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/PlannedFoodItem.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5F63244EEB545F86331359DF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>42B57A90E68E770935A2362F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5FF0BC0251A1BF363E5FB917</key>
+		<dict>
+			<key>fileRef</key>
+			<string>8A1761DA2D1EA803A9225474</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5FF1C9C6ADE6035EDBBA18E0</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/RepositoryInterfaces/PackagedFoodRepositoryProtocol.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6066A74B5C3C880BF9E6F078</key>
+		<dict>
+			<key>fileRef</key>
+			<string>880B60281A0F874CE0BE742F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>60840934C0870D53ACB5725D</key>
 		<dict>
 			<key>fileRef</key>
 			<string>F9425D694AE4A74132D85CB1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>61BC6034B161154D576CF797</key>
+		<dict>
+			<key>fileRef</key>
+			<string>514995415BDD17B27CF406FE</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1084,6 +1765,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>63352BFA2A08AD0B325CA2D5</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C63DB31F1583CD653D8CAA5D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>634965E98FB398E48DFA2F94</key>
 		<dict>
 			<key>isa</key>
@@ -1092,6 +1780,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Features/FoodExplorer/FoodExplorerView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>634ADEDAD5330332AA8E39C1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/MealSuggestion.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1124,6 +1823,20 @@
 		<dict>
 			<key>fileRef</key>
 			<string>9FC1E96689373881971529AA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>6616052CBEC1CA075746BCB8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3FBEC71F55AF436AEF5C0A4A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>6640ACE2026D1DE5F3D87579</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A1032F27165F25DA6C723523</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1166,6 +1879,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>67A763BDF300FBDF5385776E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>05B40938A7AC6482310DF505</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>67B0A769AC08D15E5F4CDF61</key>
 		<dict>
 			<key>fileRef</key>
@@ -1192,6 +1912,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Features/Authentication/EmailVerificationStatusView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>685AA0D3435693E943B67E00</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/CustomFoodRepository.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1231,6 +1962,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>69BF0662903852AFBD95097D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/SmartSuggestions/AddSuggestionToPlanSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>6C60AB740CB3403C693DE02B</key>
 		<dict>
 			<key>isa</key>
@@ -1256,6 +1998,24 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>6CC5075271B4DF15AED653C1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/GetRecipesUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6D3CEBA7C8C4B328357448DF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>EFB50753A8F58339F392285E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>6D5BDA4BE7A7C6ACC450E561</key>
 		<dict>
 			<key>fileRef</key>
@@ -1263,10 +2023,31 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>6DBFD19AF86653BC64E74132</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C5F05BA536EE33D70BD36379</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>6DCA37462DCF4103EC9A21F1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C8E175E635C908253AD55839</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>6E4283BAAFE67C5FB558E6EC</key>
 		<dict>
 			<key>fileRef</key>
 			<string>0EB506FBB99C432F3C3094E9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>6E47D7B7B66CD6DDEFE2F11A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>E44578F8F68831BDE5FA6018</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1303,10 +2084,28 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>6EC95EE949FDDEEBF64F10A0</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/RepositoryInterfaces/MealPlanRepositoryProtocol.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>6F9F09AB20B6EDAE1026A0D6</key>
 		<dict>
 			<key>fileRef</key>
 			<string>F04D1B1CE4FB887496B6E85D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>700B0C3B5E927D1D691B4FC7</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9E3C5C94AEE807E0FA3816D3</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1320,6 +2119,13 @@
 			<string>NutriLens/Features/History/MealHistoryView.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7194E2FB396A44631D63EBE0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4F6BF1260480EEAF9AADF420</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>719DBDB2681386AE1EEB1C8D</key>
 		<dict>
@@ -1368,6 +2174,24 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>72EABF72A87DFAB04D76615D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>42318388BF8298A25415CD62</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>72ECEE50DEA45FC5B8688FE9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/SaveCustomFoodUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>730829ABE91B9E9559449C71</key>
 		<dict>
 			<key>buildConfigurations</key>
@@ -1381,6 +2205,13 @@
 			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
+		</dict>
+		<key>73D0A14AE2A0B85AC68F89AD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>85C9B4668CD74C5094538E74</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>750675C6CF628DD5F617DD63</key>
 		<dict>
@@ -1439,6 +2270,13 @@
 			<key>productType</key>
 			<string>com.apple.product-type.application</string>
 		</dict>
+		<key>776A61D308A0E707AD667FBD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CDE31A6224FE5B09D4A40DCE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>776E64E393AEEA2BE2E4D9C6</key>
 		<dict>
 			<key>isa</key>
@@ -1450,10 +2288,68 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>7823C2EE81F7B37DC74008D9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>EDE070F9C28B2B2E585E8284</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>788075CFC0C67F0086625F83</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/DeleteRecipeUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>78B42AF3D376365894B038F8</key>
 		<dict>
 			<key>fileRef</key>
 			<string>128DA9C775A860458137CF46</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>7986736234AA1E67F2E5A473</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/CreateEditRecipeView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>798B277B4B096D1F72B35A4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/UserDietaryProfile.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>79ED273FBAD4406C8FD52CEC</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/SmartSuggestions/SmartSuggestionsView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7A559C34C8ADFB0A29A8D01C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>075645949EC6C6D1F6B6E9DF</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1471,12 +2367,45 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>7C3EA2BA0C8FA779EB3B05F5</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MockPackagedFoodRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>7C5BBF4F63D5107C02F7D8D3</key>
 		<dict>
 			<key>fileRef</key>
 			<string>CB553C76391387692FE01E1E</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>7D7402AB732E6CD7C184537A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/WeeklyMealPlannerViewModel.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7DE89BA0C4AE03A55B7254BE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/GetPackagedFoodsUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>7E03693C705EF154817E9462</key>
 		<dict>
@@ -1496,6 +2425,20 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>7F78321C6CF1337619151AD0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6EC95EE949FDDEEBF64F10A0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>8034873C60954352D950C74F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C81EA4D711830BEA93EB6AA0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>8130ACA506949AE401DF3F57</key>
 		<dict>
 			<key>fileRef</key>
@@ -1511,6 +2454,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLensUITests/NutriLensUITests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>831399FD0499C3C716356170</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/BundledPackagedFoodCatalogue.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1559,12 +2513,45 @@
 				<string>B5CAE33C202CA73358362965</string>
 				<string>587F1514410E963AF57E63C8</string>
 				<string>2AD2EA74E7D8CCE1349DEEF7</string>
+				<string>0BD5CFD1FDCD822374EE5868</string>
+				<string>372A212A42C914EC3A00BA2F</string>
+				<string>05B40938A7AC6482310DF505</string>
+				<string>E6E8644277E1A4E43197544D</string>
+				<string>882E180B2085F7C421EC8575</string>
+				<string>48D807F9408D2C190C4A561F</string>
+				<string>D07463D2293191E655AA0E21</string>
+				<string>C1ED3A6D23D12CF18CEB94EE</string>
+				<string>7D7402AB732E6CD7C184537A</string>
+				<string>EDE070F9C28B2B2E585E8284</string>
+				<string>7986736234AA1E67F2E5A473</string>
+				<string>F5AA4BCF76D115B346E33D4D</string>
+				<string>15927386B9CBC475242C84F7</string>
+				<string>0BBE48EEB91E5591EF6EAFF5</string>
+				<string>997A2A52DFBE016CC69777A1</string>
+				<string>4F6BF1260480EEAF9AADF420</string>
+				<string>C1D514957CBF0F512B07C692</string>
+				<string>BDE7FE4810D1D80364E2DB17</string>
 				<string>67E47B2033F6E1CAF8EE53CA</string>
 				<string>E308A49471B1A857AFA9C5DC</string>
 				<string>BD513E732A7E54A9C803E250</string>
 				<string>F50FBB5C3285D36386B3BC75</string>
+				<string>C523458E19B1F83899BEBAFC</string>
+				<string>42318388BF8298A25415CD62</string>
+				<string>04B18A70BEDAF45ED4D2EA17</string>
+				<string>8A1761DA2D1EA803A9225474</string>
+				<string>EFB50753A8F58339F392285E</string>
+				<string>0F65A3FEAEB0F18B3036E36E</string>
+				<string>C5FFF3B557927B97E51D37B4</string>
+				<string>514995415BDD17B27CF406FE</string>
 				<string>4A7E41CD8FCE1F683BABA282</string>
 				<string>163EF8A6243AF389523E803E</string>
+				<string>69BF0662903852AFBD95097D</string>
+				<string>E44578F8F68831BDE5FA6018</string>
+				<string>10E24C6CF461B6931A5EFB74</string>
+				<string>1A9B039A959E2EE4358B916F</string>
+				<string>79ED273FBAD4406C8FD52CEC</string>
+				<string>1924333FDB9AE7E1129B5363</string>
+				<string>35EDCE0444B177DCD336944E</string>
 				<string>40FE00BD605F55E0E45A6318</string>
 				<string>CB84FD0178E8A1E13ABEA843</string>
 				<string>F117A3359E74F8FD2B3E99B1</string>
@@ -1592,53 +2579,110 @@
 				<string>0E094EEF7979623BDCD2CA88</string>
 				<string>750675C6CF628DD5F617DD63</string>
 				<string>AFA64BC2F46814D57B945361</string>
+				<string>831399FD0499C3C716356170</string>
+				<string>685AA0D3435693E943B67E00</string>
 				<string>B25A2DE47D321EDB5D614C50</string>
 				<string>E71F14F5155DA576208DE4BD</string>
 				<string>FE1B125EC1E10E92AB6E733F</string>
+				<string>34B8AC80B8FD3DF1F60EDFD2</string>
 				<string>C7EFFFE6167220C31A59D517</string>
 				<string>13F612F73775A708068B3CDB</string>
+				<string>EDE019C60995694854E06F77</string>
 				<string>DCD50C86C7BC8B054235F2A6</string>
 				<string>0CBFC6C0C433ACA666509112</string>
 				<string>E6223631B0DCD8A1C7F89719</string>
+				<string>4A76823140ACD5AC5E716679</string>
 				<string>AEED6892412F88AF0D4E605E</string>
+				<string>7C3EA2BA0C8FA779EB3B05F5</string>
+				<string>213012C4CC93D02FF1AFAB3F</string>
+				<string>E1D4A083B780A4E8B14A9903</string>
+				<string>AC56FFD5E1F67133FF6D0E3D</string>
+				<string>3FBEC71F55AF436AEF5C0A4A</string>
+				<string>E6DE37A54FB604F7B84AACCE</string>
 				<string>D11C3D583C00DE11ABB3426C</string>
 				<string>FBDE76F38D4BE56FDDF81709</string>
 				<string>DD4AFBC09766AA2B17B9913B</string>
 				<string>A5E1D833BB3D5EB27D17CADE</string>
+				<string>D3391CDB02B58CC2560B5723</string>
 				<string>66EE9CB032280A0109E8129F</string>
 				<string>8BC2375919DC37CFF8C2C1B1</string>
 				<string>CDD9A1DCE64FF21B16759954</string>
+				<string>6EC95EE949FDDEEBF64F10A0</string>
 				<string>006CA5C4C218E655EBD24508</string>
+				<string>5FF1C9C6ADE6035EDBBA18E0</string>
+				<string>D5AA69F2CC64FF67EDD8C940</string>
+				<string>85C9B4668CD74C5094538E74</string>
 				<string>389352F4258426F45FE26326</string>
 				<string>3F9B86840316E93CD3B5BCF2</string>
+				<string>86ED2D562FA155D20C561BA8</string>
 				<string>D2782DDF29386274653410FF</string>
+				<string>92C274A554266394041307E1</string>
 				<string>BABEBD58300E04EDC6423604</string>
+				<string>2EBF9FA44B04BC1E757B8E8C</string>
 				<string>128DA9C775A860458137CF46</string>
+				<string>F4CE6C1F99830BC66B48F7AF</string>
+				<string>83CE15D16B6885912BE6E557</string>
+				<string>788075CFC0C67F0086625F83</string>
 				<string>0448C6C0801A2BFD6B01B82A</string>
+				<string>C81EA4D711830BEA93EB6AA0</string>
 				<string>7285010FDEBF6BD403DB5F2B</string>
 				<string>3AC219BC1FBBC08B728EDC21</string>
 				<string>BC575741E159D51320B2EFC3</string>
 				<string>D4EC8199E854142FD4F365FC</string>
 				<string>B23D69EC9BFC1A005C136BA2</string>
+				<string>7DE89BA0C4AE03A55B7254BE</string>
+				<string>6CC5075271B4DF15AED653C1</string>
+				<string>9E3C5C94AEE807E0FA3816D3</string>
 				<string>7E03693C705EF154817E9462</string>
+				<string>C5F05BA536EE33D70BD36379</string>
+				<string>5944E99DDFF20757D4C427FE</string>
 				<string>4672D834636CC11A25555B28</string>
 				<string>F0CD18A8A23827BE19921AAA</string>
+				<string>CF1D0A9974989AEBB95A1849</string>
+				<string>C63DB31F1583CD653D8CAA5D</string>
 				<string>9D2C3647C0FEAE14DA842DF2</string>
 				<string>AFA747805022B6E1383D30A8</string>
 				<string>1F47159FE2BB5FF9606EBB09</string>
 				<string>FC5CE4970C1FD90B577407C9</string>
+				<string>72ECEE50DEA45FC5B8688FE9</string>
+				<string>32DE34AE2758723853BD4565</string>
+				<string>18AAE86361D1810A96904CD9</string>
+				<string>089766967A8F2871655D534E</string>
 				<string>6E59DC463A57D174BBF9A07A</string>
+				<string>3522766C16B423586000D728</string>
+				<string>2091840AB422B5A596368458</string>
+				<string>880B60281A0F874CE0BE742F</string>
+				<string>9D1FC42C71E0E96A8C3FF984</string>
+				<string>B48E82AB17F4EFBE031BE912</string>
+				<string>280A5DC2A150036B9B6FA0CE</string>
 				<string>B583D04DD052B46FC10707FB</string>
 				<string>F8A3DDB57EECE6DCE9993F63</string>
 				<string>6C60AB740CB3403C693DE02B</string>
+				<string>BA5001ED3A311230ABD04679</string>
+				<string>9F3B23246EBACC9032E217E1</string>
+				<string>075645949EC6C6D1F6B6E9DF</string>
+				<string>154599C602B4B902B84CACD8</string>
+				<string>A2341E70E559183D30F64D46</string>
 				<string>4A31187A7971632C74C66AB6</string>
 				<string>6E73BD67BF2AA95CD3B22F24</string>
 				<string>C4F8C2EE1EC1FC193E2DA98C</string>
+				<string>CBCBA4B2EFCF1EA0B94C7D5C</string>
 				<string>719DBDB2681386AE1EEB1C8D</string>
+				<string>634ADEDAD5330332AA8E39C1</string>
+				<string>48C8C820401DC0D41DB93B13</string>
 				<string>62DC3512BA93426D8B8B70D1</string>
 				<string>0EB506FBB99C432F3C3094E9</string>
+				<string>CF846ACB056893EB91BDD92B</string>
+				<string>368A0F6FB3F6FAC4E5F916EF</string>
+				<string>5F1E2589BAEA82A7732C3BEF</string>
+				<string>1DAF831CE7B30F1E7F8833FA</string>
+				<string>A1032F27165F25DA6C723523</string>
+				<string>A634740DAEECB7F720D0B2DF</string>
 				<string>EBCAF97E034C9745D3C34E2A</string>
+				<string>42B57A90E68E770935A2362F</string>
+				<string>798B277B4B096D1F72B35A4D</string>
 				<string>686424683C03721F1776789D</string>
+				<string>0D3633D9DBF2BDDA2A845455</string>
 				<string>8FB74865798B2750874D5A37</string>
 				<string>D67F83CDAB485422DD917C3A</string>
 			</array>
@@ -1646,6 +2690,24 @@
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>NutriLens</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>83C46ACD7ED589F5681D7D40</key>
+		<dict>
+			<key>fileRef</key>
+			<string>997A2A52DFBE016CC69777A1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>83CE15D16B6885912BE6E557</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/DeletePlannedMealUseCase.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1670,6 +2732,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>85C9B4668CD74C5094538E74</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/RepositoryInterfaces/UserDietaryProfileRepositoryProtocol.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>868CD18DF6DB31E8E8820973</key>
 		<dict>
 			<key>isa</key>
@@ -1681,10 +2754,68 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>86CB212F6546DBA165F0A837</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D3391CDB02B58CC2560B5723</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>86ED2D562FA155D20C561BA8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/CalculateRecipeNutritionUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>880B60281A0F874CE0BE742F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Services/PackagedFoodSafetyService.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>882E180B2085F7C421EC8575</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/PlannedMealCardView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>88C6A61314405ED68A60C6B0</key>
 		<dict>
 			<key>fileRef</key>
 			<string>8BC2375919DC37CFF8C2C1B1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>8A1761DA2D1EA803A9225474</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/CreateEditPackagedFoodView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8B720DA36BBCA3E444C13730</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6CC5075271B4DF15AED653C1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1698,6 +2829,13 @@
 			<string>NutriLens/Domain/RepositoryInterfaces/FoodRecognitionRepositoryProtocol.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8C176CD1BAF14014FC2B88DA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C1ED3A6D23D12CF18CEB94EE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>8D005B7E8C1803B87C6A880B</key>
 		<dict>
@@ -1746,12 +2884,45 @@
 				<string>9DDDCCC205A51E8CB9716591</string>
 				<string>E80A45F0EBDF9E34ED7AE447</string>
 				<string>05009AB2F0C0D37EF745798B</string>
+				<string>132FE5439EF467B8887C1199</string>
+				<string>A6E2FB623DBC74DCF0867245</string>
+				<string>67A763BDF300FBDF5385776E</string>
+				<string>072AC518F5F249A42D0106E3</string>
+				<string>C1B7C9E1DAAAD2A13603C126</string>
+				<string>1B0670F41FF166411FCAE8E3</string>
+				<string>B7FD458C48158058812D9B84</string>
+				<string>8C176CD1BAF14014FC2B88DA</string>
+				<string>4C7CB8BA619BE82F59B4CC52</string>
+				<string>7823C2EE81F7B37DC74008D9</string>
+				<string>D9DE60F439790BFC3DADCFDB</string>
+				<string>2B1040F9DA2F3EFC9ADE2831</string>
+				<string>B0400CC35E64966A0E92DE30</string>
+				<string>044792C4947F2511320E3C7C</string>
+				<string>83C46ACD7ED589F5681D7D40</string>
+				<string>7194E2FB396A44631D63EBE0</string>
+				<string>B20C4ED819E79DD8D2462F01</string>
+				<string>37038A360DD31DCE5FB5BB77</string>
 				<string>DDA36D109DC0518180BF4D24</string>
 				<string>B0FB8735EC4E14EAC160CFB4</string>
 				<string>8F101258CDBEA0AF6E40A12A</string>
 				<string>8E02B908B2893DFAE3E58DF7</string>
+				<string>3425AED86809E155C811BEB8</string>
+				<string>72EABF72A87DFAB04D76615D</string>
+				<string>B01409F775419E6534706200</string>
+				<string>5FF0BC0251A1BF363E5FB917</string>
+				<string>6D3CEBA7C8C4B328357448DF</string>
+				<string>5630B62FC94CE3C5FA669614</string>
+				<string>38F201E64F8EE33FBAE062A3</string>
+				<string>61BC6034B161154D576CF797</string>
 				<string>6982010D77F9B5CBDF96F01A</string>
 				<string>D989414512973A25B8A8CC6C</string>
+				<string>47F83019877DA3D02257F6DF</string>
+				<string>6E47D7B7B66CD6DDEFE2F11A</string>
+				<string>D4F39BA2570945B7791C25B9</string>
+				<string>C685F5E0D937D6CC83CB51D4</string>
+				<string>A56CAEB326783517F1FFD0B5</string>
+				<string>488345B7AB7841077C5E7E96</string>
+				<string>06183C774037CF5FA356DBC0</string>
 				<string>D288905923477B0F5B4344F3</string>
 				<string>D9167100A7C0D9FF0BA6CAC6</string>
 				<string>DF3D8CB6A062AE32E64EA3AA</string>
@@ -1779,53 +2950,110 @@
 				<string>1EA1ABA056B66945F307BAF6</string>
 				<string>10B9AFF4B2B019E1C000F138</string>
 				<string>FAF8FAA6C8B5E32332DAFB9B</string>
+				<string>BA6B305A5D45934A34B20D56</string>
+				<string>E0033279F00EFA4B387EF8E7</string>
 				<string>28E15A4C7773D00F888DA8D6</string>
 				<string>E724B1E414A65E8039CB19DB</string>
 				<string>078D0F5B7AE2C47ABC9D6F38</string>
+				<string>54B9CF7CF70207959E4342F0</string>
 				<string>62B28BDE729712647B58A6CF</string>
 				<string>E4C649B8A58404507FB4D937</string>
+				<string>AC0DED3AC93D13DDE5D8FAAF</string>
 				<string>858EE11A0FE326A781FF3D34</string>
 				<string>15D8AF9362A5E8F55B8C0F36</string>
 				<string>DDA1FC0A155280DF7161956B</string>
+				<string>DD9F97523B8D696AAFFD0631</string>
 				<string>AEF55656A963A851C59151D0</string>
+				<string>5E98C46914F1BCB9A29DFCEF</string>
+				<string>462510408120DF059335A60E</string>
+				<string>92CE01CDF18215A6026B9F6A</string>
+				<string>B8258DDD7E1536172ACDC448</string>
+				<string>6616052CBEC1CA075746BCB8</string>
+				<string>FB228BC4CC8BD58E3A5C8A71</string>
 				<string>24BCD74085D15EB4258CFC1F</string>
 				<string>688E5C247BB9804635987543</string>
 				<string>32CBAE8982E4F8DE16A08441</string>
 				<string>7279709655EC4827E73EAA92</string>
+				<string>86CB212F6546DBA165F0A837</string>
 				<string>A97DECA4C1711C749BD47A61</string>
 				<string>88C6A61314405ED68A60C6B0</string>
 				<string>A3CB70063B1455BAD0E32C07</string>
+				<string>7F78321C6CF1337619151AD0</string>
 				<string>B83DA3FC01130753727D3F15</string>
+				<string>1B301946E609EBC20C2B370A</string>
+				<string>4C8F3CBE910F25252CFAAD68</string>
+				<string>73D0A14AE2A0B85AC68F89AD</string>
 				<string>DECA62EDB6ADD86101C1D24B</string>
 				<string>023B6D3C839AAAA89D0ECE34</string>
+				<string>5E3A1E5BEB6B2D98D3F3F756</string>
 				<string>E14176DFB01AA0AC010F8898</string>
+				<string>2E935CBD515DD223AB1D2B8D</string>
 				<string>6516399D66A334F689972715</string>
+				<string>F68525F71A5E67E8DA751E6D</string>
 				<string>78B42AF3D376365894B038F8</string>
+				<string>C8966FC0E0F7F72DA691AB6B</string>
+				<string>B64A47175E65C0672E6E91BA</string>
+				<string>F4A0FD78683E254979DBF141</string>
 				<string>EFAEEFA3636DC0B3D50E63D8</string>
+				<string>8034873C60954352D950C74F</string>
 				<string>1168C91E8B2ED1B1B1695BC2</string>
 				<string>0769EBEDDFE199A70F86B251</string>
 				<string>22FB2D3DDFA5FBD64DA19B4B</string>
 				<string>4ED0505E53EAC630A768CFB2</string>
 				<string>E8889AE048B16B7FECD56CB5</string>
+				<string>117F4E5D234E1744FEF0A575</string>
+				<string>8B720DA36BBCA3E444C13730</string>
+				<string>700B0C3B5E927D1D691B4FC7</string>
 				<string>722307ED626EC9E9D0A954AA</string>
+				<string>6DBFD19AF86653BC64E74132</string>
+				<string>C13F8663B09DD61532979795</string>
 				<string>0ABC2735952E31B36C0B0702</string>
 				<string>00192FB68436BD3091096378</string>
+				<string>1487B2590A697A43448BFB06</string>
+				<string>63352BFA2A08AD0B325CA2D5</string>
 				<string>641D8A0A05481BA8A3D344C3</string>
 				<string>4D0E4516185840E0209383DE</string>
 				<string>75730767A02F08D6DA0F6757</string>
 				<string>9ED96A67F49EC9EA1E8101DC</string>
+				<string>949A63B719F0D3AF464B3326</string>
+				<string>DAA98BD677C079E5DA7CB865</string>
+				<string>15282A016A56CF7903EC5065</string>
+				<string>55B40F0D7267E06BB1D086C8</string>
 				<string>CFE65CE3C730CEE399ED4950</string>
+				<string>C31FDB49CFB9A696366AB0C1</string>
+				<string>4E31A21414EA03E3A03243E7</string>
+				<string>6066A74B5C3C880BF9E6F078</string>
+				<string>3D8310DCD7C21E410537A1ED</string>
+				<string>C022C00E98E6E0FE4F41E245</string>
+				<string>325B521EFF3E6C86A7BE8D18</string>
 				<string>FFFB0241C56062D33AE81E47</string>
 				<string>6D5BDA4BE7A7C6ACC450E561</string>
 				<string>7EC9DA657C534DC8B418DFD0</string>
+				<string>998AEB00F36C17BB3345D554</string>
+				<string>0F2C5A3E1085A430FD4F368E</string>
+				<string>7A559C34C8ADFB0A29A8D01C</string>
+				<string>F7DF5057BC64C5956551F46E</string>
+				<string>BDFE9FB79EAF583B5281F1AD</string>
 				<string>6734C59128AFA5F368A34E73</string>
 				<string>47C56A0BE9A86378C73D5571</string>
 				<string>2B1E977AF9C521D3F567A90D</string>
+				<string>FC191D8FDF9C8DEABCE52B7C</string>
 				<string>DD1110DC6E6029A6025D90E8</string>
+				<string>8D7C0DF98EE69B939589654C</string>
+				<string>01648A59CA5A03A250D4BAC1</string>
 				<string>8D60F1E102AC4D859000307D</string>
 				<string>6E4283BAAFE67C5FB558E6EC</string>
+				<string>3AF01D31FEBC5BC81E557C2C</string>
+				<string>0DEB19F7C7B9B5B1E29072AF</string>
+				<string>28F38EB3290BF7261CE20917</string>
+				<string>ADA461717FAE08AF8592FB26</string>
+				<string>6640ACE2026D1DE5F3D87579</string>
+				<string>5DBCC07D500C3D6236D7582F</string>
 				<string>7C2F7FF4F02DDAEC1AB3B0F5</string>
+				<string>5F63244EEB545F86331359DF</string>
+				<string>B4DFD55A4E6CE92C244B183E</string>
 				<string>0BAEDE9950082E7B102D07E6</string>
+				<string>3A2B1DD7AF835270D89BF11D</string>
 			</array>
 			<key>isa</key>
 			<string>PBXSourcesBuildPhase</string>
@@ -1836,6 +3064,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>62DC3512BA93426D8B8B70D1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>8D7C0DF98EE69B939589654C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>634ADEDAD5330332AA8E39C1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1882,6 +3117,38 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>927EE659491BFBA8FB917EDE</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D315D20230916E8C3448716E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>92C274A554266394041307E1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/CopyDayPlanUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>92CE01CDF18215A6026B9F6A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>E1D4A083B780A4E8B14A9903</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>949A63B719F0D3AF464B3326</key>
+		<dict>
+			<key>fileRef</key>
+			<string>72ECEE50DEA45FC5B8688FE9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>9656B078BD52190DDFA4950D</key>
 		<dict>
 			<key>fileRef</key>
@@ -1893,6 +3160,24 @@
 		<dict>
 			<key>fileRef</key>
 			<string>3F9C2148FDFB49E37E290913</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>997A2A52DFBE016CC69777A1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/MyFoodsAndRecipesView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>998AEB00F36C17BB3345D554</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BA5001ED3A311230ABD04679</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1929,6 +3214,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Features/Authentication/AccountManagementView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9D1FC42C71E0E96A8C3FF984</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Services/SmartMealSuggestionEngine.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2013,6 +3309,17 @@
 			<key>productType</key>
 			<string>com.apple.product-type.bundle.unit-test</string>
 		</dict>
+		<key>9E3C5C94AEE807E0FA3816D3</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/GetWeeklyMealPlanUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>9E619DF4F7B9D8B2661D840F</key>
 		<dict>
 			<key>isa</key>
@@ -2042,6 +3349,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>9F3B23246EBACC9032E217E1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/BarcodeType.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>9FC1E96689373881971529AA</key>
 		<dict>
 			<key>isa</key>
@@ -2050,6 +3368,28 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Features/Authentication/AuthViewModel.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A1032F27165F25DA6C723523</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/Recipe.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A2341E70E559183D30F64D46</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/DietaryPreferenceType.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2076,6 +3416,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>A56CAEB326783517F1FFD0B5</key>
+		<dict>
+			<key>fileRef</key>
+			<string>79ED273FBAD4406C8FD52CEC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>A5E1D833BB3D5EB27D17CADE</key>
 		<dict>
 			<key>isa</key>
@@ -2086,6 +3433,24 @@
 			<string>NutriLens/Domain/RepositoryInterfaces/AuthenticationRepositoryProtocol.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A634740DAEECB7F720D0B2DF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/RecipeIngredient.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A6E2FB623DBC74DCF0867245</key>
+		<dict>
+			<key>fileRef</key>
+			<string>372A212A42C914EC3A00BA2F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>A782BDB12D04D8B2B22446EF</key>
 		<dict>
@@ -2134,10 +3499,35 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>AC0DED3AC93D13DDE5D8FAAF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>EDE019C60995694854E06F77</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>AC56FFD5E1F67133FF6D0E3D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/PackagedFoodRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>ACDD611BB3EAD70CA67F0D8F</key>
 		<dict>
 			<key>fileRef</key>
 			<string>354799794BF581772A9A7416</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ADA461717FAE08AF8592FB26</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1DAF831CE7B30F1E7F8833FA</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -2181,6 +3571,20 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>B01409F775419E6534706200</key>
+		<dict>
+			<key>fileRef</key>
+			<string>04B18A70BEDAF45ED4D2EA17</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B0400CC35E64966A0E92DE30</key>
+		<dict>
+			<key>fileRef</key>
+			<string>15927386B9CBC475242C84F7</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>B0DFFEFDFCC4B656399DA403</key>
 		<dict>
 			<key>isa</key>
@@ -2210,6 +3614,13 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>B20C4ED819E79DD8D2462F01</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C1D514957CBF0F512B07C692</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>B23D69EC9BFC1A005C136BA2</key>
 		<dict>
 			<key>isa</key>
@@ -2236,6 +3647,24 @@
 		<dict>
 			<key>fileRef</key>
 			<string>3431F9C4602DD4561D4664C1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B48E82AB17F4EFBE031BE912</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Services/VietnameseDishIngredientMetadata.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B4DFD55A4E6CE92C244B183E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>798B277B4B096D1F72B35A4D</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -2272,10 +3701,31 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>B64A47175E65C0672E6E91BA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>83CE15D16B6885912BE6E557</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>B6DCB79BF7528DEDD9559361</key>
 		<dict>
 			<key>fileRef</key>
 			<string>F5A7C679614A507B959C30E2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B7FD458C48158058812D9B84</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D07463D2293191E655AA0E21</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B8258DDD7E1536172ACDC448</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AC56FFD5E1F67133FF6D0E3D</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -2337,6 +3787,24 @@
 			<string>NutriLens/Features/Nutrition/NutritionAnalyticsView.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA5001ED3A311230ABD04679</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/BarcodeLookupResult.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BA6B305A5D45934A34B20D56</key>
+		<dict>
+			<key>fileRef</key>
+			<string>831399FD0499C3C716356170</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>BABEBD58300E04EDC6423604</key>
 		<dict>
@@ -2406,6 +3874,24 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>BDE7FE4810D1D80364E2DB17</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/RecipeDetailView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BDFE9FB79EAF583B5281F1AD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A2341E70E559183D30F64D46</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>BE97A736EE5C8D33060CFF81</key>
 		<dict>
 			<key>isa</key>
@@ -2444,6 +3930,20 @@
 			<key>productType</key>
 			<string>com.apple.product-type.bundle.ui-testing</string>
 		</dict>
+		<key>C022C00E98E6E0FE4F41E245</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B48E82AB17F4EFBE031BE912</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C13F8663B09DD61532979795</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5944E99DDFF20757D4C427FE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>C1B0D475F7746409ADBE8D6F</key>
 		<dict>
 			<key>buildConfigurations</key>
@@ -2458,6 +3958,42 @@
 			<key>isa</key>
 			<string>XCConfigurationList</string>
 		</dict>
+		<key>C1B7C9E1DAAAD2A13603C126</key>
+		<dict>
+			<key>fileRef</key>
+			<string>882E180B2085F7C421EC8575</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C1D514957CBF0F512B07C692</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/RecipeCardView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C1ED3A6D23D12CF18CEB94EE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/WeeklyMealPlannerView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C31FDB49CFB9A696366AB0C1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3522766C16B423586000D728</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>C4F8C2EE1EC1FC193E2DA98C</key>
 		<dict>
 			<key>isa</key>
@@ -2466,6 +4002,39 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Domain/Entities/HydrationRecord.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C523458E19B1F83899BEBAFC</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/BarcodeCaptureService.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C5F05BA536EE33D70BD36379</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/LogPackagedFoodToDiaryUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C5FFF3B557927B97E51D37B4</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/PackagedFoodLibraryView.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2480,6 +4049,24 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>C63DB31F1583CD653D8CAA5D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/MarkPlannedMealStatusUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C685F5E0D937D6CC83CB51D4</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1A9B039A959E2EE4358B916F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>C7EFFFE6167220C31A59D517</key>
 		<dict>
 			<key>isa</key>
@@ -2491,12 +4078,41 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>C81EA4D711830BEA93EB6AA0</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/GetCustomFoodsUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C8966FC0E0F7F72DA691AB6B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F4CE6C1F99830BC66B48F7AF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>C89EF9269027813DCDE6144F</key>
 		<dict>
 			<key>fileRef</key>
 			<string>4E347ACB14EB4633DC8D735D</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>C8E175E635C908253AD55839</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLensTests/UnitTests/SmartSuggestionsTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>C9012B998B89CA0E87CEFFBE</key>
 		<dict>
@@ -2542,6 +4158,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>CBCBA4B2EFCF1EA0B94C7D5C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/IngredientVerificationStatus.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>CBE077DF9ABFD73098EFADB9</key>
 		<dict>
 			<key>isa</key>
@@ -2573,6 +4200,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>CDE31A6224FE5B09D4A40DCE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLensTests/UnitTests/BarcodeScannerTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>CEB2171EA91A84CE413EA11A</key>
 		<dict>
 			<key>isa</key>
@@ -2584,12 +4222,45 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>CF1D0A9974989AEBB95A1849</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/LookupBarcodeUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CF846ACB056893EB91BDD92B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/Entities/PackagedFood.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>CFE65CE3C730CEE399ED4950</key>
 		<dict>
 			<key>fileRef</key>
 			<string>6E59DC463A57D174BBF9A07A</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>D07463D2293191E655AA0E21</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/WeeklyCalendarStripView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>D0FF03998DDA8DDBDFA28B8E</key>
 		<dict>
@@ -2631,6 +4302,28 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>D315D20230916E8C3448716E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLensTests/UnitTests/WeeklyMealPlannerTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D3391CDB02B58CC2560B5723</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/RepositoryInterfaces/CustomFoodRepositoryProtocol.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>D4EC8199E854142FD4F365FC</key>
 		<dict>
 			<key>isa</key>
@@ -2639,6 +4332,24 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Domain/UseCases/GetMealHistoryUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D4F39BA2570945B7791C25B9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>10E24C6CF461B6931A5EFB74</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>D5AA69F2CC64FF67EDD8C940</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/RepositoryInterfaces/RecipeRepositoryProtocol.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2774,10 +4485,24 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>D9DE60F439790BFC3DADCFDB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>7986736234AA1E67F2E5A473</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>D9E7BE349980140BC6691682</key>
 		<dict>
 			<key>fileRef</key>
 			<string>BE97A736EE5C8D33060CFF81</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>DAA98BD677C079E5DA7CB865</key>
+		<dict>
+			<key>fileRef</key>
+			<string>32DE34AE2758723853BD4565</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -2798,6 +4523,13 @@
 			<string>NutriLens/Core/DesignSystem/NutritionGoalsCard.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>DBC07DD3424968B0B702F9CF</key>
+		<dict>
+			<key>fileRef</key>
+			<string>449148F0C950D2B9750024F1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>DCD50C86C7BC8B054235F2A6</key>
 		<dict>
@@ -2827,6 +4559,13 @@
 			<string>NutriLens/Data/LocalStorage/SwiftDataEntities.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>DD9F97523B8D696AAFFD0631</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4A76823140ACD5AC5E716679</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>DDA1FC0A155280DF7161956B</key>
 		<dict>
@@ -2871,6 +4610,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>F117A3359E74F8FD2B3E99B1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>E0033279F00EFA4B387EF8E7</key>
+		<dict>
+			<key>fileRef</key>
+			<string>685AA0D3435693E943B67E00</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -2947,6 +4693,17 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>E1D4A083B780A4E8B14A9903</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MockUserDietaryProfileRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>E226813443FA14CAE81DC8AE</key>
 		<dict>
 			<key>isa</key>
@@ -2966,6 +4723,17 @@
 			<string>sourcecode.swift</string>
 			<key>path</key>
 			<string>NutriLens/Features/FoodRecognition/CameraService.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E44578F8F68831BDE5FA6018</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/SmartSuggestions/EditDietaryPreferencesSheet.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2993,6 +4761,28 @@
 			<string>B5F8316277DF9BBF3F65210F</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>E6DE37A54FB604F7B84AACCE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/UserDietaryProfileRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E6E8644277E1A4E43197544D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/WeeklyMealPlanner/PlannedFoodSourcePickerSheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>E71F14F5155DA576208DE4BD</key>
 		<dict>
@@ -3079,6 +4869,28 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>EDE019C60995694854E06F77</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Data/Repositories/MockCustomFoodRepository.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EDE070F9C28B2B2E585E8284</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/CreateEditCustomFoodView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>EE0A002E39EF6C252553846A</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -3098,6 +4910,17 @@
 			<string>0448C6C0801A2BFD6B01B82A</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>EFB50753A8F58339F392285E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/BarcodeScanner/ManualBarcodeEntrySheet.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>F04D1B1CE4FB887496B6E85D</key>
 		<dict>
@@ -3191,6 +5014,24 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>F4A0FD78683E254979DBF141</key>
+		<dict>
+			<key>fileRef</key>
+			<string>788075CFC0C67F0086625F83</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F4CE6C1F99830BC66B48F7AF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Domain/UseCases/DeletePackagedFoodUseCase.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>F50FBB5C3285D36386B3BC75</key>
 		<dict>
 			<key>isa</key>
@@ -3212,6 +5053,31 @@
 			<string>NutriLens/Core/Logging/AppLogger.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F5AA4BCF76D115B346E33D4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>NutriLens/Features/CustomFoodsAndRecipes/CustomFoodCardView.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F68525F71A5E67E8DA751E6D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>2EBF9FA44B04BC1E757B8E8C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F7DF5057BC64C5956551F46E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>154599C602B4B902B84CACD8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>F8A3DDB57EECE6DCE9993F63</key>
 		<dict>
@@ -3298,6 +5164,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>FB228BC4CC8BD58E3A5C8A71</key>
+		<dict>
+			<key>fileRef</key>
+			<string>E6DE37A54FB604F7B84AACCE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>FBAD619B488551B3090D8690</key>
 		<dict>
 			<key>fileRef</key>
@@ -3320,6 +5193,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>9DE02D7B7B410409713A6AEF</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FC191D8FDF9C8DEABCE52B7C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CBCBA4B2EFCF1EA0B94C7D5C</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>

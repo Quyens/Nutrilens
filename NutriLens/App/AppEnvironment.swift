@@ -17,6 +17,11 @@ public final class AppEnvironment: ObservableObject {
     public let foodFavoritesRepository: FoodFavoritesRepositoryProtocol
     public let authenticationRepository: AuthenticationRepositoryProtocol
     public let hydrationRepository: HydrationRepositoryProtocol
+    public let customFoodRepository: CustomFoodRepositoryProtocol
+    public let recipeRepository: RecipeRepositoryProtocol
+    public let mealPlanRepository: MealPlanRepositoryProtocol
+    public let userDietaryProfileRepository: UserDietaryProfileRepositoryProtocol
+    public let packagedFoodRepository: PackagedFoodRepositoryProtocol
 
     // Services
     public let unitFormattingService: UnitFormattingServiceProtocol
@@ -34,6 +39,33 @@ public final class AppEnvironment: ObservableObject {
     public let getDailyHydrationUseCase: GetDailyHydrationUseCaseProtocol
     public let getHydrationHistoryUseCase: GetHydrationHistoryUseCaseProtocol
     public let deleteHydrationUseCase: DeleteHydrationUseCaseProtocol
+
+    // Phase 03: Custom Foods & Recipes Use Cases
+    public let getCustomFoodsUseCase: GetCustomFoodsUseCaseProtocol
+    public let saveCustomFoodUseCase: SaveCustomFoodUseCaseProtocol
+    public let deleteCustomFoodUseCase: DeleteCustomFoodUseCaseProtocol
+    public let getRecipesUseCase: GetRecipesUseCaseProtocol
+    public let saveRecipeUseCase: SaveRecipeUseCaseProtocol
+    public let deleteRecipeUseCase: DeleteRecipeUseCaseProtocol
+    public let calculateRecipeNutritionUseCase: CalculateRecipeNutritionUseCaseProtocol
+
+    // Phase 04: Weekly Meal Planner Use Cases
+    public let getWeeklyMealPlanUseCase: GetWeeklyMealPlanUseCaseProtocol
+    public let savePlannedMealUseCase: SavePlannedMealUseCaseProtocol
+    public let deletePlannedMealUseCase: DeletePlannedMealUseCaseProtocol
+    public let markPlannedMealStatusUseCase: MarkPlannedMealStatusUseCaseProtocol
+    public let copyDayPlanUseCase: CopyDayPlanUseCaseProtocol
+    public let logPlannedMealToDiaryUseCase: LogPlannedMealToDiaryUseCaseProtocol
+
+    // Phase 05: Smart Meal Suggestions Use Cases
+    public let smartMealSuggestionsUseCase: SmartMealSuggestionsUseCaseProtocol
+
+    // Phase 06: Barcode Scanner & Packaged Food Use Cases
+    public let lookupBarcodeUseCase: LookupBarcodeUseCase
+    public let savePackagedFoodUseCase: SavePackagedFoodUseCase
+    public let deletePackagedFoodUseCase: DeletePackagedFoodUseCase
+    public let getPackagedFoodsUseCase: GetPackagedFoodsUseCase
+    public let logPackagedFoodToDiaryUseCase: LogPackagedFoodToDiaryUseCase
 
     // Auth Use Cases
     public let getAuthSessionUseCase: GetAuthSessionUseCaseProtocol
@@ -53,6 +85,11 @@ public final class AppEnvironment: ObservableObject {
         foodFavoritesRepository: FoodFavoritesRepositoryProtocol = FoodFavoritesRepository(),
         authenticationRepository: AuthenticationRepositoryProtocol = AuthenticationRepository(),
         hydrationRepository: HydrationRepositoryProtocol = HydrationRepository(),
+        customFoodRepository: CustomFoodRepositoryProtocol = CustomFoodRepository(),
+        recipeRepository: RecipeRepositoryProtocol = RecipeRepository(),
+        mealPlanRepository: MealPlanRepositoryProtocol = MealPlanRepository(),
+        userDietaryProfileRepository: UserDietaryProfileRepositoryProtocol = UserDietaryProfileRepository(),
+        packagedFoodRepository: PackagedFoodRepositoryProtocol = PackagedFoodRepository(),
         unitFormattingService: UnitFormattingServiceProtocol = UnitFormattingService.shared,
         hapticFeedbackService: HapticFeedbackServiceProtocol = HapticFeedbackService.shared,
         isMockAuth: Bool = false
@@ -63,6 +100,11 @@ public final class AppEnvironment: ObservableObject {
         self.foodFavoritesRepository = foodFavoritesRepository
         self.authenticationRepository = authenticationRepository
         self.hydrationRepository = hydrationRepository
+        self.customFoodRepository = customFoodRepository
+        self.recipeRepository = recipeRepository
+        self.mealPlanRepository = mealPlanRepository
+        self.userDietaryProfileRepository = userDietaryProfileRepository
+        self.packagedFoodRepository = packagedFoodRepository
         self.unitFormattingService = unitFormattingService
         self.hapticFeedbackService = hapticFeedbackService
         self.isMockAuth = isMockAuth
@@ -84,6 +126,43 @@ public final class AppEnvironment: ObservableObject {
         self.getDailyHydrationUseCase = GetDailyHydrationUseCase(repository: hydrationRepository)
         self.getHydrationHistoryUseCase = GetHydrationHistoryUseCase(repository: hydrationRepository)
         self.deleteHydrationUseCase = DeleteHydrationUseCase(repository: hydrationRepository)
+
+        // Phase 03: Custom Foods & Recipes use cases
+        self.getCustomFoodsUseCase = GetCustomFoodsUseCase(repository: customFoodRepository)
+        self.saveCustomFoodUseCase = SaveCustomFoodUseCase(repository: customFoodRepository)
+        self.deleteCustomFoodUseCase = DeleteCustomFoodUseCase(repository: customFoodRepository)
+        self.getRecipesUseCase = GetRecipesUseCase(repository: recipeRepository)
+        self.saveRecipeUseCase = SaveRecipeUseCase(repository: recipeRepository)
+        self.deleteRecipeUseCase = DeleteRecipeUseCase(repository: recipeRepository)
+        self.calculateRecipeNutritionUseCase = CalculateRecipeNutritionUseCase()
+
+        // Phase 04: Weekly Meal Planner use cases
+        self.getWeeklyMealPlanUseCase = GetWeeklyMealPlanUseCase(repository: mealPlanRepository)
+        self.savePlannedMealUseCase = SavePlannedMealUseCase(repository: mealPlanRepository)
+        self.deletePlannedMealUseCase = DeletePlannedMealUseCase(repository: mealPlanRepository)
+        self.markPlannedMealStatusUseCase = MarkPlannedMealStatusUseCase(repository: mealPlanRepository)
+        self.copyDayPlanUseCase = CopyDayPlanUseCase(repository: mealPlanRepository)
+        self.logPlannedMealToDiaryUseCase = LogPlannedMealToDiaryUseCase(
+            mealPlanRepository: mealPlanRepository,
+            mealRepository: mealRepository
+        )
+
+        // Phase 05: Smart Meal Suggestions
+        self.smartMealSuggestionsUseCase = SmartMealSuggestionsUseCase(
+            userDietaryProfileRepository: userDietaryProfileRepository,
+            foodFavoritesRepository: foodFavoritesRepository,
+            customFoodRepository: customFoodRepository,
+            recipeRepository: recipeRepository,
+            mealPlanRepository: mealPlanRepository,
+            mealRepository: mealRepository
+        )
+
+        // Phase 06: Barcode Scanner & Packaged Food Use Cases
+        self.lookupBarcodeUseCase = LookupBarcodeUseCase(repository: packagedFoodRepository)
+        self.savePackagedFoodUseCase = SavePackagedFoodUseCase(repository: packagedFoodRepository)
+        self.deletePackagedFoodUseCase = DeletePackagedFoodUseCase(repository: packagedFoodRepository)
+        self.getPackagedFoodsUseCase = GetPackagedFoodsUseCase(repository: packagedFoodRepository)
+        self.logPackagedFoodToDiaryUseCase = LogPackagedFoodToDiaryUseCase(mealRepository: mealRepository)
 
         // Auth use cases
         self.getAuthSessionUseCase = GetAuthSessionUseCase(repository: authenticationRepository)
@@ -117,6 +196,35 @@ public final class AppEnvironment: ObservableObject {
         return vm
     }
 
+    /// Factory method to build SmartSuggestionsViewModel
+    public func makeSmartSuggestionsViewModel(
+        initialCategory: PlannedMealCategory? = nil,
+        initialDate: Date = Date()
+    ) -> SmartSuggestionsViewModel {
+        SmartSuggestionsViewModel(
+            useCase: smartMealSuggestionsUseCase,
+            hapticService: hapticFeedbackService,
+            initialCategory: initialCategory,
+            initialDate: initialDate
+        )
+    }
+
+    /// Factory method to build BarcodeScannerViewModel
+    public func makeBarcodeScannerViewModel(
+        captureService: BarcodeCaptureServiceProtocol? = nil
+    ) -> BarcodeScannerViewModel {
+        let service = captureService ?? BarcodeCaptureService()
+        return BarcodeScannerViewModel(
+            lookupUseCase: lookupBarcodeUseCase,
+            saveUseCase: savePackagedFoodUseCase,
+            deleteUseCase: deletePackagedFoodUseCase,
+            getFoodsUseCase: getPackagedFoodsUseCase,
+            logDiaryUseCase: logPackagedFoodToDiaryUseCase,
+            userProfileRepository: userDietaryProfileRepository,
+            captureService: service
+        )
+    }
+
     /// Standard production environment backed by SwiftData & Production CoreML Pipeline
     public static func live() -> AppEnvironment {
         let mealRepo = MealRepository()
@@ -125,6 +233,11 @@ public final class AppEnvironment: ObservableObject {
         let favoritesRepo = FoodFavoritesRepository()
         let authRepo = AuthenticationRepository()
         let hydrationRepo = HydrationRepository()
+        let customFoodRepo = CustomFoodRepository()
+        let recipeRepo = RecipeRepository()
+        let mealPlanRepo = MealPlanRepository()
+        let dietaryRepo = UserDietaryProfileRepository()
+        let packagedFoodRepo = PackagedFoodRepository()
 
         return AppEnvironment(
             mealRepository: mealRepo,
@@ -133,6 +246,11 @@ public final class AppEnvironment: ObservableObject {
             foodFavoritesRepository: favoritesRepo,
             authenticationRepository: authRepo,
             hydrationRepository: hydrationRepo,
+            customFoodRepository: customFoodRepo,
+            recipeRepository: recipeRepo,
+            mealPlanRepository: mealPlanRepo,
+            userDietaryProfileRepository: dietaryRepo,
+            packagedFoodRepository: packagedFoodRepo,
             isMockAuth: false
         )
     }
@@ -153,6 +271,11 @@ public final class AppEnvironment: ObservableObject {
                 HydrationRecord(amountLiters: 0.5, notes: "Buổi trưa")
             ]
         )
+        let customFoodRepo = MockCustomFoodRepository()
+        let recipeRepo = MockRecipeRepository()
+        let mealPlanRepo = MockMealPlanRepository()
+        let dietaryRepo = MockUserDietaryProfileRepository()
+        let packagedFoodRepo = MockPackagedFoodRepository()
 
         return AppEnvironment(
             mealRepository: mealRepo,
@@ -161,6 +284,11 @@ public final class AppEnvironment: ObservableObject {
             foodFavoritesRepository: favoritesRepo,
             authenticationRepository: authRepo,
             hydrationRepository: hydrationRepo,
+            customFoodRepository: customFoodRepo,
+            recipeRepository: recipeRepo,
+            mealPlanRepository: mealPlanRepo,
+            userDietaryProfileRepository: dietaryRepo,
+            packagedFoodRepository: packagedFoodRepo,
             isMockAuth: true
         )
     }
